@@ -14,6 +14,7 @@ body {
     color: #ffffff;
     height: 30px;
     font-size: 12px;
+    transition: all 0.5s;
 }
 
 .topbar i {
@@ -27,9 +28,23 @@ body {
     padding-left: 5px;
 }
 
+#topbar.topbar-scrolled {
+    top: -30px;
+}
+
 /*--------------------------------------------------------------
 # Nav Bar
 --------------------------------------------------------------*/
+.navbar {
+    padding: 0;
+    top: 30px;
+    transition: all 0.5s;
+}
+
+.navbar-transparent {
+    background: transparent;
+}
+
 .navbar .navbar-brand,
 .navbar .navbar-brand:hover {
     font-family: "Satisfy", sans-serif;
@@ -38,11 +53,11 @@ body {
 }
 
 .navbar .nav-item a {
-    color: #444444;
+    color: black;
 }
 
 .navbar a:hover {
-    color: #b06c00;
+    color: #d78300;
 }
 
 .navbar-nav .nav-link.active {
@@ -54,6 +69,37 @@ body {
     font-size: larger;
 }
 
+/*--------------------------------------------------------------
+# Nav Bar Scrolled
+--------------------------------------------------------------*/
+.navbar.navbar-scrolled .navbar-brand,
+.navbar.navbar-scrolled .navbar-brand:hover {
+    font-family: "Satisfy", sans-serif;
+    font-size: 30px;
+    color: #ffffff;
+}
+
+#navbar.navbar-scrolled {
+    top: 0;
+    background: rgba(26, 24, 22, 0.85);
+}
+
+#navbar.navbar-scrolled a {
+    color: #ffffff;
+}
+
+#navbar.navbar-scrolled.navbar li a:hover,
+#navbar.navbar-scrolled.navbar .navbar-toolbar a:hover {
+    color: #ffc975;
+}
+
+#navbar.navbar-scrolled .navbar-nav .nav-link.active {
+    color: #ffa600;
+}
+
+/*--------------------------------------------------------------
+# Nav Bar Mobile
+--------------------------------------------------------------*/
 @media (max-width: 991.98px) {
     .navbar .navbar-nav {
         margin-top: 10px;
@@ -62,11 +108,29 @@ body {
         background: white;
     }
 
+    .navbar .navbar-nav .nav-item a,
+    #navbar.navbar-scrolled .navbar-nav .nav-item a {
+        color: black;
+    }
+
+    .navbar .navbar-nav .nav-item a:hover,
+    #navbar.navbar-scrolled .navbar-nav .nav-item a:hover {
+        color: #d78300;
+    }
+
+    .navbar .navbar-nav .nav-link.active,
+    .navbar .navbar-nav .nav-link.active:hover,
+    #navbar.navbar-scrolled .navbar-nav .nav-link.active,
+    #navbar.navbar-scrolled .navbar-nav .nav-link.active:hover {
+        color: #b06c00;
+    }
+
     .navbar .navbar-nav .nav-link {
         padding: 10px 0;
     }
 
-    .navbar .navbar-nav .nav-item a {
-        color: #444444;
+    #navbar.navbar-scrolled .navbar-toggler-icon {
+        opacity: 1;
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
 }
