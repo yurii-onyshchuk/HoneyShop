@@ -1,7 +1,72 @@
-header {
-    background-color: #1b2740;
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #444444;
+}
+
+/*--------------------------------------------------------------
+# Top Bar
+--------------------------------------------------------------*/
+.topbar {
+    background: rgba(26, 24, 22, 0.8);
+    color: #ffffff;
+    height: 30px;
+    font-size: 12px;
+}
+
+.topbar i {
+    color: #ffb03b;
+    line-height: 0;
+}
+
+.topbar i span {
+    color: #fff;
+    font-style: normal;
+    padding-left: 5px;
+}
+
+/*--------------------------------------------------------------
+# Nav Bar
+--------------------------------------------------------------*/
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+    font-family: "Satisfy", sans-serif;
+    font-size: 30px;
+    color: black;
+}
+
+.navbar .nav-item a {
+    color: #444444;
+}
+
+.navbar a:hover {
+    color: #b06c00;
+}
+
+.navbar-nav .nav-link.active {
+    color: #b06c00;
 }
 
 .navbar-toolbar a {
-    color: #fff;
+    color: #000000;
+    font-size: larger;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-nav {
+        margin-top: 10px;
+        border-radius: 7px;
+        border: 2px solid rgb(143, 117, 15);
+        background: white;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 10px 0;
+    }
+
+    .navbar .navbar-nav .nav-item a {
+        color: #444444;
+    }
 }
