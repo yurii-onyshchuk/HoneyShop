@@ -3,10 +3,12 @@
 --------------------------------------------------------------*/
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #444444;
+    color: #000000;
 }
 
 a {
+    color: #000000;
+    font-style: normal;
     text-decoration: none;
 }
 
@@ -23,10 +25,10 @@ a {
 
 .topbar i {
     color: #ffbe33;
-    line-height: 0;
 }
 
-.topbar i span {
+.topbar .topbar-info a,
+.topbar .topbar-info span {
     color: #fff;
     font-style: normal;
     padding-left: 5px;
@@ -54,51 +56,46 @@ a {
 .navbar .navbar-brand:hover {
     font-family: "Satisfy", sans-serif;
     font-size: 30px;
-    color: black;
+    color: #000000;
 }
 
-.navbar .nav-item a {
-    color: black;
+.navbar a {
+    color: #000000;
 }
 
 .navbar a:hover {
     color: #d78300;
 }
 
-.navbar-nav .nav-link.active {
+.navbar .nav-link.active,
+.navbar .nav-link.active:hover {
     color: #b06c00;
 }
 
 .navbar-toolbar a {
-    color: #000000;
     font-size: larger;
 }
 
 /*--------------------------------------------------------------
 # Nav Bar Scrolled
 --------------------------------------------------------------*/
-.navbar.navbar-scrolled .navbar-brand,
-.navbar.navbar-scrolled .navbar-brand:hover {
-    font-family: "Satisfy", sans-serif;
-    font-size: 30px;
-    color: #ffffff;
-}
-
-#navbar.navbar-scrolled {
+.navbar-scrolled {
     top: 0;
     background-color: #222831;
 }
 
-#navbar.navbar-scrolled a {
+.navbar-scrolled a,
+.navbar-scrolled .navbar-brand,
+.navbar-scrolled .navbar-brand:hover {
     color: #ffffff;
 }
 
-#navbar.navbar-scrolled.navbar li a:hover,
-#navbar.navbar-scrolled.navbar .navbar-toolbar a:hover {
+.navbar-scrolled a:hover {
     color: #ffbe33;
 }
 
-#navbar.navbar-scrolled .navbar-nav .nav-link.active {
+.navbar-scrolled .nav-link.active,
+.navbar-scrolled .nav-link.active:hover {
     color: #ffa600;
 }
 
@@ -106,36 +103,26 @@ a {
 # Nav Bar Mobile
 --------------------------------------------------------------*/
 @media (max-width: 991.98px) {
-    .navbar .navbar-nav {
+    .navbar-nav {
         margin-top: 10px;
         border-radius: 7px;
-        border: 2px solid rgb(143, 117, 15);
-        background: white;
+        background: #ffffff;
     }
 
-    .navbar .navbar-nav .nav-item a,
-    #navbar.navbar-scrolled .navbar-nav .nav-item a {
-        color: black;
+    .navbar .nav-item a {
+        color: #000000;
     }
 
-    .navbar .navbar-nav .nav-item a:hover,
-    #navbar.navbar-scrolled .navbar-nav .nav-item a:hover {
+    .navbar .nav-item a:hover {
         color: #d78300;
     }
 
-    .navbar .navbar-nav .nav-link.active,
-    .navbar .navbar-nav .nav-link.active:hover,
-    #navbar.navbar-scrolled .navbar-nav .nav-link.active,
-    #navbar.navbar-scrolled .navbar-nav .nav-link.active:hover {
+    .navbar .nav-link.active,
+    .navbar .nav-link.active:hover {
         color: #b06c00;
     }
 
-    .navbar .navbar-nav .nav-link {
-        padding: 10px 0;
-    }
-
-    #navbar.navbar-scrolled .navbar-toggler-icon {
-        opacity: 1;
+    .navbar-scrolled .navbar-toggler-icon {
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
 
@@ -162,15 +149,15 @@ footer .footer_social a i:hover {
     color: #ffbe33;
 }
 
-footer .footer-logo a,
-footer .footer-logo a:hover {
+.footer-logo a,
+.footer-logo a:hover {
     font-size: 38px;
     font-weight: 600;
     font-family: "Satisfy", sans-serif;
     color: #ffffff;
 }
 
-footer .footer_social a {
+.footer_social a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -183,12 +170,16 @@ footer .footer_social a {
     font-size: 18px;
 }
 
-footer .contact_box a {
-    font-size: 13px;
-    padding: 2px 0 3px 0;
+.footer_menu_box li {
+    padding-bottom: 0.5rem;
 }
 
-footer .footer-info {
+.footer_contact_box li {
+    font-size: 13px;
+    padding-bottom: 0.5rem;
+}
+
+.footer-info {
     color: rgba(189, 189, 189, 0.6);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 12px;
