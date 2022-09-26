@@ -7,7 +7,7 @@
     </div>
     <nav id="navbar" class="navbar navbar-expand-lg navbar-transparent fixed-top px-lg-5">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">MedOK</a>
+            <a class="navbar-brand" href="{% url 'home' %}">MedOK</a>
             <div class="d-flex order-lg-2">
                 <div class="navbar-toolbar d-flex align-items-center">
                     <a class="like_link mx-3" href="#">
@@ -28,19 +28,19 @@
             <div class="collapse navbar-collapse order-lg-1 justify-content-center" id="navbar-collapse">
                 <ul class="navbar-nav mb-2 mb-lg-0 text-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Головна</a>
+                        <a class="nav-link" href="{% url 'home' %}">Головна</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Магазин</a>
+                        <a class="nav-link" href="{% url 'shop' %}">Магазин</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Блог</a>
+                        <a class="nav-link" href="{% url 'blog' %}">Блог</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Про нас</a>
+                        <a class="nav-link" href="{% url 'about' %}">Про нас</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Контакти</a>
+                        <a class="nav-link" href="{% url 'contacts' %}">Контакти</a>
                     </li>
                 </ul>
             </div>

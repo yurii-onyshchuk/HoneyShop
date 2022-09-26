@@ -1,4 +1,4 @@
-<footer>
+<footer class="mt-auto">
     <div class="container-fluid">
         <div class="footer-main row text-center">
             <div class="footer_about col-md py-3">
@@ -28,11 +28,11 @@
                 </div>
             </div>
             <div class="footer_menu col-md order-2 order-md-1 d-flex flex-column py-3">
-                <a class="py-1" href="#">Головна</a>
-                <a class="py-1" href="#">Магазин</a>
-                <a class="py-1" href="#">Блог</a>
-                <a class="py-1" href="#">Про&nbsp;нас</a>
-                <a class="py-1" href="#">Контакти</a>
+                <a class="py-1" href="{% url 'home' %}">Головна</a>
+                <a class="py-1" href="{% url 'shop' %}">Магазин</a>
+                <a class="py-1" href="{% url 'blog' %}">Блог</a>
+                <a class="py-1" href="{% url 'about' %}">Про&nbsp;нас</a>
+                <a class="py-1" href="{% url 'contacts' %}">Контакти</a>
             </div>
             <div class="footer_contact col-md order-1 order-md-2 py-3">
                 <h5>Наші контакти: </h5>
