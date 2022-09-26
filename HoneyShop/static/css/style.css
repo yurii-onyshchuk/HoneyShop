@@ -6,11 +6,15 @@ body {
     color: #444444;
 }
 
+a {
+    text-decoration: none;
+}
+
 /*--------------------------------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
 .topbar {
-    background: rgba(26, 24, 22, 0.8);
+    background-color: #222831;
     color: #ffffff;
     height: 30px;
     font-size: 12px;
@@ -18,7 +22,7 @@ body {
 }
 
 .topbar i {
-    color: #ffb03b;
+    color: #ffbe33;
     line-height: 0;
 }
 
@@ -29,6 +33,7 @@ body {
 }
 
 #topbar.topbar-scrolled {
+    transition: all 0.5s;
     top: -30px;
 }
 
@@ -38,10 +43,10 @@ body {
 .navbar {
     padding: 0;
     top: 30px;
-    transition: all 0.5s;
 }
 
 .navbar-transparent {
+    transition: all 0.5s;
     background: transparent;
 }
 
@@ -81,7 +86,7 @@ body {
 
 #navbar.navbar-scrolled {
     top: 0;
-    background: rgba(26, 24, 22, 0.85);
+    background-color: #222831;
 }
 
 #navbar.navbar-scrolled a {
@@ -90,7 +95,7 @@ body {
 
 #navbar.navbar-scrolled.navbar li a:hover,
 #navbar.navbar-scrolled.navbar .navbar-toolbar a:hover {
-    color: #ffc975;
+    color: #ffbe33;
 }
 
 #navbar.navbar-scrolled .navbar-nav .nav-link.active {
@@ -133,4 +138,53 @@ body {
         opacity: 1;
         background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
     }
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+footer {
+    background-color: #222831;
+    color: #ffffff;
+}
+
+footer a {
+    color: #ffffff;
+}
+
+footer a:hover,
+footer .footer_social a i:hover {
+    color: #ffbe33;
+}
+
+footer .footer-logo a,
+footer .footer-logo a:hover{
+    font-size: 38px;
+    font-weight: 600;
+    font-family: "Satisfy", sans-serif;
+    color: #ffffff;
+}
+
+footer .footer_social a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222831;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    margin: 0 3px;
+    font-size: 18px;
+}
+
+footer .contact_box a {
+    font-size: 13px;
+    padding: 2px 0 3px 0;
+}
+
+footer .footer-info {
+    color: rgba(189, 189, 189, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
 }
