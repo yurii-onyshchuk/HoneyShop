@@ -2,14 +2,31 @@
 # General
 --------------------------------------------------------------*/
 body {
+    background-image: url(../img/body_fon.jpg);
+    background-size: 280px;
     font-family: 'Montserrat', sans-serif;
     color: #000000;
+}
+
+.content-container {
+    padding-top: 85px;
 }
 
 a {
     color: #000000;
     font-style: normal;
     text-decoration: none;
+}
+
+a:hover {
+    color: #d78300;
+    transition: all 0.25s;
+}
+
+.btn-main {
+    font-size: small;
+    background-color: #ffd838;
+    border-color: #ffd838;
 }
 
 /*--------------------------------------------------------------
@@ -104,9 +121,9 @@ a {
 --------------------------------------------------------------*/
 @media (max-width: 991.98px) {
     .navbar-nav {
-        margin-top: 10px;
         border-radius: 7px;
         background: #ffffff;
+        border: solid 1px #ffd838;
     }
 
     .navbar .nav-item a {
@@ -183,4 +200,12 @@ footer .footer_social a i:hover {
     color: rgba(189, 189, 189, 0.6);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 12px;
+}
+
+/*--------------------------------------------------------------
+# Contacts page
+--------------------------------------------------------------*/
+
+.contact-page-info .form-label {
+    font-size: small;
 }

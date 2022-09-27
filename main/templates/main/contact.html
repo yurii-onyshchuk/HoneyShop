@@ -1,4 +1,73 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
+    <div class="container content-container">
+        <div class="row contact-page-title justify-content-center mt-3">
+            <div class="col text-center">
+                <h3>Контакти</h3>
+            </div>
+        </div>
+        <div class="contact-page-info row gx-md-5">
+            <div class="col contact-info-col mt-3 text-center order-md-1">
+                <div class="contact mb-3">
+                    <h6>Контактна інформація:</h6>
+                    <ul class="footer_contact_box ps-0 mb-0">
+                        <li class="list-group-item">
+                            <a href="tel:+380976011377">
+                                <i class="fa fa-phone pe-1" aria-hidden="true"></i>
+                                <span>+38 097 601 13 77</span></a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="mailto:yura.onyshchuk@gmail.com">
+                                <i class="fa fa-envelope pe-1" aria-hidden="true"></i>
+                                <span>yura.onyshchuk@gmail.com</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="schedule mb-3">
+                    <h6>Графік роботи:</h6>
+                    <ul class="footer_contact_box ps-0 mb-0">
+                        <li class="list-group-item">Понеділок - П'ятниця: 09:00 - 18:00</li>
+                        <li class="list-group-item">Субота - Неділя: вихідний</li>
+                    </ul>
+                </div>
+                <div class="address mb-3">
+                    <h6>Адреса магазину:</h6>
+                    <ul class="footer_contact_box ps-0 mb-0">
+                        <li class="list-group-item">
+                            <a href="https://www.google.com/maps/place/50%C2%B009'08.3%22N+26%C2%B049'30.2%22E/@50.1350663,26.8039408,13.5z/data=!4m5!3m4!1s0x0:0x565865a7af96e204!8m2!3d50.1522906!4d26.8250575"
+                               target="_blank">
+                                <i class="fa fa-map-marker pe-1" aria-hidden="true"></i>
+                                <span>Хмельницька&nbsp;обл., Ізяславський&nbsp;р&#8209;н.,<br>с.&nbsp;Путринці, пров.&nbsp;Шкільний,&nbsp;13</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 contact-form-col mt-3 order-md-0">
+                <h6 class="text-center mb-0">Форма зв'язку</h6>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Ваше ім'я</label>
+                    <input type='text' class="form-control" id="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email"
+                           placeholder="">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Повідомлення</label>
+                    <textarea class="form-control" id="message" rows="3"></textarea>
+                </div>
+                <button class="btn btn-warning btn-main float-end" type="submit">Надіслати</button>
+            </div>
+        </div>
+        <div class="row address-map-col mt-4">
+            <div class="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d40918.29926298169!2d26.8039408!3d50.1350663!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x565865a7af96e204!2zNTDCsDA5JzA4LjMiTiAyNsKwNDknMzAuMiJF!5e0!3m2!1suk!2sua!4v1664220920451!5m2!1suk!2sua"
+                        width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
 {% endblock %}
