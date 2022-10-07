@@ -241,3 +241,35 @@ footer .footer_social a i:hover {
 .contact-page-info .form-label {
     font-size: small;
 }
+
+/*--------------------------------------------------------------
+# Blog
+--------------------------------------------------------------*/
+.blog-sidebar ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+
+.blog-post-list .post-image {
+    border-radius: 0;
+}
+
+
+.blog-post-list .single-post .card {
+    border: none;
+    border-radius: 0;
+}
+
+.blog-post-list .single-post p.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.blog-post-list .single-post .post-info li {
+    display: inline-block;
+    list-style: none;
+}
