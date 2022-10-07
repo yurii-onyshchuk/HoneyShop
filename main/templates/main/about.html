@@ -2,121 +2,126 @@
 {% load static %}
 
 {% block content %}
-    <div class="container content-container">
-        <div class="row about-page-title justify-content-center my-3">
-            <div class="col text-center">
-                <h2>Про нас</h2>
+    <section class="content">
+        <div class="container">
+            <div class="row about-page-title justify-content-center mb-3">
+                <div class="col text-center">
+                    <h2>Про нас</h2>
+                </div>
             </div>
-        </div>
-        {% include 'main/inc/_lightbox_dialog.html' %}
-        <div class="about-page-info row">
-            <div class="about-info-col col-xl-4 pe-3">
-                <p>Магазин меду та продукції бджільництва "MedOK" створений на основі пасіки сім'ї Онищуків.
-                    Анатолій Петрович вже більше 40 років займається цією захоплюючою справою і бере на
-                    себе основну частину роботи. Голова бджолиного господарства має багатий досвід роботи на пасіці,
-                    власноруч виготовляє вулики, розводить рої, а також забезпечує належні умови для правильного
-                    медозбору. Я ж - Юрій являюся власником інтернет-магазину "MedOK".</p>
-                <p>Наша пасіка знаходиться в селі Путринці Шепетівського району Хмельницької області в екологічно
-                    чистій місцевості. Поруч знаходиться все, що необхідно для створення справжнього корисного меду:
-                    безкраї поля, квітучі фруктові сади, ліси, тиха річка Горинь та свіже повітря. На сьогоднішній день
-                    пасіка розрослася настільки, що у нас з'явилася можливість ділитися її дарами з Вами. Саме тому до
-                    мене прийшла ідея відкрити інтернет-магазин.</p>
-                <p>Головна наша особливість - це любов до своєї справи і до кожної бджоли, а не просто механізований
-                    процес добування продукції. Ми несемо відповідальність перед покупцями і пропонуємо 100%
-                    екологічно чисті, натуральні та якісні продукти бджільництва з нашої сімейної пасіки. Наш мед ніколи
-                    не перетоплюється, до його складу не додаються сиропи та інші сумнівні домішки. Він
-                    залишається в природньому стані і таким потрапляє до споживачів.</p>
-                <p>Ми маємо документи на пасіку та сертифікати, що підтверджують безпеку нашої продукції.</p>
-            </div>
-            <div class="gallery-col col-xl-8">
-                <div class="row">
-                    <div id="gallery-carousel" class="col carousel slide" data-bs-ride="true">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="{% static 'img/gallery/img1.jpg' %}" class="d-block w-100" alt="...">
+            {% include 'main/inc/_lightbox_dialog.html' %}
+            <div class="about-page-info row">
+                <div class="about-info-col col-xl-4 pe-3">
+                    <p>Магазин меду та продукції бджільництва "MedOK" створений на основі пасіки сім'ї Онищуків.
+                        Анатолій Петрович вже більше 40 років займається цією захоплюючою справою і бере на
+                        себе основну частину роботи. Голова бджолиного господарства має багатий досвід роботи на пасіці,
+                        власноруч виготовляє вулики, розводить рої, а також забезпечує належні умови для правильного
+                        медозбору. Я ж - Юрій являюся власником інтернет-магазину "MedOK".</p>
+                    <p>Наша пасіка знаходиться в селі Путринці Шепетівського району Хмельницької області в екологічно
+                        чистій місцевості. Поруч знаходиться все, що необхідно для створення справжнього корисного меду:
+                        безкраї поля, квітучі фруктові сади, ліси, тиха річка Горинь та свіже повітря. На сьогоднішній
+                        день
+                        пасіка розрослася настільки, що у нас з'явилася можливість ділитися її дарами з Вами. Саме тому
+                        до
+                        мене прийшла ідея відкрити інтернет-магазин.</p>
+                    <p>Головна наша особливість - це любов до своєї справи і до кожної бджоли, а не просто механізований
+                        процес добування продукції. Ми несемо відповідальність перед покупцями і пропонуємо 100%
+                        екологічно чисті, натуральні та якісні продукти бджільництва з нашої сімейної пасіки. Наш мед
+                        ніколи
+                        не перетоплюється, до його складу не додаються сиропи та інші сумнівні домішки. Він
+                        залишається в природньому стані і таким потрапляє до споживачів.</p>
+                    <p>Ми маємо документи на пасіку та сертифікати, що підтверджують безпеку нашої продукції.</p>
+                </div>
+                <div class="gallery-col col-xl-8">
+                    <div class="row">
+                        <div id="gallery-carousel" class="col carousel slide" data-bs-ride="true">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="{% static 'img/gallery/img1.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img2.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img3.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img4.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img5.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img6.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img7.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img8.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="{% static 'img/gallery/img9.jpg' %}" class="d-block w-100" alt="...">
+                                </div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img2.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img3.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img4.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img5.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img6.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img7.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img8.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{% static 'img/gallery/img9.jpg' %}" class="d-block w-100" alt="...">
-                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#gallery-carousel"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#gallery-carousel"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#gallery-carousel"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#gallery-carousel"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
-                </div>
-                <div id="lightbox-links" class="gallery-thumbnail row g-2 py-3">
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img2.jpg' %}" title="Анатолій Петрович">
-                            <img src="{% static 'img/gallery/img2.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img3.jpg' %}" title="Доця-помічниця">
-                            <img src="{% static 'img/gallery/img3.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img4.jpg' %}" title="Роїння">
-                            <img src="{% static 'img/gallery/img4.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img5.jpg' %}" title="Медозбір">
-                            <img src="{% static 'img/gallery/img5.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img6.jpg' %}" title="Поселення роя">
-                            <img src="{% static 'img/gallery/img6.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
+                    <div id="lightbox-links" class="gallery-thumbnail row g-2 py-3">
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img2.jpg' %}" title="Анатолій Петрович">
+                                <img src="{% static 'img/gallery/img2.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img3.jpg' %}" title="Доця-помічниця">
+                                <img src="{% static 'img/gallery/img3.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img4.jpg' %}" title="Роїння">
+                                <img src="{% static 'img/gallery/img4.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img5.jpg' %}" title="Медозбір">
+                                <img src="{% static 'img/gallery/img5.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img6.jpg' %}" title="Поселення роя">
+                                <img src="{% static 'img/gallery/img6.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
 
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img7.jpg' %}" title="Один з вуликів">
-                            <img src="{% static 'img/gallery/img7.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img7.jpg' %}" title="Один з вуликів">
+                                <img src="{% static 'img/gallery/img7.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
 
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img8.jpg' %}" title="Трудівниці на водопої">
-                            <img src="{% static 'img/gallery/img8.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
-                    </div>
-                    <div class="lightbox-item col-6 col-xl-3">
-                        <a href="{% static 'img/gallery/img9.jpg' %}" title="Збір травненого пилку">
-                            <img src="{% static 'img/gallery/img9.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
-                        </a>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img8.jpg' %}" title="Трудівниці на водопої">
+                                <img src="{% static 'img/gallery/img8.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
+                        <div class="lightbox-item col-6 col-xl-3">
+                            <a href="{% static 'img/gallery/img9.jpg' %}" title="Збір травненого пилку">
+                                <img src="{% static 'img/gallery/img9.jpg' %}" class="img-fluid img-thumbnail" alt=""/>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

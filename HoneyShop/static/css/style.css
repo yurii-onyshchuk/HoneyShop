@@ -23,8 +23,9 @@ h5 {
     font-weight: 600;
 }
 
-.content-container {
-    padding-top: 85px;
+.content {
+    margin-top: 85px;
+    padding-top: 15px;
 }
 
 a {
