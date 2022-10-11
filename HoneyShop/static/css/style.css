@@ -245,20 +245,23 @@ footer .footer_social a i:hover {
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
+/*Sidebar*/
 .blog-sidebar ul {
-    padding-left: 0;
     list-style: none;
+    text-align: left;
 }
 
-
+/*Post list*/
 .blog-post-list .post-image {
     border-radius: 0;
 }
 
-
-.blog-post-list .single-post .card {
+.blog-post-list .single-post .card,
+.blog-sidebar .category.card,
+.blog-sidebar .popular-post.card {
     border: none;
     border-radius: 0;
+    box-shadow: 0 0 20px rgb(0 0 0 / 10%);
 }
 
 .blog-post-list .single-post p.card-text {
@@ -271,5 +274,38 @@ footer .footer_social a i:hover {
 
 .blog-post-list .single-post .post-info li {
     display: inline-block;
-    list-style: none;
 }
+
+/*Post pagination*/
+.blog-post-pagination .nav-links .page-numbers {
+    border: 1px solid #ffd838;
+    border-radius: 50%;
+    color: #000000;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    height: 35px;
+    line-height: 35px;
+    list-style: outside none none;
+    margin-right: 5px;
+    text-align: center;
+    width: 35px;
+}
+
+
+.blog-post-pagination .nav-links .page-numbers.current {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.blog-post-pagination .nav-links .page-numbers:hover {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.blog-post-pagination .nav-links a {
+    text-decoration: none;
+}
+

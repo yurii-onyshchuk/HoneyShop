@@ -5,42 +5,24 @@
     <section class="content">
         <div class="container-md">
             <div class="row">
-                <div class="col">
-                    <div class="search col-12 col-md-5 col-lg-4 col-xxl-3 mb-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Пошук"
-                                   aria-label="Search">
-                            <button class="btn btn-warning btn-main" type="submit">Знайти</button>
-                        </form>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-md-5 col-lg-4 col-xxl-3 mb-3">
+                            <div class="search">
+                                <form class="d-flex" role="search">
+                                    <input class="form-control me-2" type="search" placeholder="Пошук"
+                                           aria-label="Search">
+                                    <button class="btn btn-warning btn-main" type="submit">Знайти</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="blog-sidebar col-12 col-md-5 col-lg-3 col-xxl-3">
-                    <div class="category">
-                        <h4>Категорії</h4>
-                        <ul class="text-start">
-                            <li>Новини</li>
-                            <li>Продукти бджільництва</li>
-                            <li>Корисне для пасічників</li>
-                            <li>Здоров'я та краса</li>
-                        </ul>
-                    </div>
-                    <div class="popular-post">
-                        <h4>Популярні</h4>
-                        <ul>
-                            <li>1</li>
-                            <li>2</li>
-                            <li>3</li>
-                            <li>4</li>
-                            <li>5</li>
-                        </ul>
-                    </div>
+                <div class="col-12 col-md-5 col-lg-3 col-xxl-3 order-1 order-md-0">
+                    {% include 'blog/inc/_sidebar.html' %}
                 </div>
-                <div class="blog-post-list col">
-                    <div class="row gy-5">
-                        {% include 'blog/inc/_single_post.html' %}
-                    </div>
+                <div class="col order-0 order-md-1">
+                    {% include 'blog/inc/_post_list.html' %}
                     {% include 'blog/inc/_pagination.html' %}
                 </div>
             </div>
