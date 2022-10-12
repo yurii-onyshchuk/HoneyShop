@@ -1,6 +1,9 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
 class Blog(TemplateView):
-    template_name = 'blog/blog_main_page.html'
+    template_name = 'blog/post_list.html'
+
+
+class SinglePost(TemplateView):
+    template_name = 'blog/post_detail.html'

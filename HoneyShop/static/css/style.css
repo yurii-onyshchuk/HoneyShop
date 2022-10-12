@@ -272,7 +272,8 @@ footer .footer_social a i:hover {
     text-overflow: ellipsis;
 }
 
-.blog-post-list .single-post .post-info li {
+.blog-post-list .single-post .post-info li,
+.blog-post-detail .post-info li {
     display: inline-block;
 }
 
@@ -309,3 +310,6 @@ footer .footer_social a i:hover {
     text-decoration: none;
 }
 
+.blog-post-detail {
+    background-color: white;
+}
