@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %} {{title}} :: {{ block.super }} {% endblock %}
+
 {% block content %}
     <section class="content">
         <div class="container">
@@ -76,7 +78,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="lightbox-links" class="gallery-thumbnail row g-2 py-3">
+                    <div id="lightbox-links" class="gallery-thumbnail row g-2 pt-3">
                         <div class="lightbox-item col-6 col-xl-3">
                             <a href="{% static 'img/gallery/img2.jpg' %}" title="Анатолій Петрович">
                                 <img src="{% static 'img/gallery/img2.jpg' %}" class="img-fluid img-thumbnail" alt=""/>

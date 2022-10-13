@@ -1,13 +1,29 @@
-<div class="blog-post-pagination">
-    <div class="row py-3">
-        <div class="col text-center">
-            <div class="nav-links">
-                <a class="page-numbers" href="?page=1">&lt;</a>
-                <a class="page-numbers" href="?page=1">1</a>
-                <span class="page-numbers current">2</span>
-                <a class="page-numbers" href="?page=3">3</a>
-                <a class="page-numbers" href="?page=3">&gt;</a>
+{% if page_obj.has_other_pages %}
+    <div class="blog-post-pagination">
+        <div class="row pb-3">
+            <div class="col text-center">
+                <div class="nav-links">
+                    {% if page_obj.has_previous %}
+                        <a class="page-numbers" href="?{{ s }}page={{ page_obj.previous_page_number }}">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+
+                    {% for p in page_obj.paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <span class="page-numbers current">{{ p }}</span>
+                        {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                            <a class="page-numbers" href="?{{ s }}page={{ p }}">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a class="page-numbers" href="?{{ s }}page={{ page_obj.next_page_number }}">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endif %}

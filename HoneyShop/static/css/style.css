@@ -26,6 +26,7 @@ h5 {
 .content {
     margin-top: 85px;
     padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 a {
@@ -140,7 +141,7 @@ p {
 # Nav Bar Mobile
 --------------------------------------------------------------*/
 @media (max-width: 767px) {
-    .navbar-nav {
+    .navbar .navbar-nav {
         border-radius: 7px;
         background: #ffffff;
         border: solid 1px #ffd838;
@@ -170,6 +171,106 @@ p {
         padding-top: 85px;
         background: #ffd838;
     }
+}
+
+/*--------------------------------------------------------------
+# Blog
+--------------------------------------------------------------*/
+.blog .card {
+    border: none;
+    border-radius: 0;
+}
+
+.blog .post-info li {
+    display: inline-block;
+    color: #7c7c7c;
+    font-size: 14px;
+}
+
+/*Sidebar*/
+.blog-sidebar ul {
+    list-style: none;
+    text-align: left;
+}
+
+.blog-sidebar .nav-link:hover,
+.blog-sidebar .nav-link.active,
+.blog-sidebar .nav-link.active:hover {
+    color: #d78300;
+}
+
+.blog-sidebar .nav-link.active,
+.blog-sidebar .nav-link.active:hover {
+    font-weight: 500;
+}
+
+.blog-sidebar .categories .nav-link:hover,
+.blog-sidebar .categories .nav-link.active,
+.blog-sidebar .categories .nav-link.active:hover {
+    background-color: #f3f3f3;
+}
+
+.blog-sidebar .post-info li {
+    font-size: 13px;
+}
+
+/*Single post*/
+.single-post .card-img {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.single-post .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-detail {
+    background-color: white;
+}
+
+/*Post pagination*/
+.blog-post-pagination .nav-links .page-numbers {
+    border: 1px solid #ffd838;
+    border-radius: 50%;
+    color: #000000;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    height: 35px;
+    line-height: 35px;
+    list-style: outside none none;
+    margin-right: 5px;
+    text-align: center;
+    width: 35px;
+}
+
+.blog-post-pagination .nav-links .page-numbers.current {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.blog-post-pagination .nav-links .page-numbers:hover {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.blog-post-pagination .nav-links a {
+    text-decoration: none;
+}
+
+/*--------------------------------------------------------------
+# Contacts page
+--------------------------------------------------------------*/
+.contact-page-info .form-label {
+    font-size: small;
 }
 
 /*--------------------------------------------------------------
@@ -233,83 +334,4 @@ footer .footer_social a i:hover {
     font-size: 12px;
     color: rgba(189, 189, 189, 0.6);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/*--------------------------------------------------------------
-# Contacts page
---------------------------------------------------------------*/
-.contact-page-info .form-label {
-    font-size: small;
-}
-
-/*--------------------------------------------------------------
-# Blog
---------------------------------------------------------------*/
-/*Sidebar*/
-.blog-sidebar ul {
-    list-style: none;
-    text-align: left;
-}
-
-/*Post list*/
-.blog-post-list .post-image {
-    border-radius: 0;
-}
-
-.blog-post-list .single-post .card,
-.blog-sidebar .category.card,
-.blog-sidebar .popular-post.card {
-    border: none;
-    border-radius: 0;
-    box-shadow: 0 0 20px rgb(0 0 0 / 10%);
-}
-
-.blog-post-list .single-post p.card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.blog-post-list .single-post .post-info li,
-.blog-post-detail .post-info li {
-    display: inline-block;
-}
-
-/*Post pagination*/
-.blog-post-pagination .nav-links .page-numbers {
-    border: 1px solid #ffd838;
-    border-radius: 50%;
-    color: #000000;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    height: 35px;
-    line-height: 35px;
-    list-style: outside none none;
-    margin-right: 5px;
-    text-align: center;
-    width: 35px;
-}
-
-
-.blog-post-pagination .nav-links .page-numbers.current {
-    background: #ffd838;
-    color: #000000;
-    font-weight: 600;
-}
-
-.blog-post-pagination .nav-links .page-numbers:hover {
-    background: #ffd838;
-    color: #000000;
-    font-weight: 600;
-}
-
-.blog-post-pagination .nav-links a {
-    text-decoration: none;
-}
-
-.blog-post-detail {
-    background-color: white;
 }
