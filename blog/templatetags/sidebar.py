@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.inclusion_tag('blog/categories_tpl.html')
 def show_category():
-    categories = Category.objects.filter(posts__isnull=False)
+    categories = Category.objects.all()
     return {'categories': categories}
 
 
