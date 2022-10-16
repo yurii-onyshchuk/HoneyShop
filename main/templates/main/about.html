@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} {{title}} :: {{ block.super }} {% endblock %}
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
 
 {% block content %}
     <section class="content">
@@ -11,7 +11,6 @@
                     <h2>Про нас</h2>
                 </div>
             </div>
-            {% include 'main/inc/_lightbox_dialog.html' %}
             <div class="about-page-info row">
                 <div class="about-info-col col-xl-4 pe-3">
                     <p>Магазин меду та продукції бджільництва "MedOK" створений на основі пасіки сім'ї Онищуків.
@@ -78,6 +77,7 @@
                             </button>
                         </div>
                     </div>
+                    {% include 'main/inc/_lightbox_dialog.html' %}
                     <div id="lightbox-links" class="gallery-thumbnail row g-2 pt-3">
                         <div class="lightbox-item col-6 col-xl-3">
                             <a href="{% static 'img/gallery/img2.jpg' %}" title="Анатолій Петрович">
