@@ -222,17 +222,13 @@ p {
     object-fit: cover;
 }
 
-.single-post .card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.post-detail {
-    background-color: white;
-}
+/*.single-post .card-text {*/
+/*    display: -webkit-box;*/
+/*    -webkit-line-clamp: 4;*/
+/*    -webkit-box-orient: vertical;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*}*/
 
 /*Post pagination*/
 .blog-post-pagination .nav-links .page-numbers {

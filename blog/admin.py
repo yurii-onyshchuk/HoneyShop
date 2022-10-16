@@ -1,10 +1,16 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from .models import *
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
+class PostAdminForm(forms.ModelForm):
+    content = forms.CharField(label='Вміст', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Post
+        fields = '__all__'
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -16,6 +22,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     fields = ('title', 'slug', 'category', 'content', 'photo', 'get_photo', 'views', 'created_at',)
     readonly_fields = ('created_at', 'views', 'get_photo',)
+    form = PostAdminForm
 
     def get_photo(self, obj):
         if obj.photo:
@@ -25,5 +32,9 @@ class PostAdmin(admin.ModelAdmin):
     get_photo.short_description = 'Мініатюра'
 
 
-admin.site.register(Category, CategoryAdmin)
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
+
 admin.site.register(Post, PostAdmin)
+admin.site.register(Category, CategoryAdmin)

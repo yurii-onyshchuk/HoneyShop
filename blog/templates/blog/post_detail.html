@@ -20,6 +20,6 @@
                 <img src="{{ post.photo.url }}" class="post-image card-img-top mb-3" alt="...">
             </a>
         </div>
-        <p>{{ post.content }}</p>
+        <div class="post-content">{{ post.content|safe }}</div>
     </div>
 {% endblock %}
