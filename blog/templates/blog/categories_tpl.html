@@ -4,7 +4,7 @@
             <h5 class="card-title text-center">Категорії</h5>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link ps-2" href="{% url 'blog' %}">Всі статті</a>
+                    <a class="nav-link ps-2" href="{% url 'blog:blog' %}">Всі статті</a>
                 </li>
                 {% for category in categories %}
                     <li class="nav-item">

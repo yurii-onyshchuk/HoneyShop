@@ -10,11 +10,11 @@ class Category(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'slug': self.slug})
+        return reverse('blog:category', kwargs={'slug': self.slug})
 
     class Meta:
-        verbose_name = 'Категорія'
-        verbose_name_plural = 'Категорії'
+        verbose_name = 'Категорія статті'
+        verbose_name_plural = 'Категорії статтей'
         ordering = ['title']
 
 
@@ -31,7 +31,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'slug': self.slug})
+        return reverse('blog:post', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Стаття(ю)'
