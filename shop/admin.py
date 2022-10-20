@@ -1,6 +1,16 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from .models import Category, Product, Comment
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+class ProductAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Вміст', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Product
+        fields = '__all__'
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -10,8 +20,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title',)
     list_filter = ('category', 'available',)
     search_fields = ('title',)
-    fields = ('title', 'slug', 'price', 'available', 'category', 'description', 'photo', 'get_photo', 'sales', 'views', 'created_at',)
+    fields = ('title', 'slug', 'price', 'available', 'category', 'description', 'photo', 'get_photo', 'sales', 'views',
+              'created_at',)
     readonly_fields = ('created_at', 'views', 'sales', 'get_photo',)
+    form = ProductAdminForm
 
     def get_photo(self, obj):
         if obj.photo:
