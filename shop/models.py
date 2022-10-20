@@ -23,7 +23,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name='Категорія')
     title = models.CharField(max_length=250, verbose_name='Назва')
     slug = models.SlugField(max_length=250, verbose_name='URL', unique=True)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name='Фото')
+    photo = models.ImageField(upload_to='photos/shop/%Y/%m', blank=True, verbose_name='Фото')
     description = models.TextField(blank=True, verbose_name='Опис')
     price = models.DecimalField(verbose_name='Ціна', max_digits=7, decimal_places=0)
     available = models.DecimalField(default=0, verbose_name='Доступно', max_digits=7, decimal_places=2)

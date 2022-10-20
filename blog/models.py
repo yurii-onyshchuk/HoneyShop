@@ -24,7 +24,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='posts', verbose_name='Категорія')
     content = models.TextField(blank=True, verbose_name='Вміст')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публікації')
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d', blank=True, verbose_name='Фото')
+    photo = models.ImageField(upload_to='photos/blog/%Y/%m', blank=True, verbose_name='Фото')
     views = models.IntegerField(default=0, verbose_name='Перегляди')
 
     def __str__(self):
