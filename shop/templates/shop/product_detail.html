@@ -1,0 +1,29 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+
+{% block shop_content %}
+    <div class="product-detail">
+        <div class="row">
+            <div class="col-5">
+                {% if product.photo %}
+                    <a href="{{ product.photo.url }}"><img src="{{ product.photo.url }}" class="card-img-top" alt="..."></a>
+                {% else %}
+                    <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
+                {% endif %}
+            </div>
+            <div class="col">
+                <p>В наявності</p>
+                <h5 class="price mt-2">{{ product.price }} грн.</h5>
+                <div>
+                    <a class="btn btn-warning btn-main mt-2" href="#">В корзину
+                        <i class="fa-solid fa-basket-shopping ps-1"></i>
+                    </a>
+                    <a class="btn btn-warning btn-main mt-2" href="#">
+                        <i class="fa-solid fa-heart ps-1"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

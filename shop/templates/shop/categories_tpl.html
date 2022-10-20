@@ -1,0 +1,14 @@
+<div class="categories mb-3">
+    <div class="card shadow">
+        <div class="card-body">
+            <h5 class="card-title text-center">Категорії</h5>
+            <ul class="navbar-nav">
+                {% for category in categories %}
+                    <li class="nav-item">
+                        <a class="nav-link ps-2" href="{{ category.get_absolute_url }}">{{ category }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

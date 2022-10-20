@@ -1,0 +1,12 @@
+{% load shop_sidebar %}
+
+<div class="col-12">
+    <h2>{{ top_title }}</h2>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-sm-6 col-lg-4">
+                {% include 'shop/inc/_single_product_card.html' %}
+            </div>
+        {% endfor %}
+    </div>
+</div>

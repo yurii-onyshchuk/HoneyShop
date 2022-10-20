@@ -1,0 +1,31 @@
+{% load static %}
+
+<div class="single-product mb-4">
+    <div class="card">
+        <a href="{{ product.get_absolute_url }}">
+            {% if product.photo %}
+                <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
+            {% else %}
+                <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
+            {% endif %}
+        </a>
+        <div class="card-body">
+            <a href="{{ product.get_absolute_url }}"><h5 class="card-title">{{ product.title }}</h5></a>
+            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки(10)</a>
+            <h5 class="price mt-2">{{ product.price }} грн.</h5>
+            {% if product.available %}
+                <p>В наявності</p>
+            {% else %}
+                <p>Немає в наявності</p>
+            {% endif %}
+            <div class="text-center">
+                <a class="btn btn-warning btn-main mt-2" href="#">
+                    <i class="fa-solid fa-heart ps-1"></i>
+                </a>
+                <a class="btn btn-warning btn-main mt-2" href="#">В корзину
+                    <i class="fa-solid fa-basket-shopping ps-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

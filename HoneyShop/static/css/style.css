@@ -40,7 +40,8 @@ a:hover {
     transition: all 0.25s;
 }
 
-p {
+.post-content p,
+.about-info p {
     text-indent: 2.5rem;
 }
 
@@ -188,29 +189,29 @@ p {
 }
 
 /*Sidebar*/
-.blog-sidebar ul {
+.sidebar ul {
     list-style: none;
     text-align: left;
 }
 
-.blog-sidebar .nav-link:hover,
-.blog-sidebar .nav-link.active,
-.blog-sidebar .nav-link.active:hover {
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active,
+.sidebar .nav-link.active:hover {
     color: #d78300;
 }
 
-.blog-sidebar .nav-link.active,
-.blog-sidebar .nav-link.active:hover {
+.sidebar .nav-link.active,
+.sidebar .nav-link.active:hover {
     font-weight: 500;
 }
 
-.blog-sidebar .categories .nav-link:hover,
-.blog-sidebar .categories .nav-link.active,
-.blog-sidebar .categories .nav-link.active:hover {
+.sidebar .categories .nav-link:hover,
+.sidebar .categories .nav-link.active,
+.sidebar .categories .nav-link.active:hover {
     background-color: #f3f3f3;
 }
 
-.blog-sidebar .post-info li {
+sidebar .post-info li {
     font-size: 13px;
 }
 

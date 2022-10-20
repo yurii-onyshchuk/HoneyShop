@@ -1,0 +1,12 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+{% load products %}
+
+{% block shop_content %}
+    <div class="shop-proposition">
+        <div class="row gy-5">
+            {% get_top_products 'Топ продаж' 'sales' 6 %}
+            {% get_top_products 'Гарячі новинки' '-created_at' 6 %}
+        </div>
+    </div>
+{% endblock %}

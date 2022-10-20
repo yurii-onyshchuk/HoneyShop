@@ -10,9 +10,13 @@
                         <div class="card shadow">
                             <div class="row">
                                 <div class="col">
-                                    <a href="{{ post.photo.url }}">
-                                        <img src="{{ post.photo.url }}" class="card-img" alt="...">
-                                    </a>
+                                    {% if post.photo %}
+                                        <a href="{{ post.photo.url }}">
+                                            <img src="{{ post.photo.url }}" class="card-img" alt="...">
+                                        </a>
+                                    {% else %}
+                                        <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
+                                    {% endif %}
                                 </div>
                                 <div class="col-lg-5 col-xl-7">
                                     <div class="card-body">
@@ -42,9 +46,9 @@
                     </div>
                 </div>
             {% empty %}
-                    <h5 class="text-center ps-0 mb-5">За даним запитом нічного не знайдено...</h5>
+                <h5 class="text-center ps-0 mb-5">За даним запитом нічного не знайдено...</h5>
             {% endfor %}
         </div>
     </div>
-    {% include 'blog/inc/_pagination.html' %}
+    {% include 'inc/_pagination.html' %}
 {% endblock %}
