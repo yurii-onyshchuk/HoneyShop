@@ -13,7 +13,7 @@ class Shop(ListView):
 class ProductsByCategory(ListView):
     template_name = 'shop/product_list.html'
     context_object_name = 'products'
-    paginate_by = 3
+    paginate_by = 9
     allow_empty = False
 
     def get_queryset(self):

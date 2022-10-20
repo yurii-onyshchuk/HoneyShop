@@ -11,13 +11,15 @@
         </a>
         <div class="card-body">
             <a href="{{ product.get_absolute_url }}"><h5 class="card-title">{{ product.title }}</h5></a>
-            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки(10)</a>
+            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки({{ product.comments.count }})</a>
             <h5 class="price mt-2">{{ product.price }} грн.</h5>
-            {% if product.available %}
-                <p>В наявності</p>
-            {% else %}
-                <p>Немає в наявності</p>
-            {% endif %}
+                <div class="mb-3">
+                    {% if product.available %}
+                        <span class="available"><i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності</span>
+                    {% else %}
+                        <span class="not-available">Немає в наявності</span>
+                    {% endif %}
+                </div>
             <div class="text-center">
                 <a class="btn btn-warning btn-main mt-2" href="#">
                     <i class="fa-solid fa-heart ps-1"></i>

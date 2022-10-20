@@ -4,7 +4,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
     color: #000000;
-    text-align: justify;
     background-image: url(../img/body_fon.jpg);
     background-size: 280px;
 
@@ -42,6 +41,7 @@ a:hover {
 
 .post-content p,
 .about-info p {
+    text-align: justify;
     text-indent: 2.5rem;
 }
 
@@ -175,6 +175,37 @@ a:hover {
 }
 
 /*--------------------------------------------------------------
+# Shop
+--------------------------------------------------------------*/
+.product-description {
+    text-align: justify;
+}
+
+.shop .available {
+    background-color: #f4faf6;
+    color: #00a046;
+}
+
+.shop .not-available {
+    background-color: #faf4f4;
+    color: #c50000;
+}
+
+.product-detail .nav-link {
+    color: #000;
+}
+.product-detail .nav-link:hover,
+.product-detail .nav-link.active,
+.product-detail .nav-link.active:hover {
+    color: #d78300;
+}
+
+.product-detail .nav-link.active,
+.product-detail .nav-link.active:hover {
+    font-weight: 600;
+}
+
+/*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
 .blog .card {
@@ -211,7 +242,7 @@ a:hover {
     background-color: #f3f3f3;
 }
 
-sidebar .post-info li {
+.sidebar .post-info li {
     font-size: 13px;
 }
 
