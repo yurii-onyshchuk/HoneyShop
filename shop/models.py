@@ -42,7 +42,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товари'
 
 
-class Comment(models.Model):
+class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments', verbose_name='Товар')
     user = models.ForeignKey(User, on_delete=models.SET('Видалений користувач'), related_name='comments',
                              verbose_name='Користувач')

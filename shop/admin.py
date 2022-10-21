@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Category, Product, Comment
+from .models import Category, Product, Review
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
@@ -37,7 +37,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
-class CommentAdmin(admin.ModelAdmin):
+class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'product', 'body', 'created_at', 'user')
     list_display_links = ('id',)
     list_filter = ('product', 'user')
@@ -48,4 +48,4 @@ class CommentAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Comment, CommentAdmin)
+admin.site.register(Review, ReviewAdmin)
