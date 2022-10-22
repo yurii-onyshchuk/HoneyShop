@@ -1,0 +1,60 @@
+{% load static %}
+<div class="row mt-3">
+    <div class="col">
+        <div class="pb-3 border-bottom">
+            {% if user.is_authenticated %}
+                <button class="btn btn-warning btn-main" data-bs-toggle="modal" data-bs-target="#add-review">Залишити
+                    відгук
+                </button>
+                {% include 'shop/inc/_modal_add_review.html' %}
+            {% else %}
+                <p>Авторизуйтеся, щоб залишити відгук</p>
+                <button class="btn btn-warning btn-main">Авторизуватися</button>
+            {% endif %}
+        </div>
+        <ul class="review_list ps-0">
+            {% for review in product.reviews.all %}
+                {% if review.is_parent %}
+                    <li class="review-item list-unstyled py-3 border-bottom">
+                        <div class="user-photo">
+                            {% if user.photo %}
+                                <img src="{{ user.photo.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'img/favicon.ico' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="body">
+                            <h5>{{ review.user }}</h5>
+                            <p class="data-time mb-1"><i class="fa fa-calendar-alt me-2"></i>{{ review.created_at }}</p>
+                            <p class="mb-0">{{ review.body }}</p>
+                            {% if user.is_authenticated %}
+                                <button type="button" class="btn btn-link btn-link-mod btn-sm ps-0"
+                                        data-bs-toggle="modal" data-bs-target="#add-replay_{{ review.pk }}">
+                                    <i class="fa fa-reply me-2" aria-hidden="true"></i>Відповісти
+                                </button>
+                                {% include 'shop/inc/_modal_add_replay.html' %}
+                            {% endif %}
+                        </div>
+                        <ul class="reply-list">
+                            {% for replies in review.children %}
+                                <li class="reply-item list-unstyled mt-3">
+                                    <div class="user-photo">
+                                        <img src="{% static 'img/favicon.ico' %}" alt="">
+                                    </div>
+                                    <div class="body">
+                                        <h6>{{ replies.user }}</h6>
+                                        <p class="data-time mb-1"><i
+                                                class="fa fa-calendar-alt me-2"></i>{{ replies.created_at }}</p>
+                                        <p class="mb-0">{{ replies.body }}</p>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% empty %}
+                <div class="py-3 border-bottom">Немає відгуків про даний товар</div>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

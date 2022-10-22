@@ -50,6 +50,18 @@ a:hover {
     border-color: #ffd838;
 }
 
+.btn-link-mod {
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
+    --bs-btn-focus-shadow-rgb: none;
+}
+
+.btn-link-mod:hover,
+.btn-link-mod:focus {
+    color: #d78300;
+}
+
 /*--------------------------------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
@@ -181,6 +193,10 @@ a:hover {
     text-align: justify;
 }
 
+.shop .single-product .card:hover {
+    box-shadow: 3px 5px 10px 5px #e0e0e0;
+}
+
 .shop .available {
     background-color: #f4faf6;
     color: #00a046;
@@ -194,6 +210,7 @@ a:hover {
 .product-detail .nav-link {
     color: #000;
 }
+
 .product-detail .nav-link:hover,
 .product-detail .nav-link.active,
 .product-detail .nav-link.active:hover {
@@ -205,9 +222,29 @@ a:hover {
     font-weight: 600;
 }
 
+.review-item .user-photo img {
+    border-radius: 50%;
+    float: left;
+    width: 60px;
+}
+
+.review-item .body {
+    margin-left: 70px;
+}
+
+.review-item p.data-time {
+    color: #7c7c7c;
+    font-size: 14px;
+}
+
+.reply-list {
+    margin-left: 40px;
+}
+
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
+.sidebar .card,
 .blog .card {
     border: none;
     border-radius: 0;

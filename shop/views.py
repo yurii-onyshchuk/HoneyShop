@@ -1,6 +1,11 @@
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from django.db.models import F
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormMixin
+
 from .models import Product, Category
+from .forms import ReviewForm
 
 
 class Shop(ListView):
@@ -25,18 +30,33 @@ class ProductsByCategory(ListView):
         return context
 
 
-class DetailProduct(DetailView):
+class DetailProduct(FormMixin, DetailView):
     model = Product
     template_name = 'shop/product_detail.html'
     context_object_name = 'product'
+    form_class = ReviewForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data()
-        context['title'] = Product.objects.get(slug=self.kwargs['slug'])
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.object.title
         self.object.views = F('views') + 1
         self.object.save()
         self.object.refresh_from_db()
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        product = self.get_object()
+        if form.is_valid():
+            if request.POST.get('parent', None):
+                form.instance.parent_id = int(request.POST.get('parent'))
+            form.instance.product = product
+            form.instance.user = self.request.user
+            form.save()
+        return redirect(product.get_absolute_url())
+
+    def get_success_url(self):
+        return reverse_lazy('shop:product', kwargs={'slug': self.kwargs['slug']})
 
 
 class Search(ListView):

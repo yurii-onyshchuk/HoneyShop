@@ -1,0 +1,22 @@
+<div class="modal fade" id="add-replay_{{ review.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Надіслати відповідь для {{ review.user }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <input type="hidden" name="parent" value="{{ review.pk }}">
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <input class="btn btn-light" type="reset" data-bs-dismiss="modal" value="Скасувати"/>
+                    <input class="btn btn-warning btn-main" type="submit" value="Відповісти"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

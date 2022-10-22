@@ -14,7 +14,9 @@
             <div class="col-md-7 mt-xl-4">
                 <div class="mb-3">
                     {% if product.available %}
-                        <span class="available"><i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності</span>
+                        <span class="available">
+                            <i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності
+                        </span>
                     {% else %}
                         <span class="not-available">Немає в наявності</span>
                     {% endif %}
@@ -29,58 +31,26 @@
                     </a>
                 </div>
             </div>
-            <div class="product-description col-12">
+            <div class="product-description col-12 mt-3">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#description">Опис</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#reviews">Відгуки
-                            ({{ product.comments.count }})</a>
+                            ({{ product.get_reviews_count }})</a>
                     </li>
                 </ul>
-                <div class="tab-content mb-3">
+                <div class="tab-content">
                     <div class="tab-pane container active" id="description">
                         {% if product.description %}
                             <div class="mt-3">{{ product.description|safe }}</div>
                         {% else %}
-                            <div class="mt-3">На даний товар опис відсутній</div>
+                            <div class="py-3 mb-3 border-bottom">Опис даного товару відсутній</div>
                         {% endif %}
                     </div>
                     <div class="tab-pane container fade" id="reviews">
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                {% for comment in product.comments.all %}
-                                    <h6>{{ comment.user }}</h6>
-                                    <span>{{ comment.created_at }}</span>
-                                    <p>{{ comment.body }}</p>
-                                    <hr>
-                                {% empty %}
-                                    <div>Немає відгуків про цей товар</div>
-                                {% endfor %}
-                            </div>
-                            <div class="col-lg-6 mt-3 mt-lg-0">
-                                <h5 class="text-center">Написати відгук</h5>
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Ваше ім'я</label>
-                                        <input type='text' class="form-control" id="name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">E-mail</label>
-                                        <input type="email" class="form-control" id="email"
-                                               placeholder="">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="message" class="form-label">Відгук</label>
-                                        <textarea class="form-control" id="message" rows="3"></textarea>
-                                    </div>
-                                    <button class="btn btn-sm btn-warning btn-main float-end" type="submit">
-                                        Надіслати
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
+                        {% include 'shop/inc/_reviews.html' %}
                     </div>
                 </div>
             </div>

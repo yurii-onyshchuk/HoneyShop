@@ -11,7 +11,7 @@
         </a>
         <div class="card-body">
             <a href="{{ product.get_absolute_url }}"><h5 class="card-title">{{ product.title }}</h5></a>
-            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки({{ product.comments.count }})</a>
+            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки({{ product.get_reviews_count }})</a>
             <h5 class="price mt-2">{{ product.price }} грн.</h5>
                 <div class="mb-3">
                     {% if product.available %}

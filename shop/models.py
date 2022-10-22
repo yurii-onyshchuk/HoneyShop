@@ -37,22 +37,37 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('shop:product', kwargs={'slug': self.slug})
 
+    def get_reviews_count(self):
+        return Review.objects.filter(product=self, parent__isnull=True).count()
+
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
 
 
 class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments', verbose_name='Товар')
-    user = models.ForeignKey(User, on_delete=models.SET('Видалений користувач'), related_name='comments',
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', verbose_name='Товар')
+    user = models.ForeignKey(User, on_delete=models.SET('Видалений користувач'), related_name='reviews',
                              verbose_name='Користувач')
     body = models.TextField(verbose_name='Коментар')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     def __str__(self):
-        return f'Коментар на {self.product} від {self.user}'
+        return self.body
+        # return f'Коментар на {self.product} від {self.user}'
 
     class Meta:
         verbose_name = 'Коментар'
         verbose_name_plural = 'Коментарі'
         ordering = ['-created_at']
+
+    @property
+    def children(self):
+        return Review.objects.filter(parent=self).reverse()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
