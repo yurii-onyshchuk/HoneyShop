@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %} {{title}} :: {{ block.super }} {% endblock %}
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
 
 {% block content %}
-    {% include 'main/inc/_carousel.html' %}
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="home">
+        {% include 'main/inc/_carousel.html' %}
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    </div>
 {% endblock %}
