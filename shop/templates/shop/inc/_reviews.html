@@ -9,7 +9,7 @@
                 {% include 'shop/inc/_modal_add_review.html' %}
             {% else %}
                 <p>Авторизуйтеся, щоб залишити відгук</p>
-                <button class="btn btn-warning btn-main">Авторизуватися</button>
+                <a class="btn btn-warning btn-main" href="{% url 'login' %}?next={{request.path}}">Авторизуватися</a>
             {% endif %}
         </div>
         <ul class="review_list ps-0">

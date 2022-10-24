@@ -123,8 +123,41 @@ a:hover {
     color: #b06c00;
 }
 
-.navbar-toolbar a {
+.navbar-toolbar a i {
     font-size: larger;
+}
+
+.navbar-toolbar .like-link,
+.navbar-toolbar .cart-link {
+    position: relative;
+}
+
+.navbar-toolbar .like-total,
+.navbar-toolbar .cart-total {
+    position: absolute;
+    top: -7px;
+    right: -19px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    border-radius: 50%;
+    background: #ffbe33;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    color: #ffffff;
+}
+
+.navbar-toolbar .dropdown-item:hover,
+.navbar-toolbar .dropdown-item.active,
+.navbar-toolbar .dropdown-item.active:hover {
+    color: #d78300;
+    background-color: #f3f3f3;
+}
+
+.navbar-toolbar .dropdown-item.active,
+.navbar-toolbar .dropdown-item.active:hover {
+    font-weight: 500;
 }
 
 /*--------------------------------------------------------------
@@ -135,7 +168,8 @@ a:hover {
     background-color: #222831;
 }
 
-.navbar-scrolled a,
+.navbar-scrolled .navbar-nav a,
+.navbar-scrolled a i,
 .navbar-scrolled .navbar-brand,
 .navbar-scrolled .navbar-brand:hover {
     color: #ffffff;
@@ -160,7 +194,7 @@ a:hover {
         border: solid 1px #ffd838;
     }
 
-    .navbar .nav-item a {
+    .navbar #navbar-collapse .nav-item a {
         color: #000000;
     }
 

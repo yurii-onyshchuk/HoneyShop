@@ -8,19 +8,46 @@
     <nav id="navbar" class="navbar navbar-expand-md navbar-transparent fixed-top">
         <div class="container-md">
             <a class="navbar-brand brand" href="{% url 'home' %}">MedOK</a>
-            <div class="d-flex order-md-2">
-                <div class="navbar-toolbar d-flex align-items-center">
-                    <a class="like_link mx-3" href="#">
-                        <i class="fa-regular fa-heart"></i>
-                    </a>
-                    <a class="user_link mx-3" href="#">
-                        <i class="fa-solid fa-basket-shopping"></i>
-                    </a>
-                    <a class="cart_link mx-3" href="#">
-                        <i class="fa-regular fa-user"></i>
-                    </a>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapse"
+            <div class="navbar-toolbar d-flex order-md-2">
+                <ul class="toolbar-list list-unstyled d-flex align-items-center mb-0">
+                    <li class="nav-item like mx-4 mx-md-3">
+                        <a class="like-link" href="#">
+                            <i class="fa-regular fa-heart"></i>
+                            <span class="like-total text-center">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item cart mx-4 mx-md-3">
+                        <a class="cart-link" href="#">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                            <span class="cart-total text-center">1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item user mx-4 mx-md-3">
+                        {% if user.is_authenticated %}
+                            <div class="dropdown">
+                                <a class="user-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                    <i class="fa-regular fa-user"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <h6 class="dropdown-header font">{{ user.first_name }} {{ user.last_name }}</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'settings' user.slug %}">Особиста інформація</a></li>
+                                    <li><a class="dropdown-item" href="#">Мої замовлення</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">
+                                        Вийти з акаунту </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% else %}
+                            <a class="user-link" href="{% url 'login' %}?next={{ request.path }}">
+                                <i class="fa-regular fa-user"></i>
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
+                <button class="navbar-toggler ms-1" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbar-collapse"
                         aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
