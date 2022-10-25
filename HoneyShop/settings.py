@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
+    'debug_toolbar',
     'phonenumber_field',
     'main.apps.MainConfig',
     'accounts.apps.AccountsConfig',
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'HoneyShop.urls'
@@ -199,6 +201,8 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+INTERNAL_IPS = [os.getenv('INTERNAL_IPS')]
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
