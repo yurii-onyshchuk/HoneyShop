@@ -43,6 +43,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товари'
+        ordering = ['-available']
 
 
 class Review(models.Model):

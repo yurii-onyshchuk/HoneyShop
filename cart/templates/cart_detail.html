@@ -1,0 +1,76 @@
+{% extends 'shop/shop_base.html' %}
+{% load static %}
+
+{% block shop_content %}
+    <div class="cart container-xl px-0 mx-0 px-xl-5 mx-xl-5">
+        {% if cart %}
+            <ul class="cart-list list-unstyled mb-0">
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <li class="cart-item border-top py-3 py-lg-2">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img style="width: 100px" src="
+                                        {% if product.photo %}
+                                            {{ product.photo.url }}
+                                        {% else %}
+                                            {% static "img/no-image.jpg" %}
+                                        {% endif %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="col px-0 align-self-lg-center">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-5 mb-2">
+                                            <a href="{{ product.get_absolute_url }}">
+                                                <h6 class="title d-inline-block mb-0 mt-2">{{ product.title }}</h6>
+                                            </a>
+                                            <p class="price mb-0">{{ item.price }} грн.</p>
+                                        </div>
+                                        <div class="col-8 col-lg-4 align-self-center">
+                                            <form action="{% url "shop:cart:cart_update" product.id %}" method="POST"
+                                                  class="">
+                                                <button class="btn btn-link-mod me-1" type="submit">
+                                                    <i class="fa fa fa-refresh fa-xl" aria-hidden="true"></i>
+                                                </button>
+                                                {% csrf_token %}
+                                                <input type="number" name="quantity" value="{{ item.quantity }}"
+                                                       class="form-control" min="1" max="20"> шт.
+                                            </form>
+                                        </div>
+                                        <div class="col-4 col-lg-3 align-self-center px-0">
+                                            <h6 class="total-price mb-0">{{ item.total_price }} грн.</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <form action="{% url "shop:cart:cart_delete" product.id %}"
+                                          class="pt-2 float-end align-content-start">
+                                        <button class="btn btn-link-mod" type="submit">
+                                            <i class="fa fa-times fa-xl" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+            <div class="row border-top align-items-center py-3 mb-4">
+                <h4 class="total-price text-end"> Разом {{ cart.get_total_price }} грн </h4>
+                <div class="col">
+                    <a href="{% url "shop:shop" %}" class="btn btn-light border">Продовжити покупки</a>
+                </div>
+                <div class="col text-end">
+                    <a href="#" class="btn btn-warning btn-main">Оформити замовлення</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="cart-empty text-center">
+                <img src="{% static 'img/cart_empty.png' %}" width="200px" alt="">
+                <h5 class="my-3">Корзина порожня</h5>
+                <p>Але це ніколи не пізно виправити :)</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -2,31 +2,39 @@
 
 <div class="single-product mb-4">
     <div class="card">
-        <a href="{{ product.get_absolute_url }}">
-            {% if product.photo %}
-                <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
-            {% else %}
-                <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
-            {% endif %}
-        </a>
+        <div class="img-and-button">
+            <a class="like-link" href="#">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+            <a href="{{ product.get_absolute_url }}">
+                {% if product.photo %}
+                    <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
+                {% else %}
+                    <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
+                {% endif %}
+            </a>
+        </div>
         <div class="card-body">
             <a href="{{ product.get_absolute_url }}"><h5 class="card-title">{{ product.title }}</h5></a>
             <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки({{ product.get_reviews_count }})</a>
             <h5 class="price mt-2">{{ product.price }} грн.</h5>
-                <div class="mb-3">
-                    {% if product.available %}
-                        <span class="available"><i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності</span>
-                    {% else %}
-                        <span class="not-available">Немає в наявності</span>
-                    {% endif %}
-                </div>
+            <div class="mb-2">
+                {% if product.available %}
+                    <span class="available"><i class="fa fa-check-circle-o me-2"
+                                               aria-hidden="true"></i>В наявності</span>
+                {% else %}
+                    <span class="not-available">Немає в наявності</span>
+                {% endif %}
+            </div>
             <div class="text-center">
-                <a class="btn btn-warning btn-main mt-2" href="#">
-                    <i class="fa-solid fa-heart ps-1"></i>
-                </a>
-                <a class="btn btn-warning btn-main mt-2" href="#">В корзину
-                    <i class="fa-solid fa-basket-shopping ps-1"></i>
-                </a>
+                {% if product.available %}
+                    <form action="{% url 'shop:cart:cart_add' product.id %}" method="POST">
+                        {% csrf_token %}
+                        {{ cart_form }}
+                        <button type="submit" class="btn btn-warning btn-main">В корзину
+                            <i class="fa-solid fa-basket-shopping ps-1"></i></button>
+                    </form>
+                {% endif %}
             </div>
         </div>
     </div>

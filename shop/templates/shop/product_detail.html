@@ -22,12 +22,17 @@
                     {% endif %}
                 </div>
                 <h4 class="price mt-2">{{ product.price }} грн.</h4>
-                <div class="mb-4">
-                    <a class="btn btn-warning btn-main mt-2" href="#">В корзину
-                        <i class="fa-solid fa-basket-shopping ps-1"></i>
-                    </a>
-                    <a class="btn btn-warning btn-main mt-2" href="#">
-                        <i class="fa-solid fa-heart ps-1"></i>
+                <div class="mb-4 text-center text-md-start">
+                    {% if product.available %}
+                        <form class="d-inline" action="{% url 'shop:cart:cart_add' product.id %}" method="POST">
+                            {% csrf_token %}
+                            {{ cart_form }}
+                            <button type="submit" class="btn btn-warning btn-main">В корзину
+                                <i class="fa-solid fa-basket-shopping ps-1"></i></button>
+                        </form>
+                    {% endif %}
+                    <a class="btn btn-warning btn-main" href="#">
+                        <i class="fa-regular fa-heart"></i>
                     </a>
                 </div>
             </div>

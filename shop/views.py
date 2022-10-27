@@ -6,13 +6,19 @@ from django.views.generic.edit import FormMixin
 
 from .models import Product, Category
 from .forms import ReviewForm
+from cart.forms import CartAddProductForm, CartAddSeveralProductForm
 
 
 class Shop(ListView):
     model = Product
-    extra_context = {'title': 'Магазин'}
     template_name = 'shop/index.html'
     context_object_name = 'products'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Магазин'
+        context['cart_form'] = CartAddProductForm
+        return context
 
 
 class ProductsByCategory(ListView):
@@ -27,6 +33,7 @@ class ProductsByCategory(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = Category.objects.get(slug=self.kwargs['slug'])
+        context['cart_form'] = CartAddProductForm
         return context
 
 
@@ -39,6 +46,7 @@ class DetailProduct(FormMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.title
+        context['cart_form'] = CartAddSeveralProductForm
         self.object.views = F('views') + 1
         self.object.save()
         self.object.refresh_from_db()
@@ -69,6 +77,7 @@ class Search(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['s'] = f"s={self.request.GET.get('s')}&"
         context['title'] = 'Результати пошуку'
+        context['s'] = f"s={self.request.GET.get('s')}&"
+        context['cart_form'] = CartAddProductForm
         return context

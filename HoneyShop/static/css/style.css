@@ -53,7 +53,9 @@ a:hover {
 .btn-link-mod {
     color: black;
     font-size: 13px;
+    padding: 0;
     text-decoration: none;
+    border: none;
     --bs-btn-focus-shadow-rgb: none;
 }
 
@@ -281,6 +283,48 @@ a:hover {
 
 .reply-list {
     margin-left: 40px;
+}
+
+.cart .checkout-box {
+    border: 1px solid #ffd838;
+    border-radius: 5px;
+    background-color: rgba(255, 216, 56, 0.24);
+}
+
+.single-product {
+    position: relative;
+}
+
+.img-and-button .like-link {
+    position: absolute;
+    font-size: x-large;
+    color: #ffd838;
+    top: 0;
+    right: 7px;
+}
+
+@media (max-width: 575px) {
+    .img-and-button .like-link {
+        color: #ffd838;
+    }
+}
+
+.cart input[type=number],
+.product-detail input[type=number] {
+    display: inline;
+    width: 65px;
+}
+
+.cart input[type=number]::-webkit-inner-spin-button,
+.cart input[type=number]::-webkit-outer-spin-button,
+.product-detail input[type=number]::-webkit-inner-spin-button,
+.product-detail input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.cart .cart-item .price {
+    color: #7c7c7c;
+    font-size: 15px;
 }
 
 /*--------------------------------------------------------------
