@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, TemplateView
 from . import forms
 from .models import User
 
@@ -18,6 +18,11 @@ class UserAuthentication(LoginView):
     template_name = 'accounts/login.html'
     form_class = forms.UserAuthenticationForm
     success_url = reverse_lazy('index')
+
+
+class PersonalCabinet(LoginRequiredMixin, TemplateView):
+    extra_context = {'title': 'Особистий кабінет'}
+    template_name = 'accounts/personal_cabinet.html'
 
 
 class UserSettingsView(LoginRequiredMixin, UpdateView):

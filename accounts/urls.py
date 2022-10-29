@@ -8,6 +8,8 @@ urlpatterns = [
     path('login/', views.UserAuthentication.as_view(next_page='home'), name='login'),
     path('logout', LogoutView.as_view(next_page='home'), name='logout'),
 
+    path('personal-cabinet/', views.PersonalCabinet.as_view(), name='personal_cabinet'),
+
     path('<str:slug>/settings/', views.UserSettingsView.as_view(), name='settings'),
     path('password_change/', PasswordChangeView.as_view(template_name='accounts/password_change_form.html',
                                                         form_class=forms.UserPasswordChangeForm),
