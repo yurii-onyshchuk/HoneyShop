@@ -427,7 +427,9 @@ a:hover {
 # Account
 --------------------------------------------------------------*/
 
-.personal-cabinet{
+.personal-cabinet,
+.address-list,
+.address-form {
     max-width: 1000px;
 }
 

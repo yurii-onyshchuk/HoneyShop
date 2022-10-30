@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} :: {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="container address-list">
+        <div class="row justify-content-center">
+            <div class="col">
+                <h3>Мої адреси</h3>
+                <h6 class="text-muted pb-2 mb-0 border-bottom">{{ subtitle }}</h6>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for address in addresses %}
+                    <div class="col">
+                        <div class="card pb-3">
+                            <div class="card-header bg-white small text-muted text-center">
+                                {% if address.default_address %}
+                                    <i class="fa fa-check fa-lg me-2" aria-hidden="true"></i>За замовчуванням
+                                {% else %}
+                                    <a class="" href="{% url 'set_default' address.pk %}">Встановити за
+                                        замовчуванням</a>
+                                {% endif %}
+                            </div>
+                            <div class="card-body small pb-1">
+                                <p class="card-text m-0 fw-bold">{{ address.recipient_last_name }} {{ address.recipient_first_name }} {{ address.recipient_patronymic }}</p>
+                                <p class="card-text m-0">{{ address.city }}</p>
+                                <p class="card-text m-0">{{ address.street }} {{ address.house }}, {{ address.flat }}</p>
+                                <p class="card-text m-0">Номер
+                                    телефону: {{ address.recipient_phone_number }}</p>
+                                <div class="pt-5">
+                                    <a href="{% url 'edit_address' address.pk %}">Редагувати</a> |
+                                    <a href="{% url 'delete_address' address.pk %}">Видалити</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col">
+                    <a href="{% url 'add_address' %}" class="text-reset" role="button">
+                        <div class="card mb-3 h-100" style="border: dashed 2px #ccc;">
+                            <div class="row g-0 h-100">
+                                <div class="col-12" style="min-height:200px">
+                                    <div class="card-body text-center position-absolute top-50 start-50 translate-middle">
+                                        <svg style="color:#ccc;" xmlns="http://www.w3.org/2000/svg" width="60"
+                                             height="60"
+                                             fill="currentColor"
+                                             class="bi bi-plus" viewBox="0 0 16 16">
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        <h1 class="h5">Додати адресу</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

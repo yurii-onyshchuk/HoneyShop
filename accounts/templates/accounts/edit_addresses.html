@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} :: {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="container address-form">
+        <div class="row justify-content-center">
+            <div class="col">
+                <h3>{{ title }}</h3>
+                <h6 class="text-muted pb-2 mb-0 border-bottom">{{ subtitle }}</h6>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col col-sm-8 col-md-6">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="text-center">
+                            <input class="btn btn-light" type="reset" data-bs-dismiss="modal" value="Скасувати"/>
+                            <input class="btn btn-warning btn-main" type="submit" value="Зберегти"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

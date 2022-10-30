@@ -9,6 +9,11 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page='home'), name='logout'),
 
     path('personal-cabinet/', views.PersonalCabinet.as_view(), name='personal_cabinet'),
+    path('addresses/', views.AddressesList.as_view(), name='addresses_list'),
+    path('add_address/', views.AddAddress.as_view(), name='add_address'),
+    path('addresses/edit/<int:pk>/', views.EditAddress.as_view(), name='edit_address'),
+    path('addresses/delete/<int:pk>/', views.delete_address, name="delete_address"),
+    path('addresses/set_default/<int:pk>/', views.set_default, name='set_default'),
 
     path('<str:slug>/settings/', views.UserSettingsView.as_view(), name='settings'),
     path('password_change/', PasswordChangeView.as_view(template_name='accounts/password_change_form.html',
