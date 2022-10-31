@@ -31,23 +31,6 @@ class UserAuthenticationForm(AuthenticationForm):
                 field.widget.attrs['class'] = 'form-control'
 
 
-class UserSettingForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'autofocus': False})
-        self.fields['username'].help_text = ''
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
-
-    class Meta:
-        model = User
-        fields = ('photo', 'username', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',)
-        widgets = {'date_of_birth': forms.DateInput()}
-
-
 class UserPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -67,6 +50,23 @@ class UserSetPasswordForm(SetPasswordForm):
                 field.widget.attrs['class'] += ' form-control'
             else:
                 field.widget.attrs['class'] = 'form-control'
+
+
+class UserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autofocus': False})
+        self.fields['username'].help_text = ''
+        for field_name, field in self.fields.items():
+            if field.widget.attrs.get('class'):
+                field.widget.attrs['class'] += ' form-control'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+
+    class Meta:
+        model = User
+        fields = ('photo', 'username', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',)
+        widgets = {'date_of_birth': forms.DateInput()}
 
 
 class AddressForm(forms.ModelForm):

@@ -17,8 +17,7 @@
                                 {% if address.default_address %}
                                     <i class="fa fa-check fa-lg me-2" aria-hidden="true"></i>За замовчуванням
                                 {% else %}
-                                    <a class="" href="{% url 'set_default' address.pk %}">Встановити за
-                                        замовчуванням</a>
+                                    <a href="{% url 'set_default' address.pk %}">Встановити за замовчуванням</a>
                                 {% endif %}
                             </div>
                             <div class="card-body small pb-1">

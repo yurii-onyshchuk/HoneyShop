@@ -9,18 +9,22 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page='home'), name='logout'),
 
     path('personal-cabinet/', views.PersonalCabinet.as_view(), name='personal_cabinet'),
+
     path('addresses/', views.AddressesList.as_view(), name='addresses_list'),
     path('add_address/', views.AddAddress.as_view(), name='add_address'),
     path('addresses/edit/<int:pk>/', views.EditAddress.as_view(), name='edit_address'),
     path('addresses/delete/<int:pk>/', views.delete_address, name="delete_address"),
-    path('addresses/set_default/<int:pk>/', views.set_default, name='set_default'),
+    path('addresses/set_default/<int:pk>/', views.set_default_address, name='set_default'),
 
-    path('<str:slug>/settings/', views.UserSettingsView.as_view(), name='settings'),
+    path('<str:slug>/personal-info/', views.PersonalInfoUpdateView.as_view(), name='personal_info'),
+    path('<str:slug>/personal-safety/', views.PersonalSafetyView.as_view(), name='personal_safety'),
+    path('<str:slug>/delete-account/', views.DeleteAccount.as_view(), name='delete_account'),
     path('password_change/', PasswordChangeView.as_view(template_name='accounts/password_change_form.html',
                                                         form_class=forms.UserPasswordChangeForm),
          name='password_change'),
     path('password_change/done/', PasswordChangeDoneView.as_view(template_name='accounts/password_change_done.html'),
          name='password_change_done'),
+
     path('password_reset/', PasswordResetView.as_view(template_name='accounts/password_reset_form.html',
                                                       subject_template_name='accounts/password_reset_subject.txt',
                                                       email_template_name='accounts/password_reset_email.html'),

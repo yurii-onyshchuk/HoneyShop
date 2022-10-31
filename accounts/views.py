@@ -12,23 +12,51 @@ class UserRegister(CreateView):
     extra_context = {'title': 'Реєстрація'}
     template_name = 'accounts/register.html'
     form_class = forms.UserRegisterForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
 
 
 class UserAuthentication(LoginView):
     extra_context = {'title': 'Вхід'}
     template_name = 'accounts/login.html'
     form_class = forms.UserAuthenticationForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('home')
 
 
 class PersonalCabinet(LoginRequiredMixin, TemplateView):
-    extra_context = {'title': 'Особистий кабінет', 'subtitle': 'Керуйте своїми замовленнями та особистими даними'}
+    extra_context = {'title': 'Особистий кабінет',
+                     'subtitle': 'Керуйте своїми замовленнями та особистими даними'}
     template_name = 'accounts/personal_cabinet.html'
 
 
+class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
+    extra_context = {'title': 'Особисті дані',
+                     'subtitle': 'Керуйте своїми особистими та контактними даними'}
+    template_name = 'accounts/personal_info.html'
+    form_class = forms.UserForm
+    success_url = reverse_lazy('home')
+    model = User
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
+
+
+class PersonalSafetyView(LoginRequiredMixin, TemplateView):
+    extra_context = {'title': 'Безпека облікового запису',
+                     'subtitle': 'Змінити пароль або видалити обліковий запис'}
+    template_name = 'accounts/personal_safety.html'
+
+
+class DeleteAccount(LoginRequiredMixin, DeleteView):
+    extra_context = {'title': 'Видалення облікового запису'}
+    success_url = reverse_lazy('login')
+
+    def get_queryset(self):
+        return User.objects.filter(pk=self.request.user.pk)
+
+
 class AddressesList(LoginRequiredMixin, ListView):
-    extra_context = {'title': 'Мої адреси', 'subtitle': 'Керуйте своїми адресами та налаштуваннями доставки'}
+    extra_context = {'title': 'Мої адреси',
+                     'subtitle': 'Керуйте своїми адресами та налаштуваннями доставки'}
     template_name = 'accounts/addresses_list.html'
     context_object_name = 'addresses'
 
@@ -37,18 +65,22 @@ class AddressesList(LoginRequiredMixin, ListView):
 
 
 class AddAddress(LoginRequiredMixin, CreateView):
-    extra_context = {'title': 'Додавання адреси', 'subtitle': 'Додайте нову адресу та параметри доставки'}
+    extra_context = {'title': 'Додавання адреси',
+                     'subtitle': 'Додайте нову адресу та параметри доставки'}
     template_name = 'accounts/edit_addresses.html'
     form_class = forms.AddressForm
     success_url = reverse_lazy('addresses_list')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if not Address.objects.filter(user=self.request.user, default_address=True):
+            form.instance.default_address = True
         return super(AddAddress, self).form_valid(form)
 
 
 class EditAddress(LoginRequiredMixin, UpdateView):
-    extra_context = {'title': 'Редагування адреси', 'subtitle': 'Змініть адресу та параметри доставки'}
+    extra_context = {'title': 'Редагування адреси',
+                     'subtitle': 'Змініть адресу та параметри доставки'}
     template_name = 'accounts/edit_addresses.html'
     form_class = forms.AddressForm
     success_url = reverse_lazy('addresses_list')
@@ -58,27 +90,16 @@ class EditAddress(LoginRequiredMixin, UpdateView):
 
 
 @login_required
-def delete_address(request, pk):
-    Address.objects.get(user=request.user, pk=pk).delete()
-    return redirect('addresses_list')
-
-
-@login_required
-def set_default(request, pk):
+def set_default_address(request, pk):
     Address.objects.filter(user=request.user, default_address=True).update(default_address=False)
-    Address.objects.filter(pk=pk, user=request.user).update(default_address=True)
+    Address.objects.filter(user=request.user, pk=pk).update(default_address=True)
     # previous_url = request.META.get("HTTP_REFERER")
     # if 'delivery_address' in previous_url:
     #     return redirect("checkout:delivery_address")
     return redirect('addresses_list')
 
 
-class UserSettingsView(LoginRequiredMixin, UpdateView):
-    extra_context = {'title': 'Особиста інформація'}
-    template_name = 'accounts/settings.html'
-    form_class = forms.UserSettingForm
-    success_url = reverse_lazy('home')
-    model = User
-
-    def get_queryset(self):
-        return User.objects.filter(username=self.request.user.username)
+@login_required
+def delete_address(request, pk):
+    Address.objects.get(user=request.user, pk=pk).delete()
+    return redirect('addresses_list')

@@ -11,22 +11,20 @@
             </div>
             <div class="row row-cols-1 row-cols-md-2 g-3">
                 <div class="col">
-                    <a href="#" class="text-reset" role="button">
+                    <a href="{% url 'personal_info' user.slug %}" class="text-reset" role="button">
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-2 position-relative">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                         fill="currentColor"
-                                         class="bi bi-gift position-absolute top-50 start-50 translate-middle"
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                         class="bi bi-person position-absolute top-50 start-50 translate-middle"
                                          viewBox="0 0 16 16">
-                                        <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"/>
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                     </svg>
                                 </div>
                                 <div class="col-10">
                                     <div class="card-body ps-0 ps-md-1">
-                                        <h1 class="h5">Мої замовлення</h1>
-                                        <p class="card-text small text-muted">Переглядайте, відстежуйте, змінюйте
-                                            або купуйте знову</p>
+                                        <h1 class="h5">Особисті дані</h1>
+                                        <p class="card-text small text-muted">Змінити основну світлину, імя користувача, ПІБ, електронну адресу та номер телефону</p>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +32,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a href="{% url 'settings' user.slug %}" class="text-reset" role="button">
+                    <a href="{% url 'personal_safety' user.slug %}" class="text-reset" role="button">
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-2 position-relative">
@@ -48,9 +46,8 @@
                                 </div>
                                 <div class="col-10">
                                     <div class="card-body ps-0 ps-md-1">
-                                        <h1 class="h5">Вхід і безпека</h1>
-                                        <p class="card-text small text-muted">Відредагувати логін, електронну адресу
-                                            та номер телефону</p>
+                                        <h1 class="h5">Безпека</h1>
+                                        <p class="card-text small text-muted">Змінити пароль для входу або видалити обліковий запис</p>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +69,30 @@
                                 <div class="col-10">
                                     <div class="card-body ps-0 ps-md-1">
                                         <h1 class="h5">Мої адреси</h1>
-                                        <p class="card-text small text-muted">Відредагувати адреси доставки</p>
+                                        <p class="card-text small text-muted">Відредагувати адреси доставки та дані отримувачів</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="#" class="text-reset" role="button">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-2 position-relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                         fill="currentColor"
+                                         class="bi bi-gift position-absolute top-50 start-50 translate-middle"
+                                         viewBox="0 0 16 16">
+                                        <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506V2.5zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h6V4H1zm8 0v2h6V4H9zm5 3H9v8h4.5a.5.5 0 0 0 .5-.5V7zm-7 8V7H2v7.5a.5.5 0 0 0 .5.5H7z"/>
+                                    </svg>
+                                </div>
+                                <div class="col-10">
+                                    <div class="card-body ps-0 ps-md-1">
+                                        <h1 class="h5">Мої замовлення</h1>
+                                        <p class="card-text small text-muted">Переглядайте, відстежуйте, змінюйте
+                                            або купуйте знову</p>
                                     </div>
                                 </div>
                             </div>
