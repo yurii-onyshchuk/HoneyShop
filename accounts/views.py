@@ -25,13 +25,13 @@ class UserAuthentication(LoginView):
 class PersonalCabinet(LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Особистий кабінет',
                      'subtitle': 'Керуйте своїми замовленнями та особистими даними'}
-    template_name = 'accounts/personal_cabinet.html'
+    template_name = 'accounts/personal_cabinet/personal_cabinet.html'
 
 
 class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
     extra_context = {'title': 'Особисті дані',
                      'subtitle': 'Керуйте своїми особистими та контактними даними'}
-    template_name = 'accounts/personal_info.html'
+    template_name = 'accounts/personal_cabinet/personal_info.html'
     form_class = forms.UserForm
     success_url = reverse_lazy('home')
     model = User
@@ -43,7 +43,7 @@ class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
 class PersonalSafetyView(LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Безпека облікового запису',
                      'subtitle': 'Змінити пароль або видалити обліковий запис'}
-    template_name = 'accounts/personal_safety.html'
+    template_name = 'accounts/personal_cabinet/personal_safety.html'
 
 
 class DeleteAccount(LoginRequiredMixin, DeleteView):
@@ -57,7 +57,7 @@ class DeleteAccount(LoginRequiredMixin, DeleteView):
 class AddressesList(LoginRequiredMixin, ListView):
     extra_context = {'title': 'Мої адреси',
                      'subtitle': 'Керуйте своїми адресами та налаштуваннями доставки'}
-    template_name = 'accounts/addresses_list.html'
+    template_name = 'accounts/personal_cabinet/addresses_list.html'
     context_object_name = 'addresses'
 
     def get_queryset(self):
@@ -67,7 +67,7 @@ class AddressesList(LoginRequiredMixin, ListView):
 class AddAddress(LoginRequiredMixin, CreateView):
     extra_context = {'title': 'Додавання адреси',
                      'subtitle': 'Додайте нову адресу та параметри доставки'}
-    template_name = 'accounts/edit_addresses.html'
+    template_name = 'accounts/personal_cabinet/edit_addresses.html'
     form_class = forms.AddressForm
     success_url = reverse_lazy('addresses_list')
 
@@ -81,7 +81,7 @@ class AddAddress(LoginRequiredMixin, CreateView):
 class EditAddress(LoginRequiredMixin, UpdateView):
     extra_context = {'title': 'Редагування адреси',
                      'subtitle': 'Змініть адресу та параметри доставки'}
-    template_name = 'accounts/edit_addresses.html'
+    template_name = 'accounts/personal_cabinet/edit_addresses.html'
     form_class = forms.AddressForm
     success_url = reverse_lazy('addresses_list')
 
