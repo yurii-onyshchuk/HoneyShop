@@ -309,6 +309,11 @@ a:hover {
     }
 }
 
+.like-link,
+.like-link:hover{
+    color: #ffd838;
+}
+
 .cart input[type=number],
 .product-detail input[type=number] {
     display: inline;
@@ -423,6 +428,7 @@ a:hover {
 .contact-page-info .form-label {
     font-size: small;
 }
+
 /*--------------------------------------------------------------
 # Account
 --------------------------------------------------------------*/

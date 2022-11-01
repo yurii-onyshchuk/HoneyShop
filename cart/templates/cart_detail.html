@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block shop_content %}
-    <div class="cart container-xl px-0 mx-0 px-xl-5 mx-xl-5">
-        {% if cart %}
+    {% if cart %}
+        <div class="cart container-xl px-0 mx-0 px-xl-5 mx-xl-5">
             <ul class="cart-list list-unstyled mb-0">
                 {% for item in cart %}
                     {% with product=item.product %}
@@ -15,7 +15,7 @@
                                         {% if product.photo %}
                                             {{ product.photo.url }}
                                         {% else %}
-                                            {% static "img/no-image.jpg" %}
+                                            {% static 'img/no-image.jpg' %}
                                         {% endif %}" alt="">
                                     </a>
                                 </div>
@@ -28,7 +28,7 @@
                                             <p class="price mb-0">{{ item.price }} грн.</p>
                                         </div>
                                         <div class="col-8 col-lg-4 align-self-center">
-                                            <form action="{% url "shop:cart:cart_update" product.id %}" method="POST"
+                                            <form action="{% url 'shop:cart:cart_update' product.id %}" method="POST"
                                                   class="">
                                                 <button class="btn btn-link-mod me-1" type="submit">
                                                     <i class="fa fa fa-refresh fa-xl" aria-hidden="true"></i>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <form action="{% url "shop:cart:cart_delete" product.id %}"
+                                    <form action="{% url 'shop:cart:cart_delete' product.id %}"
                                           class="pt-2 float-end align-content-start">
                                         <button class="btn btn-link-mod" type="submit">
                                             <i class="fa fa-times fa-xl" aria-hidden="true"></i>
@@ -59,18 +59,19 @@
             <div class="row border-top align-items-center py-3 mb-4">
                 <h4 class="total-price text-end"> Разом {{ cart.get_total_price }} грн </h4>
                 <div class="col">
-                    <a href="{% url "shop:shop" %}" class="btn btn-light border">Продовжити покупки</a>
+                    <a href="{% url 'shop:shop' %}" class="btn btn-light border">Продовжити покупки</a>
                 </div>
                 <div class="col text-end">
                     <a href="#" class="btn btn-warning btn-main">Оформити замовлення</a>
                 </div>
             </div>
-        {% else %}
-            <div class="cart-empty text-center">
-                <img src="{% static 'img/cart_empty.png' %}" width="200px" alt="">
-                <h5 class="my-3">Корзина порожня</h5>
-                <p>Але це ніколи не пізно виправити :)</p>
-            </div>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <div class="cart-empty text-center">
+            <img src="{% static 'img/cart_empty.png' %}" height="150px" alt="">
+            <h5 class="my-3">Корзина порожня</h5>
+            <p><a href="{% url 'shop:shop' %}">Але це ніколи не пізно виправити :)</a></p>
+        </div>
+    {% endif %}
+
 {% endblock %}

@@ -1,8 +1,11 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.db.models import F
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
+
 
 from .models import Product, Category
 from .forms import ReviewForm
@@ -10,15 +13,10 @@ from cart.forms import CartAddProductForm, CartAddSeveralProductForm
 
 
 class Shop(ListView):
+    extra_context = {'title': 'Магазин', 'cart_form': CartAddProductForm}
     model = Product
     template_name = 'shop/index.html'
     context_object_name = 'products'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Магазин'
-        context['cart_form'] = CartAddProductForm
-        return context
 
 
 class ProductsByCategory(ListView):
@@ -81,3 +79,22 @@ class Search(ListView):
         context['s'] = f"s={self.request.GET.get('s')}&"
         context['cart_form'] = CartAddProductForm
         return context
+
+
+class WishListView(LoginRequiredMixin, ListView):
+    extra_context = {'title': 'Список вподобань', 'cart_form': CartAddProductForm}
+    template_name = 'shop/wishlist.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return Product.objects.filter(users_wishlist=self.request.user)
+
+
+@login_required
+def add_or_remove_to_wishlist(request, slug):
+    product = Product.objects.get(slug=slug)
+    if product.users_wishlist.filter(username=request.user.username).exists():
+        product.users_wishlist.remove(request.user)
+    else:
+        product.users_wishlist.add(request.user)
+    return redirect(request.META["HTTP_REFERER"])

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from phonenumber_field import modelfields
 from autoslug import AutoSlugField
@@ -19,7 +20,7 @@ class User(AbstractUser):
 
 
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Користувач')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Користувач')
     recipient_first_name = models.CharField(verbose_name="Ім'я отримувача", max_length=100)
     recipient_last_name = models.CharField(verbose_name="Прізвище отримувача", max_length=100)
     recipient_patronymic = models.CharField(verbose_name="По-батькові отримувача", max_length=100)

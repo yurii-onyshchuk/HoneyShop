@@ -31,9 +31,11 @@
                                 <i class="fa-solid fa-basket-shopping ps-1"></i></button>
                         </form>
                     {% endif %}
-                    <a class="btn btn-warning btn-main" href="#">
-                        <i class="fa-regular fa-heart"></i>
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a class="like-link ms-2" href="{% url 'shop:add_or_remove_to_wishlist' product.slug %}">
+                            <i class="fa-{% if product in wish_list %}solid{% else %}regular{% endif %} fa-heart fa-xl"></i>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="product-description col-12 mt-3">

@@ -21,8 +21,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'available',)
     search_fields = ('title',)
     fields = ('title', 'slug', 'price', 'available', 'category', 'description', 'photo', 'get_photo', 'sales', 'views',
-              'created_at',)
-    readonly_fields = ('created_at', 'views', 'sales', 'get_photo',)
+              'created_at', 'users_wishlist')
+    readonly_fields = ('created_at', 'views', 'sales', 'get_photo', 'users_wishlist')
     form = ProductAdminForm
 
     def get_photo(self, obj):

@@ -3,9 +3,11 @@
 <div class="single-product mb-4">
     <div class="card">
         <div class="img-and-button">
-            <a class="like-link" href="#">
-                <i class="fa-regular fa-heart"></i>
-            </a>
+            {% if user.is_authenticated %}
+                <a class="like-link" href="{% url 'shop:add_or_remove_to_wishlist' product.slug %}">
+                    <i class="fa-{% if product in wish_list %}solid{% else %}regular{% endif %} fa-heart"></i>
+                </a>
+            {% endif %}
             <a href="{{ product.get_absolute_url }}">
                 {% if product.photo %}
                     <img src="{{ product.photo.url }}" class="card-img-top" alt="...">

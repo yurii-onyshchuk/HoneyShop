@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from accounts.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -30,6 +30,8 @@ class Product(models.Model):
     sales = models.IntegerField(default=0, verbose_name='Продажі')
     views = models.IntegerField(default=0, verbose_name='Перегляди')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
+    users_wishlist = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="user_wishlist", blank=True,
+                                            verbose_name='Користувачі, що вподобали')
 
     def __str__(self):
         return self.title
@@ -48,15 +50,14 @@ class Product(models.Model):
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', verbose_name='Товар')
-    user = models.ForeignKey(User, on_delete=models.SET('Видалений користувач'), related_name='reviews',
-                             verbose_name='Користувач')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET('Видалений користувач'),
+                             related_name='reviews', verbose_name='Користувач')
     body = models.TextField(verbose_name='Коментар')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     def __str__(self):
         return self.body
-        # return f'Коментар на {self.product} від {self.user}'
 
     class Meta:
         verbose_name = 'Коментар'
