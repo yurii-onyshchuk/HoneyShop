@@ -295,23 +295,27 @@ a:hover {
     position: relative;
 }
 
-.img-and-button .like-link {
+button.to_wishlist,
+button.to_wishlist:focus,
+button.to_wishlist:hover {
+    color: #ffd838;
+}
+
+.img-and-button button.to_wishlist {
     position: absolute;
     font-size: x-large;
-    color: #ffd838;
     top: 0;
     right: 7px;
 }
 
 @media (max-width: 575px) {
-    .img-and-button .like-link {
-        color: #ffd838;
+    .img-and-button button.to_wishlist {
+        font-size: xx-large;
     }
 }
 
-.like-link,
-.like-link:hover{
-    color: #ffd838;
+button.to_wishlist:hover {
+    transform: scale(1.1);
 }
 
 .cart input[type=number],
