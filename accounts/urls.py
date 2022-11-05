@@ -28,8 +28,8 @@ urlpatterns = [
          name='password_change_done'),
 
     path('password_reset/', PasswordResetView.as_view(template_name='accounts/password_reset/password_reset_form.html',
-                                                      subject_template_name='accounts/password_reset_subject.txt',
-                                                      email_template_name='accounts/password_reset_email.html'),
+                                                      subject_template_name='accounts/password_reset/password_reset_subject.txt',
+                                                      email_template_name='accounts/password_reset/password_reset_email.html'),
          name='password_reset'),
     path('password/reset/done',
          PasswordResetDoneView.as_view(template_name='accounts/password_reset/password_reset_done.html', ),
