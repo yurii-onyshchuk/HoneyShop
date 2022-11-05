@@ -39,7 +39,15 @@ $(document).ready(function () {
                 action: 'post'
             },
             success: function (json) {
-                document.getElementById("cart-total").innerHTML = json.cart_total
+                const cart_total = document.getElementById("cart-total")
+                cart_total.innerHTML = json.cart_total
+                if (json.cart_total > '0') {
+                    cart_total.style.display = 'block'
+                    console.log('block')
+                } else {
+                    cart_total.style.display = 'none'
+                    console.log('none')
+                }
             },
             error: function (xhr, errmsg, err) {
             }
@@ -59,7 +67,17 @@ $(document).ready(function () {
                 action: 'post'
             },
             success: function (json) {
-                document.getElementById("wishlist-total").innerHTML = json.wishlist_total
+                const wishlist_total = document.getElementById("wishlist-total")
+                wishlist_total.innerHTML = json.wishlist_total
+
+                if (json.wishlist_total > '0') {
+                    wishlist_total.style.display = 'block'
+                    console.log('block')
+                } else {
+                    wishlist_total.style.display = 'none'
+                    console.log('none')
+                }
+
                 if (json.action_result === 'added') {
                     $('#to-wishlist i[data-index="' + product_id + '"]').addClass('fa-solid')
                 } else {

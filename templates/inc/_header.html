@@ -13,14 +13,20 @@
                     <li class="nav-item cart me-3 me-sm-4 me-md-3">
                         <a class="cart-link" href="{% url 'shop:cart:cart_detail' %}">
                             <i class="fa-solid fa-basket-shopping"></i>
-                            <span id="cart-total" class="text-center">{{ cart|length }}</span>
+                            {% with cart|length as amount %}
+                                <span style="display: {% if amount > 0 %}block{% else %}none{% endif %}"
+                                      id="cart-total" class="text-center">{{ cart|length }}</span>
+                            {% endwith %}
                         </a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item like mx-3 mx-sm-4 mx-md-3">
                             <a class="like-link" href="{% url 'shop:wishlist' %}">
                                 <i class="fa-regular fa-heart"></i>
-                                <span id="wishlist-total" class="text-center">{{ wish_list|length }}</span>
+                                {% with wish_list|length as amount %}
+                                    <span style="display: {% if amount > 0 %}block{% else %}none{% endif %}"
+                                          id="wishlist-total" class="text-center">{{ wish_list|length }}</span>
+                                {% endwith %}
                             </a>
                         </li>
                     {% endif %}
