@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.db.models import F
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-
+from django.conf import settings
+from accounts.models import User
 
 from .models import Product, Category
 from .forms import ReviewForm
@@ -91,10 +93,13 @@ class WishListView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def add_or_remove_to_wishlist(request, slug):
-    product = Product.objects.get(slug=slug)
+def add_or_remove_to_wishlist(request):
+    product = get_object_or_404(Product, id=request.POST['product_id'])
     if product.users_wishlist.filter(username=request.user.username).exists():
         product.users_wishlist.remove(request.user)
+        action_result = 'removed'
     else:
         product.users_wishlist.add(request.user)
-    return redirect(request.META["HTTP_REFERER"])
+        action_result = 'added'
+    wishlist_total = Product.users_wishlist.through.objects.count()
+    return JsonResponse({'wishlist_total': wishlist_total, 'action_result': action_result})

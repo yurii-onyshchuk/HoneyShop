@@ -14,8 +14,9 @@ $(window).scroll(function () {
     }
 });
 
-// Add active link at navbar
+
 $(document).ready(function () {
+    // Add active link at navbar
     $('.nav-item a').each(function () {
         let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
         let link = this.href;
@@ -23,8 +24,56 @@ $(document).ready(function () {
             $(this).addClass('active');
         }
     })
+
+    // Add to cart
+    $(document).on('click', '#add-to-cart', function (e) {
+        const product_id = $(this).attr('data-index')
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('data-url'),
+            data: {
+                product_id: product_id,
+                quantity: $('#id_quantity').val(),
+                csrfmiddlewaretoken: $('.add-to-cart-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("cart-total").innerHTML = json.cart_total
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+    })
+
+    // Add to wishlist
+    $(document).on('click', '#to-wishlist', function (e) {
+        const product_id = $(this).attr('data-index')
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('data-url'),
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $('#to-wishlist-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("wishlist-total").innerHTML = json.wishlist_total
+                if (json.action_result === 'added') {
+                    $('#to-wishlist i[data-index="' + product_id + '"]').addClass('fa-solid')
+                } else {
+                    $('#to-wishlist i[data-index="' + product_id + '"]').removeClass('fa-solid')
+                }
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+    })
 });
 
+
+//Lightbox
 document.getElementById('lightbox-links').onclick = function (event) {
     event = event || window.event
     const target = event.target || event.srcElement;

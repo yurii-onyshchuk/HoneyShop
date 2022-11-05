@@ -134,8 +134,8 @@ a:hover {
     position: relative;
 }
 
-.navbar-toolbar .like-total,
-.navbar-toolbar .cart-total {
+.navbar-toolbar #wishlist-total,
+.navbar-toolbar #cart-total {
     position: absolute;
     top: -7px;
     right: -19px;
@@ -295,13 +295,13 @@ a:hover {
     position: relative;
 }
 
-button.to_wishlist,
-button.to_wishlist:focus,
-button.to_wishlist:hover {
+button#to-wishlist,
+button#to-wishlist:focus,
+button#to-wishlist:hover {
     color: #ffd838;
 }
 
-.img-and-button button.to_wishlist {
+.img-and-button button#to-wishlist {
     position: absolute;
     font-size: x-large;
     top: 0;
@@ -309,12 +309,12 @@ button.to_wishlist:hover {
 }
 
 @media (max-width: 575px) {
-    .img-and-button button.to_wishlist {
+    .img-and-button button#to-wishlist {
         font-size: xx-large;
     }
 }
 
-button.to_wishlist:hover {
+button#to-wishlist:hover {
     transform: scale(1.1);
 }
 

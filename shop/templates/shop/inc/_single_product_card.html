@@ -4,9 +4,16 @@
     <div class="card">
         <div class="img-and-button">
             {% if user.is_authenticated %}
-                <form action="{% url 'shop:add_or_remove_to_wishlist' product.slug %}">
-                    <button type="submit" class="btn btn-link-mod to_wishlist">
-                        <i class="fa-{% if product in wish_list %}solid{% else %}regular{% endif %} fa-heart"></i>
+                <form id="to-wishlist-form"
+                      data-index="{{ product.id }}">
+                    {% csrf_token %}
+                    <button type="button"
+                            class="btn btn-link-mod"
+                            id="to-wishlist"
+                            data-index="{{ product.id }}"
+                            data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
+                        <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart"
+                           data-index="{{ product.id }}"></i>
                     </button>
                 </form>
             {% endif %}
@@ -32,11 +39,18 @@
             </div>
             <div class="text-center">
                 {% if product.available %}
-                    <form action="{% url 'shop:cart:cart_add' product.id %}" method="POST">
+                    <form class="add-to-cart-form"
+                          data-index="{{ product.id }}">
                         {% csrf_token %}
                         {{ cart_form }}
-                        <button type="submit" class="btn btn-warning btn-main">В корзину
-                            <i class="fa-solid fa-basket-shopping ps-1"></i></button>
+                        <button type="button"
+                                class="btn btn-warning btn-main"
+                                id="add-to-cart"
+                                data-index="{{ product.id }}"
+                                data-url="{% url 'shop:cart:cart_add' %}">В корзину
+                            <i class="fa-solid fa-basket-shopping ps-1"
+                               data-index="{{ product.id }}"></i>
+                        </button>
                     </form>
                 {% endif %}
             </div>
