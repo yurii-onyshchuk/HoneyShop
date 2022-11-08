@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} :: {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="container orders">
+        <div class="row">
+            <h3>{{ title }}</h3>
+            <div class="col-12">
+                {% for order in object_list %}
+                   {% include 'order/inc/_order_item.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

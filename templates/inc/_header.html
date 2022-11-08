@@ -42,7 +42,7 @@
                                     </li>
                                     <li><a class="dropdown-item" href="{% url 'personal_cabinet' %}">Особистий
                                         кабінет</a></li>
-                                    <li><a class="dropdown-item" href="#">Мої замовлення</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'order_list' %}">Мої замовлення</a></li>
                                     <li><a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">
                                         Вийти з акаунту </a>
                                     </li>
