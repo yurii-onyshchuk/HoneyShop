@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from checkout.models import DeliveryOptions, PaymentOptions
+
+admin.site.register(DeliveryOptions)
+admin.site.register(PaymentOptions)

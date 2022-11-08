@@ -28,14 +28,14 @@
                                             <p class="price mb-0">{{ item.price }} грн.</p>
                                         </div>
                                         <div class="col-8 col-lg-4 align-self-center">
-                                            <form action="{% url 'shop:cart:cart_update' product.id %}" method="POST"
-                                                  class="">
-                                                <button class="btn btn-link-mod me-1" type="submit">
-                                                    <i class="fa fa fa-refresh fa-xl" aria-hidden="true"></i>
-                                                </button>
+                                            <form action="{% url 'shop:cart:cart_update' product.id %}" method="POST">
                                                 {% csrf_token %}
                                                 <input type="number" name="quantity" value="{{ item.quantity }}"
                                                        class="form-control" min="1" max="20"> шт.
+                                                <button class="btn btn-link-mod ms-1" type="submit">
+                                                    <i class="fa fa fa-refresh fa-xl" aria-hidden="true"
+                                                       title="Оновити"></i>
+                                                </button>
                                             </form>
                                         </div>
                                         <div class="col-4 col-lg-3 align-self-center px-0">
@@ -47,7 +47,7 @@
                                     <form action="{% url 'shop:cart:cart_delete' product.id %}"
                                           class="pt-2 float-end align-content-start">
                                         <button class="btn btn-link-mod" type="submit">
-                                            <i class="fa fa-times fa-xl" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-xl" aria-hidden="true" title="Видалити з корзини"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -62,7 +62,7 @@
                     <a href="{% url 'shop:shop' %}" class="btn btn-light border">Продовжити покупки</a>
                 </div>
                 <div class="col text-end">
-                    <a href="#" class="btn btn-warning btn-main">Оформити замовлення</a>
+                    <a href="{% url 'checkout' %}" class="btn btn-warning btn-main">Оформити замовлення</a>
                 </div>
             </div>
         </div>

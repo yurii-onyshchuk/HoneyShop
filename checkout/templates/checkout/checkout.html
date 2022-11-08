@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}{{ title }} :: {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="container checkout">
+        <form class="checkout-form" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <h3>{{ title }}</h3>
+                <div class="col">
+                    {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title mt-2">1. Контактні дані</h5>
+                            </div>
+                            <div class="card-body">
+                                {% for field in form.visible_fields|slice:":4" %}
+                                    <p class="contact-info-item">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title mt-2">2. Доставка</h5>
+                            </div>
+                            <div class="card-body">
+                                {% for field in form.visible_fields|slice:"4:10" %}
+                                    <p class="delivery-info-item">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header">
+                                <h5 class="card-title mt-2">3. Оплата</h5>
+                            </div>
+                            <div class="card-body">
+                                {% for field in form.visible_fields|slice:"10:" %}
+                                    <p class="payment-info-item">
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cart-checkout cart card shadow mb-3">
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="card-title mt-2">Замовлення</h5>
+                            <a class="mt-2" href="{% url 'shop:cart:cart_detail' %}"><i
+                                    class="fa-regular fa-pen-to-square me-2"></i>Редагувати</a>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="card-text">
+                                <ul class="cart-list list-unstyled mb-0">
+                                    {% for item in cart %}
+                                        {% with product=item.product %}
+                                            <li class="cart-item border-bottom py-3 py-md-2">
+                                                {% include 'checkout/inc/_cart_checkout_item.html' %}
+                                            </li>
+                                        {% endwith %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Разом</h5>
+                            <div class="card-text">
+                                <div class="d-flex justify-content-between my-2">
+                                    <span>{{ cart|length }} шт. товару на суму</span>
+                                    <span>{{ cart.get_total_price }} ₴</span>
+                                </div>
+                                <div class="d-flex justify-content-between my-2">
+                                    <span>Вартість доставки</span> <span class="text-end">За тарифами перевізника</span>
+                                </div>
+                                <div class="d-flex justify-content-between border-top border-bottom py-3">
+                                    <span>До сплати</span>
+                                    <h3>{{ cart.get_total_price }} ₴</h3>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <button type="submit" class="btn btn-warning btn-main">Замовлення підтверджую</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

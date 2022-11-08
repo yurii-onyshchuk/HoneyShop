@@ -439,7 +439,9 @@ button#to-wishlist:hover {
 
 .personal-cabinet,
 .address-list,
-.address-form {
+.address-form,
+.checkout,
+.orders {
     max-width: 1000px;
 }
 

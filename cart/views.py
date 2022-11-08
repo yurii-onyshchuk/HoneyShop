@@ -8,7 +8,7 @@ from .forms import CartAddProductForm, CartAddSeveralProductForm
 
 def cart_detail(request):
     cart = Cart(request)
-    return render(request, template_name='cart_detail.html',
+    return render(request, template_name='cart/cart_detail.html',
                   context={'cart': cart, 'cart_form': CartAddSeveralProductForm, 'title': 'Корзина'})
 
 

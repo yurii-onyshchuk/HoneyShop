@@ -54,7 +54,8 @@ class Review(models.Model):
                              related_name='reviews', verbose_name='Користувач')
     body = models.TextField(verbose_name='Коментар')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies',
+                               verbose_name='До коментаря')
 
     def __str__(self):
         return self.body
