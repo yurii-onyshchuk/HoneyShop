@@ -24,8 +24,8 @@ class DeliveryOptions(models.Model):
 class PaymentOptions(models.Model):
     PAYMENT_CHOICES = [
         ("AFTER", "Оплата під час отримання товару"),
-        ("PREPAYMENT", "Передплата"),
         ("ONLINE", "Онлайн оплата"),
+        ("PREPAYMENT", "Передплата"),
     ]
 
     title = models.CharField(verbose_name='Назва', max_length=255)

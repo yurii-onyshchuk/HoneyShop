@@ -218,3 +218,6 @@ EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = str(os.getenv('EMAIL_USE_TLS')) == 'True'
 
 CART_SESSION_ID = 'cart'
+
+FONDY_MERCHANT_ID = os.getenv('FONDY_MERCHANT_ID')
+FONDY_CREDIT_KEY = os.getenv('FONDY_CREDIT_KEY')
