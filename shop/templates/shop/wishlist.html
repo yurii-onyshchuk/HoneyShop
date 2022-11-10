@@ -3,6 +3,11 @@
 
 {% block shop_content %}
     <div class="product-list">
+        {% if products %}
+            <div class="text-end border-bottom mb-3">
+                <a href="{% url 'shop:clear_wishlist' %}">Очистити список вподобань</a>
+            </div>
+        {% endif %}
         <div class="row">
             {% for product in products %}
                 <div class="col-sm-6 col-lg-4">

@@ -68,7 +68,7 @@ class DetailProduct(FormMixin, DetailView):
 class Search(ListView):
     template_name = 'shop/product_list.html'
     context_object_name = 'products'
-    paginate_by = 5
+    paginate_by = 9
 
     def get_queryset(self):
         return Product.objects.filter(title__icontains=self.request.GET.get('s'))
@@ -85,6 +85,7 @@ class WishListView(LoginRequiredMixin, ListView):
     extra_context = {'title': 'Список вподобань', 'cart_form': CartAddProductForm}
     template_name = 'shop/wishlist.html'
     context_object_name = 'products'
+    paginate_by = 9
 
     def get_queryset(self):
         return Product.objects.filter(users_wishlist=self.request.user)
@@ -101,3 +102,11 @@ def add_or_remove_to_wishlist(request):
         action_result = 'added'
     wishlist_total = Product.users_wishlist.through.objects.count()
     return JsonResponse({'wishlist_total': wishlist_total, 'action_result': action_result})
+
+
+@login_required
+def clear_wishlist(request):
+    products = Product.objects.filter(users_wishlist=request.user)
+    for product in products:
+        product.users_wishlist.remove(request.user)
+    return redirect('shop:wishlist')
