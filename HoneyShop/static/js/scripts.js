@@ -35,19 +35,24 @@ $(document).ready(function () {
             data: {
                 product_id: product_id,
                 quantity: $('#id_quantity').val(),
-                csrfmiddlewaretoken: $('.add-to-cart-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
+                csrfmiddlewaretoken: $('.add-to-cart-form[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
             },
             success: function (json) {
+                const add_to_cart_button = $('#add-to-cart[data-index="' + product_id + '"]')
+                const to_cart_link = $('#to-cart-link[data-index="' + product_id + '"]')
+                add_to_cart_button.addClass('d-none')
+                to_cart_link.removeClass('d-none')
+
+
                 const cart_total = document.getElementById("cart-total")
                 cart_total.innerHTML = json.cart_total
                 if (json.cart_total > '0') {
                     cart_total.style.display = 'block'
-                    console.log('block')
                 } else {
                     cart_total.style.display = 'none'
-                    console.log('none')
                 }
+
             },
             error: function (xhr, errmsg, err) {
             }

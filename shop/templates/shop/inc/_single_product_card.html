@@ -44,13 +44,21 @@
                         {% csrf_token %}
                         {{ cart_form }}
                         <button type="button"
-                                class="btn btn-warning btn-main"
+                                class="btn btn-warning btn-main {% if product.id in cart_item_ids %}d-none{% endif %}"
                                 id="add-to-cart"
                                 data-index="{{ product.id }}"
                                 data-url="{% url 'shop:cart:cart_add' %}">В корзину
                             <i class="fa-solid fa-basket-shopping ps-1"
                                data-index="{{ product.id }}"></i>
                         </button>
+                        <a type="button"
+                           class="btn btn-light border {% if not product.id in cart_item_ids %}d-none{% endif %}"
+                           id="to-cart-link"
+                           data-index="{{ product.id }}"
+                           href="{% url 'shop:cart:cart_detail' %}">Додано в корзину
+                            <i class="fa-solid fa-check ps-1"
+                               data-index="{{ product.id }}"></i>
+                        </a>
                     </form>
                 {% endif %}
             </div>
