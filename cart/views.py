@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from shop.models import Product
@@ -40,3 +40,9 @@ def cart_delete(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart.delete(product)
     return redirect('shop:cart:cart_detail')
+
+
+def clear_cart(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect(request.META.get('HTTP_REFERER'))

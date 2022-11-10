@@ -4,6 +4,9 @@
 {% block shop_content %}
     {% if cart %}
         <div class="cart container-xl px-0 mx-0 px-xl-5 mx-xl-5">
+            <div class="text-end">
+                <a href="{% url 'shop:cart:clear_cart' %}" class="">Очистити корзину</a>
+            </div>
             <ul class="cart-list list-unstyled mb-0">
                 {% for item in cart %}
                     {% with product=item.product %}
@@ -47,7 +50,8 @@
                                     <form action="{% url 'shop:cart:cart_delete' product.id %}"
                                           class="pt-2 float-end align-content-start">
                                         <button class="btn btn-link-mod" type="submit">
-                                            <i class="fa fa-times fa-xl" aria-hidden="true" title="Видалити з корзини"></i>
+                                            <i class="fa fa-times fa-xl" aria-hidden="true"
+                                               title="Видалити з корзини"></i>
                                         </button>
                                     </form>
                                 </div>
