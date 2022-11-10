@@ -15,7 +15,11 @@
                     <div class="col">
                         <div class="card shadow mb-3">
                             <div class="card-header">
-                                <h5 class="card-title mt-2">1. Контактні дані</h5>
+                                <h5 class="card-title mt-2 d-inline">1. Контактні дані</h5>
+                                <a href="{% url 'addresses_list' %}" title="Змінити дані за замовчуванням"
+                                   class="float-end">
+                                    <i class="fa-regular fa-pen-to-square me-2"></i>
+                                </a>
                             </div>
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:":4" %}
@@ -65,8 +69,9 @@
                     <div class="cart-checkout cart card shadow mb-3">
                         <div class="card-header d-flex justify-content-between">
                             <h5 class="card-title mt-2">Замовлення</h5>
-                            <a class="mt-2" href="{% url 'shop:cart:cart_detail' %}"><i
-                                    class="fa-regular fa-pen-to-square me-2"></i>Редагувати</a>
+                            <a class="mt-2" href="{% url 'shop:cart:cart_detail' %}" title="Редагувати замовлення">
+                                <i class="fa-regular fa-pen-to-square me-2"></i>Редагувати
+                            </a>
                         </div>
                         <div class="card-body py-0">
                             <div class="card-text">

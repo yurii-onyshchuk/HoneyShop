@@ -10,6 +10,7 @@ from cart.cart import Cart
 from checkout.forms import CheckoutForm
 from order.models import Order, OrderItem
 from checkout.models import PaymentOptions
+from accounts.models import Address
 
 
 class Checkout(LoginRequiredMixin, CreateView):
@@ -17,6 +18,19 @@ class Checkout(LoginRequiredMixin, CreateView):
     template_name = 'checkout/checkout.html'
     model = Order
     form_class = CheckoutForm
+
+    def get_initial(self):
+        initial = super(Checkout, self).get_initial()
+        initial = initial.copy()
+        try:
+            default_user_data = Address.objects.get(default_address=True)
+            all_field = [field.name for field in Address._meta.get_fields()]
+            for field in all_field:
+                initial[field] = default_user_data.__getattribute__(field)
+        except Address.DoesNotExist:
+            pass
+        finally:
+            return initial
 
     def form_valid(self, form):
         cart = Cart(self.request)
