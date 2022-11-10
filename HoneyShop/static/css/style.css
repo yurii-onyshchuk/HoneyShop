@@ -434,15 +434,19 @@ button#to-wishlist:hover {
 }
 
 /*--------------------------------------------------------------
-# Account
+# Personal cabinet
 --------------------------------------------------------------*/
 
 .personal-cabinet,
 .address-list,
 .address-form,
 .checkout,
-.orders {
+.order-list {
     max-width: 1000px;
+}
+
+.order-list .order-item button{
+font-size: 16px;
 }
 
 /*--------------------------------------------------------------

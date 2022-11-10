@@ -20,7 +20,7 @@ class Order(models.Model):
     delivery_service_department = models.CharField(verbose_name='Відділення служби доставки', max_length=50, blank=True)
     payment_option = models.ForeignKey(PaymentOptions, verbose_name='Спосіб оплати', on_delete=models.CASCADE)
     billing_status = models.BooleanField(verbose_name='Здійснено оплату', default=False)
-    total_price = models.DecimalField(verbose_name='Загальна сума оплати', max_digits=5, decimal_places=2)
+    total_price = models.DecimalField(verbose_name='Загальна сума оплати', max_digits=7, decimal_places=0)
     created_at = models.DateTimeField(verbose_name='Дата додавання', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Дата оновлення', auto_now=True)
 
@@ -32,16 +32,22 @@ class Order(models.Model):
     def __str__(self):
         return f'Замовлення №{str(self.pk)}'
 
+    def get_recipient(self):
+        return f'{self.recipient_last_name} {self.recipient_first_name} {self.recipient_patronymic}'
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Замовлення')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
-    price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Вартість')
+    price = models.DecimalField(max_digits=7, decimal_places=0, verbose_name='Вартість')
     quantity = models.PositiveIntegerField(default=1, verbose_name='Кількість')
-
-    def __str__(self):
-        return f'№{str(self.pk)} (замовлення №{str(self.order.pk)})'
 
     class Meta:
         verbose_name = 'Позиція замовлення'
         verbose_name_plural = 'Позиції замовлення'
+
+    def __str__(self):
+        return f'№{str(self.pk)} (замовлення №{str(self.order.pk)})'
+
+    def total_price(self):
+        return self.quantity * self.price

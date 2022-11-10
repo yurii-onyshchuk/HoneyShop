@@ -3,14 +3,17 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="container orders">
+    <div class="container order-list">
         <div class="row">
             <h3>{{ title }}</h3>
             <div class="col-12">
-                {% for order in object_list %}
-                   {% include 'order/inc/_order_item.html' %}
-                {% endfor %}
+                <ul class="order-list list-unstyled accordion" id="order-list-accordion">
+                    {% for order in orders %}
+                        {% include 'order/inc/_order_item.html' %}
+                    {% endfor %}
+                </ul>
             </div>
         </div>
+        {% include 'inc/_pagination.html' %}
     </div>
 {% endblock %}

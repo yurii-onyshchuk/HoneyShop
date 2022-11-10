@@ -1,0 +1,30 @@
+{% load static %}
+<li class="mb-2 border-bottom">
+    <div class="row">
+        <div class="col-auto">
+            <a href="{{ order_item.product.get_absolute_url }}">
+                <img style="width: 50px" alt="" src="{% if order_item.product.photo %}
+                                            {{ order_item.product.photo.url }}
+                                          {% else %}
+                                            {% static 'img/no-image.jpg' %}
+                                          {% endif %}">
+            </a>
+        </div>
+        <div class="col px-0 align-self-lg-center">
+            <div class="row d-flex justify-content-between">
+                <div class="col-12 col-md-5 mb-2">
+                    <a href="{{ order_item.product.get_absolute_url }}">
+                        <h6 class="title d-inline-block mb-0 mt-2">{{ order_item.product.title }}</h6>
+                    </a>
+                    <p class="price mb-0">{{ order_item.price }} ₴</p>
+                </div>
+                <div class="col-8 col-md-3 align-self-center">
+                    <span>{{ order_item.quantity }} шт.</span>
+                </div>
+                <div class="col-4 col-md-4 align-self-center px-0">
+                    <h6 class="total-price mb-0">{{ order_item.total_price }} ₴</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
