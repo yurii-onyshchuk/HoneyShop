@@ -6,12 +6,10 @@ from django.shortcuts import redirect, get_object_or_404
 from django.db.models import F
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
-from django.conf import settings
-from accounts.models import User
 
 from .models import Product, Category
 from .forms import ReviewForm
-from cart.forms import CartAddProductForm, CartAddSeveralProductForm
+from cart.forms import CartAddProductForm
 
 
 class Shop(ListView):
@@ -46,7 +44,7 @@ class DetailProduct(FormMixin, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.title
-        context['cart_form'] = CartAddSeveralProductForm
+        context['cart_form'] = CartAddProductForm
         self.object.views = F('views') + 1
         self.object.save()
         self.object.refresh_from_db()

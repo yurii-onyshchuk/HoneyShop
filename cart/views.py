@@ -3,13 +3,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from shop.models import Product
 from .cart import Cart
-from .forms import CartAddProductForm, CartAddSeveralProductForm
+from .forms import CartAddProductForm
 
 
 def cart_detail(request):
     cart = Cart(request)
     return render(request, template_name='cart/cart_detail.html',
-                  context={'cart': cart, 'cart_form': CartAddSeveralProductForm, 'title': 'Корзина'})
+                  context={'cart': cart, 'cart_form': CartAddProductForm, 'title': 'Корзина'})
 
 
 @require_POST
