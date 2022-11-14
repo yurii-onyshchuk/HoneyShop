@@ -3,9 +3,14 @@ from django.db import models
 from phonenumber_field import modelfields
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+    first_name = models.CharField(_("first name"), max_length=150, blank=False)
+    last_name = models.CharField(_("last name"), max_length=150, blank=False)
+    email = models.EmailField(_("email address"), blank=False)
+
     slug = AutoSlugField(populate_from='username', verbose_name='URL', unique=True)
     phone_number = modelfields.PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Номер телефону')
     photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=True, verbose_name='Основна світлина')
