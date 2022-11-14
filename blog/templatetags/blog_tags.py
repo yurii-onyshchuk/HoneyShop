@@ -4,8 +4,13 @@ from blog.models import Category, Post
 register = template.Library()
 
 
+@register.simple_tag
+def get_blog_categories():
+    return Category.objects.all()
+
+
 @register.inclusion_tag('blog/categories_tpl.html')
-def show_category():
+def show_categories():
     categories = Category.objects.all()
     return {'categories': categories}
 

@@ -1,7 +1,18 @@
 from django import template
-from shop.models import Product
+from shop.models import Product, Category
 
 register = template.Library()
+
+
+@register.simple_tag
+def get_shop_categories():
+    return Category.objects.all()
+
+
+@register.inclusion_tag('shop/categories_tpl.html')
+def show_categories():
+    categories = Category.objects.all()
+    return {'categories': categories}
 
 
 @register.inclusion_tag('shop/top_products.html', takes_context=True)

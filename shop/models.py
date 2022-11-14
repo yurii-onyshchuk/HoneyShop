@@ -6,6 +6,7 @@ from django.conf import settings
 class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name='Назва категорії товару')
     slug = models.SlugField(max_length=100, verbose_name='URL', unique=True)
+    photo = models.ImageField(upload_to='photos/shop/%Y/%m', blank=True, verbose_name='Фото')
 
     def __str__(self):
         return self.title

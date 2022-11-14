@@ -43,6 +43,7 @@ a:hover {
 .about-info p {
     text-align: justify;
     text-indent: 2.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .btn-main {
@@ -216,7 +217,7 @@ a:hover {
 }
 
 @media (max-width: 991px) {
-    #home_carousel_controls .carousel-inner {
+    #home_head_carousel .carousel-inner {
         padding-top: 85px;
         background: #ffd838;
     }
@@ -225,10 +226,13 @@ a:hover {
 /*--------------------------------------------------------------
 # Home
 --------------------------------------------------------------*/
-.home .carousel {
+.home .carousel#home_head_carousel {
     margin-top: -100px;
 }
 
+.shop-section .card:hover {
+    box-shadow: 3px 5px 10px 5px #e0e0e0;
+}
 
 /*--------------------------------------------------------------
 # Shop
@@ -386,13 +390,9 @@ button#to-wishlist:hover {
     object-fit: cover;
 }
 
-/*.single-post .card-text {*/
-/*    display: -webkit-box;*/
-/*    -webkit-line-clamp: 4;*/
-/*    -webkit-box-orient: vertical;*/
-/*    overflow: hidden;*/
-/*    text-overflow: ellipsis;*/
-/*}*/
+.single-post .card-text {
+    text-align: justify;
+}
 
 /*Post pagination*/
 .blog-post-pagination .nav-links .page-numbers {
@@ -445,8 +445,8 @@ button#to-wishlist:hover {
     max-width: 1000px;
 }
 
-.order-list .order-item button{
-font-size: 16px;
+.order-list .order-item button {
+    font-size: 16px;
 }
 
 /*--------------------------------------------------------------
