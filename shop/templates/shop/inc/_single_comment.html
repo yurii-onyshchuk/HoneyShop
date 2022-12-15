@@ -1,0 +1,17 @@
+{% extends 'inc/_base_single_comment.html' %}
+
+{% block comment_tools %}
+    <div class="reply tool-item">
+        <button type="button" title="Відповісти"
+                class="btn btn-link btn-link-mod btn-sm ps-0"
+                data-bs-toggle="modal"
+                data-bs-target="#add-replay_{{ review.pk }}">
+            <i class="fa fa-reply me-2" aria-hidden="true"></i>
+        </button>
+    </div>
+    {% include 'shop/inc/_modal_add_replay.html' %}
+{% endblock %}
+
+{% block single_comment %}
+    {% include 'shop/inc/_single_comment.html' with comment=reply parent=comment %}
+{% endblock %}

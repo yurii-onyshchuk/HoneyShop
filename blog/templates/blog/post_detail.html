@@ -2,24 +2,58 @@
 {% load static %}
 
 {% block blog_content %}
-    <div class="blog-post-detail">
-        <ul class="post-info ps-0 mb-0 text-start">
-            <li class="me-4 mb-2">
-                <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
-            </li>
-            <li class="me-4 mb-2">
-                <i class="fa fa-eye me-2"></i>{{ post.views }}
-            </li>
-            <li class="mb-2">
-                <i class="fa fa-cubes me-2"></i>
-                <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
-            </li>
-        </ul>
-        <div class="col">
-            <a href="{{ post.photo.url }}">
-                <img src="{{ post.photo.url }}" class="post-image card-img-top mb-3" alt="...">
-            </a>
+    <article class="post-detail-area">
+        <div class="blog-post-detail">
+            <ul class="post-info ps-0 mb-0 text-start">
+                <li class="me-4 mb-2">
+                    <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
+                </li>
+                <li class="me-4 mb-2">
+                    <i class="fa fa-eye me-2"></i>{{ post.views }}
+                </li>
+                <li class="mb-2">
+                    <i class="fa fa-cubes me-2"></i>
+                    <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+                </li>
+            </ul>
+            <div class="col">
+                <a href="{{ post.photo.url }}">
+                    <img src="{{ post.photo.url }}" class="post-image card-img-top mb-3" alt="...">
+                </a>
+            </div>
+            <div class="post-content">{{ post.content|safe }}</div>
         </div>
-        <div class="post-content">{{ post.content|safe }}</div>
-    </div>
+        <section class="comments mb-3">
+            {% if user.is_authenticated %}
+                <h6 class="mt-4"><a name="comments">Залишити коментар</a></h6>
+                <form method="POST">
+                    <div class="comment">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent" id="contactparent" value="">
+                        {{ form.as_p }}
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-warning btn-main" value="Надіслати">Надіслати</button>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <div class="border-top border-bottom py-3 mb-4">
+                    <p>Авторизуйтеся, щоб залишити коментар</p>
+                    <a class="btn btn-warning btn-main"
+                       href="{% url 'login' %}?next={{ request.path }}">Авторизуватися</a>
+                </div>
+            {% endif %}
+            <h6 class="mb-0 pb-2">Коментарі ({{ post.get_comment_count }})</h6>
+            <ul class="comment-list border-bottom ps-0">
+                {% for comment in comments %}
+                    {% if comment.is_parent %}
+                        {% include 'blog/inc/_single_comment.html' with comment=comment parent=comment %}
+                    {% endif %}
+                {% empty %}
+                    <div class="py-3 border-top">Немає коментарів</div>
+                {% endfor %}
+            </ul>
+            {% include 'inc/_pagination.html' with page_obj=comments anchor='#comments' %}
+        </section>
+    </article>
 {% endblock %}

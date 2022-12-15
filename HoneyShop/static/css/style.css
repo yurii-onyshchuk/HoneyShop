@@ -270,25 +270,6 @@ a:hover {
     font-weight: 600;
 }
 
-.review-item .user-photo img {
-    border-radius: 50%;
-    float: left;
-    width: 60px;
-}
-
-.review-item .body {
-    margin-left: 70px;
-}
-
-.review-item p.data-time {
-    color: #7c7c7c;
-    font-size: 14px;
-}
-
-.reply-list {
-    margin-left: 40px;
-}
-
 .cart .checkout-box {
     border: 1px solid #ffd838;
     border-radius: 5px;
@@ -424,6 +405,77 @@ button#to-wishlist:hover {
 
 .blog-post-pagination .nav-links a {
     text-decoration: none;
+}
+
+/*--------------------------------------------------------------
+# Comments part
+--------------------------------------------------------------*/
+.comments ul li .comment {
+    position: relative;
+}
+
+.comments .comment-author h5 {
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    /*margin-bottom: 0.2rem;*/
+}
+
+.comments .comment-date p {
+    font-size: 13px;
+    font-weight: 500;
+    color: #696363;
+    /*margin-bottom: 0.6rem;*/
+}
+
+.comments .comment-body p {
+    font-size: 15px;
+    font-weight: 500;
+    /*margin-bottom: 0.6rem;*/
+}
+
+.comments .comment-tools div.tool-item {
+    display: inline-block;
+    color: #696363;
+    margin-right: 30px;
+}
+
+.comments .comment-tools div.tool-item i {
+    color: #696363;
+    font-size: 18px;
+    margin-right: 3px;
+}
+
+.comments .comment-tools .reply-list-collapse-button span {
+    color: #696363;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.comments .comment-tools .reply-list-collapse-button span i {
+    color: #696363;
+    font-size: 13px;
+}
+
+
+.comments ul li {
+    list-style: none;
+}
+
+.comments .comment-author-photo {
+    border-radius: 50%;
+    float: left;
+    height: 55px;
+    width: 55px;
+}
+
+.comments .comment-details {
+    margin-left: 70px;
+}
+
+[aria-expanded="false"] > .expanded,
+[aria-expanded="true"] > .collapsed {
+    display: none;
 }
 
 /*--------------------------------------------------------------
