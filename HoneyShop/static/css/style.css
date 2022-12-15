@@ -375,38 +375,6 @@ button#to-wishlist:hover {
     text-align: justify;
 }
 
-/*Post pagination*/
-.blog-post-pagination .nav-links .page-numbers {
-    border: 1px solid #ffd838;
-    border-radius: 50%;
-    color: #000000;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    height: 35px;
-    line-height: 35px;
-    list-style: outside none none;
-    margin-right: 5px;
-    text-align: center;
-    width: 35px;
-}
-
-.blog-post-pagination .nav-links .page-numbers.current {
-    background: #ffd838;
-    color: #000000;
-    font-weight: 600;
-}
-
-.blog-post-pagination .nav-links .page-numbers:hover {
-    background: #ffd838;
-    color: #000000;
-    font-weight: 600;
-}
-
-.blog-post-pagination .nav-links a {
-    text-decoration: none;
-}
-
 /*--------------------------------------------------------------
 # Comments part
 --------------------------------------------------------------*/
@@ -476,6 +444,40 @@ button#to-wishlist:hover {
 [aria-expanded="false"] > .expanded,
 [aria-expanded="true"] > .collapsed {
     display: none;
+}
+
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
+.pagination .nav-links .page-numbers {
+    border: 1px solid #ffd838;
+    border-radius: 50%;
+    color: #000000;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    height: 35px;
+    line-height: 35px;
+    list-style: outside none none;
+    margin-right: 5px;
+    text-align: center;
+    width: 35px;
+}
+
+.pagination .nav-links .page-numbers.current {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.pagination .nav-links .page-numbers:hover {
+    background: #ffd838;
+    color: #000000;
+    font-weight: 600;
+}
+
+.pagination .nav-links a {
+    text-decoration: none;
 }
 
 /*--------------------------------------------------------------
