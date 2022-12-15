@@ -5,11 +5,16 @@
         <button type="button" title="Відповісти"
                 class="btn btn-link btn-link-mod btn-sm ps-0"
                 data-bs-toggle="modal"
-                data-bs-target="#add-replay_{{ review.pk }}">
+                data-bs-target="{% if user.is_authenticated %}
+                                    #add-replay_{{ review.pk }}
+                                {% else %}
+                                    #authentication
+                                {% endif %}">
             <i class="fa fa-reply me-2" aria-hidden="true"></i>
         </button>
     </div>
     {% include 'shop/inc/_modal_add_replay.html' %}
+    {% include 'accounts/inc/_modal_authentication.html' with massage='Авторизуйтеся, щоб залишити відгук' anchor='#comments' %}
 {% endblock %}
 
 {% block single_comment %}

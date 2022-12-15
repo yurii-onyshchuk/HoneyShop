@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
@@ -7,7 +8,7 @@ from django.db.models import F
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 
-from .models import Product, Category
+from .models import Product, Category, Review
 from .forms import ReviewForm
 from cart.forms import CartAddProductForm
 
@@ -45,6 +46,12 @@ class DetailProduct(FormMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.title
         context['cart_form'] = CartAddProductForm
+
+        _list = Review.objects.filter(product__slug=self.kwargs.get('slug'), parent__isnull=True)
+        paginator = Paginator(_list, 10)
+        page = self.request.GET.get('page')
+        context['reviews'] = paginator.get_page(page)
+
         self.object.views = F('views') + 1
         self.object.save()
         self.object.refresh_from_db()

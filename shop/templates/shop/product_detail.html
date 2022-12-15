@@ -87,6 +87,7 @@
                         </div>
                         <div class="tab-pane container fade" id="reviews">
                             <section class="comments mb-3">
+                                <a name="comments"></a>
                                 <div class="row mt-3">
                                     <div class="col">
                                         <div class="pb-3">
@@ -99,11 +100,13 @@
                                             {% else %}
                                                 <p>Авторизуйтеся, щоб залишити відгук</p>
                                                 <a class="btn btn-warning btn-main"
-                                                   href="{% url 'login' %}?next={{ request.path }}">Авторизуватися</a>
+                                                   href="{% url 'login' %}?next={{ request.path }}#comments">
+                                                    Авторизуватися
+                                                </a>
                                             {% endif %}
                                         </div>
                                         <ul class="comment-list border-bottom ps-0">
-                                            {% for review in product.reviews.all %}
+                                            {% for review in reviews %}
                                                 {% if review.is_parent %}
                                                     {% include 'shop/inc/_single_comment.html' with comment=review parent=review %}
                                                 {% endif %}
@@ -113,7 +116,7 @@
                                                 </div>
                                             {% endfor %}
                                         </ul>
-                                        {% include 'inc/_pagination.html' with page_obj=comments anchor='#comments' %}
+                                        {% include 'inc/_pagination.html' with page_obj=reviews anchor='#comments' %}
                                     </div>
                                 </div>
                             </section>
