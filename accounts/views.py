@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -12,13 +13,19 @@ class UserRegister(CreateView):
     extra_context = {'title': 'Реєстрація'}
     template_name = 'accounts/register.html'
     form_class = forms.UserRegisterForm
-    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return redirect('home')
 
 
 class UserAuthentication(LoginView):
     extra_context = {'title': 'Вхід'}
     template_name = 'accounts/login.html'
     form_class = forms.UserAuthenticationForm
+    redirect_authenticated_user = True
     success_url = reverse_lazy('home')
 
 
