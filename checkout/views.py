@@ -23,7 +23,7 @@ class Checkout(LoginRequiredMixin, CreateView):
         initial = super(Checkout, self).get_initial()
         initial = initial.copy()
         try:
-            default_user_data = Address.objects.get(default_address=True)
+            default_user_data = Address.objects.get(user=self.request.user, default_address=True)
             all_field = [field.name for field in Address._meta.get_fields()]
             for field in all_field:
                 initial[field] = default_user_data.__getattribute__(field)
