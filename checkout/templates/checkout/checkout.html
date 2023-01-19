@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
@@ -9,6 +10,7 @@
             <div class="row">
                 <h3>{{ title }}</h3>
                 <div class="col">
+                    {{ form|as_crispy_errors }}
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
@@ -24,9 +26,7 @@
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:":4" %}
                                     <p class="contact-info-item">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
+                                        {{ field|as_crispy_field }}
                                     </p>
                                 {% endfor %}
                             </div>
@@ -40,9 +40,7 @@
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:"4:10" %}
                                     <p class="delivery-info-item">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
+                                        {{ field|as_crispy_field }}
                                     </p>
                                 {% endfor %}
                             </div>
@@ -56,9 +54,7 @@
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:"10:" %}
                                     <p class="payment-info-item">
-                                        {{ field.label_tag }}
-                                        {{ field }}
-                                        {{ field.errors }}
+                                        {{ field|as_crispy_field }}
                                     </p>
                                 {% endfor %}
                             </div>

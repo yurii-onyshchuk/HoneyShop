@@ -10,46 +10,22 @@ class UserRegisterForm(UserCreationForm):
         self.fields['username'].help_text = ''
         self.fields['password1'].help_text = ''
         self.fields['password2'].help_text = ''
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2')
 
 
-class UserAuthenticationForm(AuthenticationForm):
+class UserSetPasswordForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
-        super(UserAuthenticationForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
+        super().__init__(*args, **kwargs)
+        self.fields['new_password1'].help_text = ''
 
 
 class UserPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = ''
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
-
-
-class UserSetPasswordForm(SetPasswordForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
 
 
 class UserForm(forms.ModelForm):
@@ -57,11 +33,6 @@ class UserForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'autofocus': False})
         self.fields['username'].help_text = ''
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = User
@@ -70,14 +41,6 @@ class UserForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            if field.widget.attrs.get('class'):
-                field.widget.attrs['class'] += ' form-control'
-            else:
-                field.widget.attrs['class'] = 'form-control'
-
     class Meta:
         model = Address
         exclude = ['user', 'default_address']

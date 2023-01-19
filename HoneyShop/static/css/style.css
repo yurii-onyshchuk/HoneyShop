@@ -28,6 +28,21 @@ h5 {
     padding-bottom: 15px;
 }
 
+.max-w-1000 {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.page-title {
+    text-align: center;
+}
+
+.layout-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0 0.75rem;
+}
+
 a {
     color: #000000;
     font-style: normal;
@@ -63,6 +78,10 @@ a:hover {
 .btn-link-mod:hover,
 .btn-link-mod:focus {
     color: #d78300;
+}
+
+.bi:before {
+    line-height: 1.25;
 }
 
 /*--------------------------------------------------------------
@@ -153,7 +172,8 @@ a:hover {
 
 .navbar-toolbar .dropdown-item:hover,
 .navbar-toolbar .dropdown-item.active,
-.navbar-toolbar .dropdown-item.active:hover {
+.navbar-toolbar .dropdown-item.active:hover,
+.navbar-toolbar .dropdown-item i:hover {
     color: #d78300;
     background-color: #f3f3f3;
 }
@@ -162,6 +182,7 @@ a:hover {
 .navbar-toolbar .dropdown-item.active:hover {
     font-weight: 500;
 }
+
 
 /*--------------------------------------------------------------
 # Nav Bar Scrolled
@@ -172,13 +193,14 @@ a:hover {
 }
 
 .navbar-scrolled .navbar-nav a,
-.navbar-scrolled a i,
+.navbar-scrolled  a.tool-link i,
 .navbar-scrolled .navbar-brand,
 .navbar-scrolled .navbar-brand:hover {
     color: #ffffff;
 }
 
-.navbar-scrolled a:hover {
+.navbar-scrolled a:hover,
+.navbar-scrolled a.tool-link i:hover {
     color: #ffbe33;
 }
 
@@ -490,15 +512,6 @@ button#to-wishlist:hover {
 /*--------------------------------------------------------------
 # Personal cabinet
 --------------------------------------------------------------*/
-
-.personal-cabinet,
-.address-list,
-.address-form,
-.checkout,
-.order-list {
-    max-width: 1000px;
-}
-
 .order-list .order-item button {
     font-size: 16px;
 }

@@ -5,7 +5,8 @@ from .models import Order
 
 
 class OrderList(LoginRequiredMixin, ListView):
-    extra_context = {'title': 'Мої замовлення'}
+    extra_context = {'title': 'Мої замовлення',
+                     'subtitle': 'Переглядайте, відстежуйте, змінюйте або купуйте знову'}
     template_name = 'order/order_list.html'
     context_object_name = 'orders'
     paginate_by = 10

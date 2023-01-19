@@ -1,3 +1,5 @@
+{% load crispy_forms_filters %}
+
 <div class="modal fade" id="add-replay_{{ review.pk }}" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -8,7 +10,7 @@
             </div>
             <form method="POST">
                 <div class="modal-body">
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     {% csrf_token %}
                     <input type="hidden" name="parent" value="{{ review.pk }}">
                 </div>

@@ -11,7 +11,7 @@
             <div class="navbar-toolbar d-flex order-md-2">
                 <ul class="toolbar-list list-unstyled d-flex align-items-center mb-0">
                     <li class="nav-item cart me-3 me-sm-4 me-md-3">
-                        <a class="cart-link" href="{% url 'shop:cart:cart_detail' %}">
+                        <a class="tool-link cart-link" href="{% url 'shop:cart:cart_detail' %}">
                             <i class="fa-solid fa-basket-shopping"></i>
                             {% with cart|length as amount %}
                                 <span style="display: {% if amount > 0 %}block{% else %}none{% endif %}"
@@ -21,7 +21,7 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item like mx-3 mx-sm-4 mx-md-3">
-                            <a class="like-link" href="{% url 'shop:wishlist' %}">
+                            <a class="tool-link like-link" href="{% url 'shop:wishlist' %}">
                                 <i class="fa-regular fa-heart"></i>
                                 {% with wish_list|length as amount %}
                                     <span style="display: {% if amount > 0 %}block{% else %}none{% endif %}"
@@ -33,18 +33,19 @@
                     <li class="nav-item user ms-3 ms-sm-4 ms-md-3">
                         {% if user.is_authenticated %}
                             <div class="dropdown">
-                                <a class="user-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <a class="tool-link user-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
                                     <i class="fa-regular fa-user"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <h6 class="dropdown-header font">{{ user.first_name }} {{ user.last_name }}</h6>
                                     </li>
-                                    <li><a class="dropdown-item" href="{% url 'personal_cabinet' %}">Особистий
-                                        кабінет</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'order_list' %}">Мої замовлення</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'personal_cabinet' %}">
+                                        <i class="bi bi-person me-2 fs-6"></i>Особистий кабінет</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'order_list' %}">
+                                        <i class="bi bi-gift me-2 fs-6"></i>Мої замовлення</a></li>
                                     <li><a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}">
-                                        Вийти з акаунту </a>
+                                        <i class="bi bi-box-arrow-right me-2 fs-6"></i>Вийти з акаунту </a>
                                     </li>
                                 </ul>
                             </div>

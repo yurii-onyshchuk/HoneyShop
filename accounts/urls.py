@@ -4,7 +4,7 @@ from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordCh
 from . import views, forms
 
 urlpatterns = [
-    path('register/', views.UserRegister.as_view(), name='register'),
+    path('sign-up/', views.UserSignUp.as_view(), name='sign_up'),
     path('login/', views.UserAuthentication.as_view(), name='login'),
     path('logout', LogoutView.as_view(next_page='home'), name='logout'),
 

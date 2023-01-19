@@ -1,3 +1,5 @@
+{% load crispy_forms_filters %}
+
 <div class="modal fade" id="add-review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -7,7 +9,7 @@
             </div>
             <form method="POST">
                 <div class="modal-body">
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                     {% csrf_token %}
                 </div>
                 <div class="modal-footer justify-content-center">

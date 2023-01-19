@@ -10,7 +10,7 @@
     </div>
     <div class="comment-details">
         <div class="comment-author">
-            <h5 class="mb-1">{{ comment.user }}</h5>
+            <h5 class="mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
         </div>
         <div class="comment-date">
             <p class="mb-2"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>

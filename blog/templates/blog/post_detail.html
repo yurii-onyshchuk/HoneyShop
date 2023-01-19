@@ -1,5 +1,6 @@
 {% extends 'blog/blog_base.html' %}
 {% load static %}
+{% load crispy_forms_filters %}
 
 {% block blog_content %}
     <article class="post-detail-area">
@@ -31,7 +32,7 @@
                     <div class="comment">
                         {% csrf_token %}
                         <input type="hidden" name="parent" id="contactparent" value="">
-                        {{ form.as_p }}
+                        {{ form|crispy }}
                         <div class="text-end">
                             <button type="submit" class="btn btn-warning btn-main" value="Надіслати">Надіслати</button>
                         </div>
