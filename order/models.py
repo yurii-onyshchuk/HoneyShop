@@ -17,7 +17,7 @@ class Order(models.Model):
     street = models.CharField(verbose_name='Вулиця', max_length=50, blank=True, null=True)
     house = models.CharField(verbose_name='Будинок', max_length=6, blank=True, null=True)
     flat = models.CharField(verbose_name='Квартира', max_length=5, blank=True, null=True)
-    delivery_service_department = models.CharField(verbose_name='Відділення служби доставки', max_length=50, blank=True)
+    delivery_service_department = models.CharField(verbose_name='Відділення служби доставки', max_length=50, blank=True, null=True)
     payment_option = models.ForeignKey(PaymentOptions, verbose_name='Спосіб оплати', on_delete=models.CASCADE)
     billing_status = models.BooleanField(verbose_name='Здійснено оплату', default=False)
     total_price = models.DecimalField(verbose_name='Загальна сума оплати', max_digits=7, decimal_places=0)

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -11,6 +12,7 @@ from checkout.forms import CheckoutForm
 from order.models import Order, OrderItem
 from checkout.models import PaymentOptions
 from accounts.models import Address
+from checkout.utils import AllowOnlyRedirectMixin
 
 
 class Checkout(LoginRequiredMixin, CreateView):
@@ -18,6 +20,11 @@ class Checkout(LoginRequiredMixin, CreateView):
     template_name = 'checkout/checkout.html'
     model = Order
     form_class = CheckoutForm
+
+    def get(self, request, *args, **kwargs):
+        if not Cart(self.request):
+            return redirect('order_list')
+        return super().get(request, *args, **kwargs)
 
     def get_initial(self):
         initial = super(Checkout, self).get_initial()
@@ -41,19 +48,19 @@ class Checkout(LoginRequiredMixin, CreateView):
         for item in cart:
             OrderItem.objects.create(order_id=order.pk, product=item['product'], price=item['price'],
                                      quantity=item['quantity'])
+        cart.clear()
         return super().form_valid(form)
 
     def get_success_url(self):
         method = PaymentOptions.objects.get(pk=int(self.request.POST.get('payment_option'))).method
         if method == 'AFTER':
-            cart = Cart(self.request)
-            cart.clear()
-            return reverse_lazy('success')
+            return reverse_lazy('checkout_success')
         elif method == 'ONLINE':
             self.object.refresh_from_db()
             return reverse_lazy('payment', kwargs={'pk': self.object.pk})
 
 
+@login_required
 def payment(request, pk):
     order = Order.objects.get(pk=pk)
     api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
@@ -66,11 +73,14 @@ def payment(request, pk):
     return redirect(url)
 
 
-class CheckoutSuccess(TemplateView):
+class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Замовлення успішно оформлене'}
     template_name = 'checkout/checkout_success.html'
+    allow_previous_url = reverse_lazy('checkout')
+    redirect_url = reverse_lazy('order_list')
 
 
-class PaymentSuccess(TemplateView):
+class PaymentSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Оплата успішна'}
     template_name = 'checkout/payment_success.html'
+    redirect_url = reverse_lazy('order_list')
