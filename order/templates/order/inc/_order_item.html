@@ -49,6 +49,9 @@
                         </p>
                         <p><span class="text-muted">Спосіб доставки:</span><br>{{ order.delivery_option }}</p>
                         <p><span class="text-muted">Спосіб оплати:</span><br>{{ order.payment_option }}</p>
+                        <p><span class="text-muted">Статус оплати:</span><br>{% if order.billing_status %}
+                            <span class="paid">Оплачено</span>{% else %}
+                            <span class="not-paid">Не оплачено</span>{% endif %}</p>
                     </div>
                 </div>
             </div>

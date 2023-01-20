@@ -102,9 +102,6 @@ class EditAddress(LoginRequiredMixin, UpdateView):
 def set_default_address(request, pk):
     Address.objects.filter(user=request.user, default_address=True).update(default_address=False)
     Address.objects.filter(user=request.user, pk=pk).update(default_address=True)
-    # previous_url = request.META.get("HTTP_REFERER")
-    # if 'delivery_address' in previous_url:
-    #     return redirect("checkout:delivery_address")
     return redirect('addresses_list')
 
 

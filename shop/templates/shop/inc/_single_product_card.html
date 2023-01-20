@@ -1,67 +1,57 @@
 {% load static %}
 
-<div class="single-product mb-4">
-    <div class="card">
-        <div class="img-and-button">
-            {% if user.is_authenticated %}
-                <form id="to-wishlist-form"
-                      data-index="{{ product.id }}">
+<div class="single-product card d-flex h-auto">
+    <div class="product-header">
+        {% if user.is_authenticated %}
+            <form id="to-wishlist-form" data-index="{{ product.id }}">
+                {% csrf_token %}
+                <button id="to-wishlist" class="btn btn-link-mod fs-4" type="button" data-index="{{ product.id }}"
+                        data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
+                    <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart"
+                       data-index="{{ product.id }}"></i>
+                </button>
+            </form>
+        {% endif %}
+        <a href="{{ product.get_absolute_url }}">
+            {% if product.photo %}
+                <img src="{{ product.photo.url }}" class="card-img-top product-photo" alt="">
+            {% else %}
+                <img src="{% static 'img/no-image.jpg' %}" class="card-img product-photo" alt="">
+            {% endif %}
+        </a>
+    </div>
+    <div class="card-body d-flex flex-column h-100 pt-0 pb-2">
+        <a href="{{ product.get_absolute_url }}">
+            <h6 class="card-title pt-1">{{ product.title }}</h6>
+        </a>
+        <a class="reviews mt-auto" href="{{ product.get_absolute_url }}">Відгуки({{ product.get_reviews_count }})</a>
+        <h6 class="price mt-2">{{ product.price }} грн.</h6>
+        <div class="availability mb-2 text-center">
+            {% if product.available %}
+                <span class="available"><i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності</span>
+            {% else %}
+                <span class="not-available">Немає в наявності</span>
+            {% endif %}
+        </div>
+        <div class="buy-button text-center">
+            {% if product.available %}
+                <form class="add-to-cart-form" data-index="{{ product.id }}">
                     {% csrf_token %}
-                    <button type="button"
-                            class="btn btn-link-mod"
-                            id="to-wishlist"
-                            data-index="{{ product.id }}"
-                            data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
-                        <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart"
-                           data-index="{{ product.id }}"></i>
+                    {{ cart_form }}
+                    <button id="add-to-cart" type="button" data-index="{{ product.id }}"
+                            class="btn btn-warning btn-main btn-sm {% if product.id in cart_item_ids %}d-none{% endif %}"
+                            data-url="{% url 'shop:cart:cart_add' %}">
+                        Купити
+                        <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
                     </button>
+                    <a href="{% url 'shop:cart:cart_detail' %}"
+                       id="to-cart-link" type="button" data-index="{{ product.id }}"
+                       class="btn btn-success btn-sm {% if not product.id in cart_item_ids %}d-none{% endif %}">
+                        В корзині
+                        <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
+                    </a>
                 </form>
             {% endif %}
-            <a href="{{ product.get_absolute_url }}">
-                {% if product.photo %}
-                    <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
-                {% else %}
-                    <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
-                {% endif %}
-            </a>
-        </div>
-        <div class="card-body">
-            <a href="{{ product.get_absolute_url }}"><h5 class="card-title">{{ product.title }}</h5></a>
-            <a class="reviews" href="{{ product.get_absolute_url }}">Відгуки({{ product.get_reviews_count }})</a>
-            <h5 class="price mt-2">{{ product.price }} грн.</h5>
-            <div class="mb-2">
-                {% if product.available %}
-                    <span class="available"><i class="fa fa-check-circle-o me-2"
-                                               aria-hidden="true"></i>В наявності</span>
-                {% else %}
-                    <span class="not-available">Немає в наявності</span>
-                {% endif %}
-            </div>
-            <div class="text-center">
-                {% if product.available %}
-                    <form class="add-to-cart-form"
-                          data-index="{{ product.id }}">
-                        {% csrf_token %}
-                        {{ cart_form }}
-                        <button type="button"
-                                class="btn btn-warning btn-main {% if product.id in cart_item_ids %}d-none{% endif %}"
-                                id="add-to-cart"
-                                data-index="{{ product.id }}"
-                                data-url="{% url 'shop:cart:cart_add' %}">В корзину
-                            <i class="fa-solid fa-basket-shopping ps-1"
-                               data-index="{{ product.id }}"></i>
-                        </button>
-                        <a type="button"
-                           class="btn btn-light border {% if not product.id in cart_item_ids %}d-none{% endif %}"
-                           id="to-cart-link"
-                           data-index="{{ product.id }}"
-                           href="{% url 'shop:cart:cart_detail' %}">Додано в корзину
-                            <i class="fa-solid fa-check ps-1"
-                               data-index="{{ product.id }}"></i>
-                        </a>
-                    </form>
-                {% endif %}
-            </div>
         </div>
     </div>
 </div>

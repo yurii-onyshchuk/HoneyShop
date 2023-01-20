@@ -7,8 +7,9 @@
             <div class="row">
                 <div class="col-md-5">
                     {% if product.photo %}
-                        <a href="{{ product.photo.url }}"><img src="{{ product.photo.url }}" class="card-img-top"
-                                                               alt="..."></a>
+                        <a href="{{ product.photo.url }}">
+                            <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
+                        </a>
                     {% else %}
                         <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
                     {% endif %}
@@ -27,25 +28,22 @@
                     <div class="mb-4 text-center text-md-start">
                         {% if product.available %}
                             <div class="d-inline-block mb-3">
-                                <form class="add-to-cart-form"
-                                      data-index="{{ product.id }}">
+                                <form class="add-to-cart-form" data-index="{{ product.id }}">
                                     {% csrf_token %}
                                     {{ cart_form }}
-                                    <button type="button"
+                                    <button id="add-to-cart" type="button"
                                             class="btn btn-warning {% if product.id in cart_item_ids %}d-none{% endif %}"
-                                            id="add-to-cart"
                                             data-index="{{ product.id }}"
-                                            data-url="{% url 'shop:cart:cart_add' %}">В корзину
-                                        <i class="fa-solid fa-basket-shopping ps-1"
-                                           data-index="{{ product.id }}"></i>
+                                            data-url="{% url 'shop:cart:cart_add' %}">
+                                        Купити
+                                        <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
                                     </button>
-                                    <a type="button"
-                                       class="btn btn-light border {% if not product.id in cart_item_ids %}d-none{% endif %}"
-                                       id="to-cart-link"
+                                    <a id="to-cart-link" type="button"
+                                       class="btn btn-success {% if not product.id in cart_item_ids %}d-none{% endif %}"
                                        data-index="{{ product.id }}"
-                                       href="{% url 'shop:cart:cart_detail' %}">Додано в корзину
-                                        <i class="fa-solid fa-check ps-1"
-                                           data-index="{{ product.id }}"></i>
+                                       href="{% url 'shop:cart:cart_detail' %}">
+                                        В корзині
+                                        <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
                                     </a>
                                 </form>
                             </div>
@@ -55,8 +53,7 @@
                                 <form id="to-wishlist-form"
                                       data-index="{{ product.id }}">
                                     {% csrf_token %}
-                                    <button type="button" class="btn btn-link-mod"
-                                            id="to-wishlist"
+                                    <button id="to-wishlist" type="button" class="btn btn-link-mod"
                                             data-index="{{ product.id }}"
                                             data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
                                         <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart fa-2xl"
@@ -73,8 +70,9 @@
                             <a class="nav-link active" data-bs-toggle="tab" href="#description">Опис</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#reviews">Відгуки
-                                ({{ product.get_reviews_count }})</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#reviews">
+                                Відгуки ({{ product.get_reviews_count }})
+                            </a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -93,14 +91,14 @@
                                         <div class="pb-3">
                                             {% if user.is_authenticated %}
                                                 <button class="btn btn-warning btn-main" data-bs-toggle="modal"
-                                                        data-bs-target="#add-review">Залишити
-                                                    відгук
+                                                        data-bs-target="#add-review">
+                                                    Залишити відгук
                                                 </button>
                                                 {% include 'shop/inc/_modal_add_review.html' %}
                                             {% else %}
                                                 <p>Авторизуйтеся, щоб залишити відгук</p>
-                                                <a class="btn btn-warning btn-main"
-                                                   href="{% url 'login' %}?next={{ request.path }}#comments">
+                                                <a href="{% url 'login' %}?next={{ request.path }}#comments"
+                                                   class="btn btn-warning btn-main">
                                                     Авторизуватися
                                                 </a>
                                             {% endif %}

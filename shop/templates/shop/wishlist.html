@@ -10,7 +10,7 @@
         {% endif %}
         <div class="row">
             {% for product in products %}
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-6 col-lg-4 col-xl-3 d-flex h-auto">
                     {% include 'shop/inc/_single_product_card.html' %}
                 </div>
             {% empty %}

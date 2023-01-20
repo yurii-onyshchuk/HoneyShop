@@ -17,17 +17,15 @@
                     <div class="col">
                         <div class="card shadow mb-3">
                             <div class="card-header">
-                                <h5 class="card-title mt-2 d-inline">1. Контактні дані</h5>
+                                <h5 class="card-title mt-2 d-inline-block">1. Контактні дані</h5>
                                 <a href="{% url 'addresses_list' %}" title="Змінити дані за замовчуванням"
                                    class="float-end">
-                                    <i class="fa-regular fa-pen-to-square me-2"></i>
+                                    <i class="fa-regular fa-pen-to-square mt-2 me-2"></i>
                                 </a>
                             </div>
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:":4" %}
-                                    <p class="contact-info-item">
-                                        {{ field|as_crispy_field }}
-                                    </p>
+                                    {{ field|as_crispy_field }}
                                 {% endfor %}
                             </div>
                         </div>
@@ -39,9 +37,7 @@
                             </div>
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:"4:10" %}
-                                    <p class="delivery-info-item">
-                                        {{ field|as_crispy_field }}
-                                    </p>
+                                    {{ field|as_crispy_field }}
                                 {% endfor %}
                             </div>
                         </div>
@@ -53,9 +49,7 @@
                             </div>
                             <div class="card-body">
                                 {% for field in form.visible_fields|slice:"10:" %}
-                                    <p class="payment-info-item">
-                                        {{ field|as_crispy_field }}
-                                    </p>
+                                    {{ field|as_crispy_field }}
                                 {% endfor %}
                             </div>
                         </div>
