@@ -4,26 +4,22 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="container-md order-list">
-        <div class="row max-w-1000">
-            <div class="col text-center text-sm-start pb-2 border-bottom">
-                <h3><i class="bi bi-gift fs-3 me-2"></i>{{ title }}</h3>
-                <h6 class="text-muted text-start">{{ subtitle }}</h6>
-            </div>
-            <div class="col-12 mt-3">
-                <ul class="order-list list-unstyled accordion" id="order-list-accordion">
-                    {% for order in orders %}
-                        {% include 'order/inc/_order_item.html' %}
-                    {% empty %}
-                        <div class="cart-empty text-center">
-                            <img src="{% static 'img/cart_empty.png' %}" height="150px" alt="">
-                            <h5 class="my-3">Ви ще не зробили щодного замовлення</h5>
-                            <p><a href="/shop/">Але це ніколи не пізно виправити :)</a></p>
-                        </div>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="user-orders max-w-1000">
+        <div class="text-center text-sm-start mb-3">
+            <h3><i class="bi bi-gift fs-3 me-2"></i>{{ title }}</h3>
+            <h6 class="text-muted text-start border-bottom pb-2">{{ subtitle }}</h6>
         </div>
+        <ul class="order-list list-unstyled accordion" id="order-list-accordion">
+            {% for order in orders %}
+                {% include 'order/inc/_order_item.html' %}
+            {% empty %}
+                <div class="cart-empty text-center">
+                    <img src="{% static 'img/cart-empty.png' %}" height="150px" alt="">
+                    <h5 class="my-3">Ви ще не зробили щодного замовлення</h5>
+                    <p><a href="/shop/">Але це ніколи не пізно виправити :)</a></p>
+                </div>
+            {% endfor %}
+        </ul>
         {% include 'inc/_pagination.html' %}
     </div>
 {% endblock %}

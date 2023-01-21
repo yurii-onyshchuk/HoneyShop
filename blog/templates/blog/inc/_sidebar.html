@@ -1,6 +1,17 @@
 {% load blog_tags %}
 
-<div class="sidebar">
-    {% show_categories %}
-    {% show_post_list %}
+<div class="col-12 col-md-5 col-lg-4 col-xxl-3 order-1 order-md-0">
+    <div class="sidebar">
+        <div class="search d-none d-md-block mb-3">
+            <form class="d-flex" role="search" action="{% url 'blog:search' %}" method="get">
+                <div class="input-group">
+                    <input class="form-control" name="s" type="search" placeholder="Пошук статтей ..."
+                           aria-label="Search">
+                    <button class="btn btn-warning btn-main" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+        {% show_categories %}
+        {% show_post_list %}
+    </div>
 </div>

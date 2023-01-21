@@ -1,20 +1,23 @@
-{% extends 'shop/shop_base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block shop_content %}
-    <div class="product-list">
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
+
+{% block content %}
+    <div class="wishlist max-w-1000">
+        <h2 class="page-title">{{ title }}</h2>
         {% if products %}
             <div class="text-end border-bottom mb-3">
                 <a href="{% url 'shop:clear_wishlist' %}">Очистити список вподобань</a>
             </div>
         {% endif %}
-        <div class="row">
+        <div class="row g-3">
             {% for product in products %}
-                <div class="col-6 col-lg-4 col-xl-3 d-flex h-auto">
+                <div class="col-6 col-sm-4 col-md-6 col-lg-4 col-xl-3 d-flex h-auto">
                     {% include 'shop/inc/_single_product_card.html' %}
                 </div>
             {% empty %}
-                <div class="cart-empty text-center">
+                <div class="cart-empty col text-center">
                     <img src="{% static 'img/wishlist-empty.png' %}" height="150px" alt="">
                     <h5 class="my-3">Список вподобань порожній</h5>
                     <p><a href="{% url 'shop:shop' %}">Але це ніколи не пізно виправити :)</a></p>

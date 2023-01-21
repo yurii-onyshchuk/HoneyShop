@@ -1,52 +1,60 @@
-{% extends 'blog/blog_base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block blog_content %}
-    <div class="blog-post-list">
-        <div class="row">
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
+
+{% block sidebar %}
+    {% include 'blog/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="post-list">
+        <h2 class="page-title">{{ title }}</h2>
+        <div class="row g-4">
             {% for post in posts %}
                 <div class="col-12">
-                    <div class="single-post mb-4">
-                        <div class="card shadow">
-                            <div class="row">
-                                <div class="col">
-                                    {% if post.photo %}
-                                        <a href="{{ post.photo.url }}">
-                                            <img src="{{ post.photo.url }}" class="card-img" alt="...">
-                                        </a>
-                                    {% else %}
-                                        <img src="{% static 'img/no-image.jpg' %}" class="card-img" alt="...">
-                                    {% endif %}
-                                </div>
-                                <div class="col-lg-5 col-xl-7">
-                                    <div class="card-body">
-                                        <ul class="post-info ps-0 mb-0 text-start">
-                                            <li class="me-4 mb-2">
-                                                <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at|date }}
-                                            </li>
-                                            <li class="me-4 mb-2">
-                                                <i class="fa fa-eye me-2"></i>{{ post.views }}
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="fa fa-cubes me-2"></i>
-                                                <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
-                                            </li>
-                                        </ul>
-                                        <a href="{{ post.get_absolute_url }}">
-                                            <h5 class="card-title">{{ post.title }}</h5>
-                                        </a>
-                                        <div class="card-text">{{ post.content | truncatewords_html:30 |safe }}</div>
-                                        <a href="{{ post.get_absolute_url }}">
-                                            <button class="btn btn-warning btn-main btn-sm">Читати повністю</button>
-                                        </a>
-                                    </div>
+                    <article class="single-post card shadow">
+                        <div class="row">
+                            <div class="col">
+                                {% if post.photo %}
+                                    <a href="{{ post.photo.url }}">
+                                        <img src="{{ post.photo.url }}" class="card-img" alt="...">
+                                    </a>
+                                {% else %}
+                                    <img src="{% static 'img/no-post-image.png' %}" class="card-img" alt="...">
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-5 col-xl-7">
+                                <div class="card-body">
+                                    <ul class="post-info ps-0 mb-0 text-start">
+                                        <li class="me-4 mb-2">
+                                            <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at|date }}
+                                        </li>
+                                        <li class="me-4 mb-2">
+                                            <i class="fa fa-eye me-2"></i>{{ post.views }}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fa fa-cubes me-2"></i>
+                                            <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+                                        </li>
+                                    </ul>
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <h5 class="card-title">{{ post.title }}</h5>
+                                    </a>
+                                    <div class="card-text">{{ post.content | truncatewords_html:30 |safe }}</div>
+                                    <a href="{{ post.get_absolute_url }}">
+                                        <button class="btn btn-warning btn-main btn-sm">Читати повністю</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
             {% empty %}
-                <h5 class="text-center ps-0 mb-5">За даним запитом нічного не знайдено...</h5>
+                <div class="products-no-found text-center">
+                    <img class="mt-2 mb-3" src="{% static 'img/posts-not-found.png' %}" height="150px" alt="">
+                    <h6>Статей за даним запитом не знайдено...</h6>
+                </div>
             {% endfor %}
         </div>
         {% include 'inc/_pagination.html' %}

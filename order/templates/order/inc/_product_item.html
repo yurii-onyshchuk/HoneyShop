@@ -1,13 +1,10 @@
 {% load static %}
 <li class="mb-2 border-bottom">
     <div class="row">
-        <div class="col-auto">
+        <div class="col-auto align-self-center">
             <a href="{{ order_item.product.get_absolute_url }}">
-                <img style="width: 50px" alt="" src="{% if order_item.product.photo %}
-                                            {{ order_item.product.photo.url }}
-                                          {% else %}
-                                            {% static 'img/no-image.jpg' %}
-                                          {% endif %}">
+                <img style="width: 50px" alt="" src="{% if order_item.product.photo %}{{ order_item.product.photo.url }}
+                                          {% else %}{% static 'img/no-product-image.png' %}{% endif %}">
             </a>
         </div>
         <div class="col px-0 align-self-lg-center">

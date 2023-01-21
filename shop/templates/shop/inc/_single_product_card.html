@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="single-product card d-flex h-auto">
+<article class="single-product card d-flex h-auto">
     <div class="product-header">
         {% if user.is_authenticated %}
             <form id="to-wishlist-form" data-index="{{ product.id }}">
@@ -16,7 +16,7 @@
             {% if product.photo %}
                 <img src="{{ product.photo.url }}" class="card-img-top product-photo" alt="">
             {% else %}
-                <img src="{% static 'img/no-image.jpg' %}" class="card-img product-photo" alt="">
+                <img src="{% static 'img/no-product-image.png' %}" class="card-img product-photo" alt="">
             {% endif %}
         </a>
     </div>
@@ -54,4 +54,4 @@
             {% endif %}
         </div>
     </div>
-</div>
+</article>

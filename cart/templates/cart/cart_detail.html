@@ -1,85 +1,91 @@
-{% extends 'shop/shop_base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load shop_tags %}
 
-{% block shop_content %}
-    {% if cart %}
-        <div class="text-end mb-2">
-            <a href="{% url 'shop:cart:clear_cart' %}" class="">Очистити корзину</a>
-        </div>
-        <div class="card cart mb-5">
-            <div class="card-body py-0">
-                <ul class="cart-list list-unstyled">
-                    {% for item in cart %}
-                        {% with product=item.product %}
-                            <li class="cart-item border-bottom py-3 py-lg-2">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <a href="{{ product.get_absolute_url }}">
-                                            <img style="width: 100px" src="
+{% block content %}
+    <div class="cart max-w-1000 mb-5">
+        <h2 class="page-title">{{ title }}</h2>
+        {% if cart %}
+            <a href="{% url 'shop:cart:clear_cart' %}" class="d-block text-end mb-2">Очистити корзину</a>
+            <div class="card">
+                <div class="card-body py-0">
+                    <ul class="cart-list list-unstyled">
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                                <li class="cart-item border-bottom py-3 py-lg-2">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <a href="{{ product.get_absolute_url }}">
+                                                <img style="width: 100px" src="
                                         {% if product.photo %}
                                             {{ product.photo.url }}
                                         {% else %}
-                                            {% static 'img/no-image.jpg' %}
+                                            {% static 'img/no-product-image.png' %}
                                         {% endif %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col px-0 align-self-lg-center">
-                                        <div class="row">
-                                            <div class="col-12 col-lg-5 mb-2">
-                                                <a href="{{ product.get_absolute_url }}">
-                                                    <h6 class="title d-inline-block mb-0 mt-2">{{ product.title }}</h6>
-                                                </a>
-                                                <p class="price mb-0">{{ item.price }} грн.</p>
-                                            </div>
-                                            <div class="col-8 col-lg-4 align-self-center">
-                                                <form action="{% url 'shop:cart:cart_update' product.id %}"
-                                                      method="POST">
-                                                    {% csrf_token %}
-                                                    <input type="number" name="quantity" value="{{ item.quantity }}"
-                                                           class="form-control" min="1" max="20" aria-label="quantity">
-                                                    шт.
-                                                    <button class="btn btn-link-mod ms-1" type="submit">
-                                                        <i class="fa fa fa-refresh fa-xl" aria-hidden="true"
-                                                           title="Оновити"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                            <div class="col-4 col-lg-3 align-self-center px-0">
-                                                <h6 class="total-price mb-0">{{ item.total_price }} грн.</h6>
+                                            </a>
+                                        </div>
+                                        <div class="col px-0 align-self-lg-center">
+                                            <div class="row">
+                                                <div class="col-12 col-lg-5 mb-2">
+                                                    <a href="{{ product.get_absolute_url }}">
+                                                        <h6 class="title d-inline-block mb-0 mt-2">{{ product.title }}</h6>
+                                                    </a>
+                                                    <p class="price mb-0">{{ item.price }} грн.</p>
+                                                </div>
+                                                <div class="col-8 col-lg-4 align-self-center">
+                                                    <form action="{% url 'shop:cart:cart_update' product.id %}"
+                                                          method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="number" name="quantity"
+                                                               value="{{ item.quantity }}"
+                                                               class="form-control" min="1" max="20"
+                                                               aria-label="quantity">
+                                                        шт.
+                                                        <button class="btn btn-link-mod ms-1" type="submit">
+                                                            <i class="fa fa fa-refresh fa-xl" aria-hidden="true"
+                                                               title="Оновити"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                <div class="col-4 col-lg-3 align-self-center px-0">
+                                                    <h6 class="total-price mb-0">{{ item.total_price }}
+                                                        грн.</h6>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-auto">
+                                            <form action="{% url 'shop:cart:cart_delete' product.id %}"
+                                                  class="pt-2 float-end align-content-start">
+                                                <button class="btn btn-link-mod" type="submit">
+                                                    <i class="fa fa-times fa-xl" aria-hidden="true"
+                                                       title="Видалити з корзини"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <form action="{% url 'shop:cart:cart_delete' product.id %}"
-                                              class="pt-2 float-end align-content-start">
-                                            <button class="btn btn-link-mod" type="submit">
-                                                <i class="fa fa-times fa-xl" aria-hidden="true"
-                                                   title="Видалити з корзини"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </li>
-                        {% endwith %}
-                    {% endfor %}
-                </ul>
-                <h4 class="total-price text-end"> Разом {{ cart.get_total_price }} грн </h4>
-                <div class="row mb-4">
-                    <div class="col">
-                        <a href="{% url 'shop:shop' %}" class="btn btn-light btn-sm border">Продовжити покупки</a>
-                    </div>
-                    <div class="col text-end">
-                        <a href="{% url 'checkout' %}" class="btn btn-warning btn-sm btn-main">Оформити замовлення</a>
+                                </li>
+                            {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    <h4 class="total-price text-end"> Разом {{ cart.get_total_price }} грн </h4>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <a href="{% url 'shop:shop' %}" class="btn btn-light btn-sm border">Продовжити
+                                покупки</a>
+                        </div>
+                        <div class="col text-end">
+                            <a href="{% url 'checkout' %}" class="btn btn-warning btn-sm btn-main">Оформити
+                                замовлення</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="cart-empty text-center">
-            <img src="{% static 'img/cart_empty.png' %}" height="150px" alt="">
-            <h5 class="my-3">Корзина порожня</h5>
-            <p><a href="{% url 'shop:shop' %}">Але це ніколи не пізно виправити :)</a></p>
-        </div>
-    {% endif %}
+        {% else %}
+            <div class="cart-empty text-center">
+                <img src="{% static 'img/cart-empty.png' %}" height="150px" alt="">
+                <h5 class="my-3">Корзина порожня</h5>
+                <p><a href="{% url 'shop:shop' %}">Але це ніколи не пізно виправити :)</a></p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -4,7 +4,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     color: #000000;
-    background-image: url(../img/body_fon.jpg);
+    background-image: url(../img/body-fon.jpg);
     background-size: 280px;
 
 }
@@ -35,6 +35,7 @@ h5 {
 
 .page-title {
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .layout-form {
@@ -263,17 +264,17 @@ a:hover {
     text-align: justify;
 }
 
-.shop .single-product.card:hover {
+.single-product.card:hover {
     box-shadow: 3px 5px 10px 5px #e0e0e0;
 }
 
-.shop .available,
+.available,
 .order-item .paid {
     background-color: #f4faf6;
     color: #00a046;
 }
 
-.shop .not-available,
+.not-available,
 .order-item .not-paid {
     background-color: #faf4f4;
     color: #c50000;
@@ -350,12 +351,12 @@ button#to-wishlist:hover {
 # Blog
 --------------------------------------------------------------*/
 .sidebar .card,
-.blog .card {
+.single-post.card {
     border: none;
     border-radius: 0;
 }
 
-.blog .post-info li {
+.post-info li {
     display: inline-block;
     color: #7c7c7c;
     font-size: 14px;

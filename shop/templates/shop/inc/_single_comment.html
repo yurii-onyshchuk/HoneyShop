@@ -2,14 +2,9 @@
 
 {% block comment_tools %}
     <div class="reply tool-item">
-        <button type="button" title="Відповісти"
-                class="btn btn-link btn-link-mod btn-sm ps-0"
-                data-bs-toggle="modal"
-                data-bs-target="{% if user.is_authenticated %}
-                                    #add-replay_{{ review.pk }}
-                                {% else %}
-                                    #authentication
-                                {% endif %}">
+        <button type="button" title="Відповісти" class="btn btn-link btn-link-mod btn-sm ps-0" data-bs-toggle="modal"
+                data-bs-target="{% if user.is_authenticated %}#add-replay_{{ review.pk }}
+                                {% else %}#authentication{% endif %}">
             <i class="fa fa-reply me-2" aria-hidden="true"></i>
         </button>
     </div>

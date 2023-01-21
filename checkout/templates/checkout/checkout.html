@@ -4,7 +4,7 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="container checkout">
+    <div class="checkout">
         <form class="checkout-form" method="POST">
             {% csrf_token %}
             <div class="row">

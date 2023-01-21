@@ -4,14 +4,11 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="container orders">
-        <div class="row">
-            <div class="col success text-center">
-                <img src="{% static 'img/success.png' %}" height="150px" alt="">
-                <h5 class="my-3">Замовлення успішно оформлене та оплачене</h5>
-                <p>Відслідковуйте статус замовлення в <a class="fw-bold" href="{% url 'order_list' %}">Особистому кабінеті</a></p>
-            </div>
-        </div>
+    <div class="payment-success text-center">
+        <img src="{% static 'img/success.png' %}" height="150px" alt="">
+        <h5 class="my-3">Замовлення успішно оформлене та оплачене</h5>
+        <p>Відслідковуйте статус замовлення в <a class="fw-bold" href="{% url 'order_list' %}">Особистому кабінеті</a>
+        </p>
     </div>
 {% endblock %}
 

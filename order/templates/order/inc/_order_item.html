@@ -1,3 +1,4 @@
+{% load static %}
 <li class="order-item accordion-item">
     <h3 class="accordion-header" id="heading-{{ order.pk }}">
         <button class="accordion-button collapsed ps-0 pe-3" type="button" data-bs-toggle="collapse"
@@ -17,8 +18,11 @@
                         <ul class="list-unstyled list-inline mb-0 text-end">
                             {% for item in order.orderitem_set.all %}
                                 <li class="list-inline-item mx-1">
-                                    {% if item.product %}
-                                        <img src="{{ item.product.photo.url }}" height="40px" alt="...">
+                                    {% if item.product.photo %}
+                                        <img src="{{ item.product.photo.url }}" height="40px" alt="">
+                                    {% else %}
+                                        <img src="{% static 'img/no-product-image.png' %}" class="border" height="40px"
+                                             alt="">
                                     {% endif %}
                                 </li>
                             {% endfor %}

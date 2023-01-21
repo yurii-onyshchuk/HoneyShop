@@ -1,12 +1,15 @@
-{% extends 'shop/shop_base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 {% load shop_tags %}
 
-{% block shop_content %}
+{% block title %} {{ title }} :: {{ block.super }} {% endblock %}
+
+{% block sidebar %}
+    {% include 'shop/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
     <div class="shop-proposition">
-        <div class="row">
-            {% get_top_products 'Топ продаж' 'sales' 12  %}
-            {% get_top_products 'Гарячі новинки' '-created_at' 12 %}
-        </div>
+        {% get_top_products 'Топ продаж' 'sales' 12 %}
+        {% get_top_products 'Гарячі новинки' '-created_at' 12 %}
     </div>
 {% endblock %}
