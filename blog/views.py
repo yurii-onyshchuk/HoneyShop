@@ -33,7 +33,7 @@ class Search(PostList):
     allow_empty = True
 
     def get_queryset(self):
-        return Post.objects.filter(title__icontains=self.request.GET.get('s'))
+        return Post.objects.filter(title__icontains=self.request.GET.get('q'))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

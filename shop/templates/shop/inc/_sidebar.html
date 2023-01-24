@@ -1,16 +1,8 @@
 {% load shop_tags %}
 
 <div class="col-12 col-md-5 col-lg-4 col-xxl-3 order-1 order-md-0">
-    <div class="sidebar">
-        <div class="search d-none d-md-block mb-3">
-            <form class="d-flex" role="search" action="{% url 'shop:search' %}" method="get">
-                <div class="input-group">
-                    <input required class="form-control" name="q" type="search" placeholder="Пошук товарів ..."
-                           aria-label="Search">
-                    <button class="btn btn-warning btn-main" type="submit"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
-        </div>
+    <aside class="sidebar">
+        {% include 'shop/inc/_search_box.html' with class='d-none d-md-block' placeholder="Пошук товарів..." %}
         {% show_categories %}
-    </div>
+    </aside>
 </div>

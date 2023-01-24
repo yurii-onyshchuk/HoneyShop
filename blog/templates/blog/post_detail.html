@@ -9,9 +9,10 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'blog/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук статтей..." %}
     <article class="post-detail">
         <h2 class="page-title">{{ title }}</h2>
-        <ul class="post-info ps-0 mb-0 text-start">
+        <ul class="post-info ps-0 mb-2 text-start">
             <li class="me-4 mb-2">
                 <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
             </li>

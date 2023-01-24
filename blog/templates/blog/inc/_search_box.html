@@ -1,0 +1,9 @@
+<div class="search {{ class }} mb-3">
+    <form class="d-flex" role="search" action="{% url 'blog:search' %}" method="GET">
+        <div class="input-group">
+            <input required class="form-control" name="q" value="{{ q }}" type="search" placeholder="{{ placeholder }}"
+                    aria-label="Search">
+            <button class="btn btn-warning btn-main" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+</div>

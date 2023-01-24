@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'shop/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук товарів..." %}
     <div class="shop-proposition">
         {% get_top_products 'Топ продаж' 'sales' 12 %}
         {% get_top_products 'Гарячі новинки' '-created_at' 12 %}

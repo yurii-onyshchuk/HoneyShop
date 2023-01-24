@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'blog/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук статтей..."  %}
     <div class="post-list">
         <h2 class="page-title">{{ title }}</h2>
         <div class="row g-4">

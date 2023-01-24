@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'shop/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук товарів..." %}
     <article class="product-detail">
         <h2 class="page-title">{{ title }}</h2>
         <div class="row">
