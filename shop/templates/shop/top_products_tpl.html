@@ -1,7 +1,7 @@
 <section class="proposition-section mb-5">
     <h2 class="page-title">{{ top_title }}</h2>
     <div class="row g-3">
-        {% for product in products %}
+        {% for product in product_list %}
             <div class="col-6 col-sm-4 col-md-6 col-lg-4 col-xl-3 d-flex h-auto">
                 {% include 'shop/inc/_single_product_card.html' %}
             </div>

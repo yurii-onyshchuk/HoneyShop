@@ -13,48 +13,67 @@ from .forms import ReviewForm
 from cart.forms import CartAddProductForm
 
 
-class Shop(ListView):
-    extra_context = {'title': 'Магазин', 'cart_form': CartAddProductForm}
+class ProductList(ListView):
     model = Product
-    template_name = 'shop/index.html'
-    context_object_name = 'products'
+    paginate_by = 12
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart_form'] = CartAddProductForm
+        return context
 
 
-class ProductsByCategory(ListView):
-    template_name = 'shop/product_list.html'
-    context_object_name = 'products'
-    paginate_by = 9
+class Shop(ProductList):
     allow_empty = False
+    extra_context = {'title': 'Магазин'}
+    template_name = 'shop/index.html'
 
+
+class ProductsByCategory(ProductList):
+    allow_empty = False
     def get_queryset(self):
         return Product.objects.filter(category__slug=self.kwargs['slug'])
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = Category.objects.get(slug=self.kwargs['slug'])
-        context['cart_form'] = CartAddProductForm
         return context
+
+
+class Search(ProductList):
+    def get_queryset(self):
+        return Product.objects.filter(title__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Результати пошуку'
+        context['q'] = self.request.GET.get('q')
+        return context
+
+
+class WishListView(LoginRequiredMixin, ProductList):
+    extra_context = {'title': 'Список вподобань'}
+    template_name = 'shop/wishlist.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(users_wishlist=self.request.user)
 
 
 class DetailProduct(FormMixin, DetailView):
     model = Product
-    template_name = 'shop/product_detail.html'
-    context_object_name = 'product'
     form_class = ReviewForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = self.object.title
-        context['cart_form'] = CartAddProductForm
-
+        self.object.views = F('views') + 1
+        self.object.save()
+        self.object.refresh_from_db()
         _list = Review.objects.filter(product__slug=self.kwargs.get('slug'), parent__isnull=True)
         paginator = Paginator(_list, 10)
         page = self.request.GET.get('page')
         context['reviews'] = paginator.get_page(page)
-
-        self.object.views = F('views') + 1
-        self.object.save()
-        self.object.refresh_from_db()
+        context['cart_form'] = CartAddProductForm
+        context['title'] = self.object.title
         return context
 
     def post(self, request, *args, **kwargs):
@@ -72,34 +91,8 @@ class DetailProduct(FormMixin, DetailView):
         return reverse_lazy('shop:product', kwargs={'slug': self.kwargs['slug']})
 
 
-class Search(ListView):
-    template_name = 'shop/product_list.html'
-    context_object_name = 'products'
-    paginate_by = 9
-
-    def get_queryset(self):
-        return Product.objects.filter(title__icontains=self.request.GET.get('s'))
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Результати пошуку'
-        context['s'] = f"s={self.request.GET.get('s')}&"
-        context['cart_form'] = CartAddProductForm
-        return context
-
-
-class WishListView(LoginRequiredMixin, ListView):
-    extra_context = {'title': 'Список вподобань', 'cart_form': CartAddProductForm}
-    template_name = 'shop/wishlist.html'
-    context_object_name = 'products'
-    paginate_by = 9
-
-    def get_queryset(self):
-        return Product.objects.filter(users_wishlist=self.request.user)
-
-
 @login_required
-def add_or_remove_to_wishlist(request):
+def wishlist_button_action(request):
     product = get_object_or_404(Product, id=request.POST['product_id'])
     if product.users_wishlist.filter(username=request.user.username).exists():
         product.users_wishlist.remove(request.user)

@@ -5,7 +5,7 @@
         <div class="search d-none d-md-block mb-3">
             <form class="d-flex" role="search" action="{% url 'shop:search' %}" method="get">
                 <div class="input-group">
-                    <input class="form-control" name="s" type="search" placeholder="Пошук товарів ..."
+                    <input required class="form-control" name="q" type="search" placeholder="Пошук товарів ..."
                            aria-label="Search">
                     <button class="btn btn-warning btn-main" type="submit"><i class="fas fa-search"></i></button>
                 </div>
