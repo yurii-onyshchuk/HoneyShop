@@ -4,11 +4,11 @@
 {% block title %}{{ title }} :: {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="checkout">
+    <div class="checkout max-w-1000">
         <form class="checkout-form" method="POST">
             {% csrf_token %}
             <div class="row">
-                <h3>{{ title }}</h3>
+                <h2 class="page-title">{{ title }}</h2>
                 <div class="col">
                     {{ form|as_crispy_errors }}
                     {% for hidden in form.hidden_fields %}
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7 col-lg-6">
                     <div class="cart-checkout cart card shadow mb-3">
                         <div class="card-header d-flex justify-content-between">
                             <h5 class="card-title mt-2">Замовлення</h5>
