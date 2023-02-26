@@ -100,7 +100,7 @@ def wishlist_button_action(request):
     else:
         product.users_wishlist.add(request.user)
         action_result = 'added'
-    wishlist_total = Product.users_wishlist.through.objects.count()
+    wishlist_total = Product.users_wishlist.through.objects.filter(user=request.user).count()
     return JsonResponse({'wishlist_total': wishlist_total, 'action_result': action_result})
 
 
