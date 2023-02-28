@@ -1,23 +1,12 @@
 {% load static %}
 
 <li class="comment list-unstyled border-top pt-2">
-    <div class="comment-author-photo">
-        {% if comment.user.photo %}
-            <img src="{{ comment.user.photo.url }}" alt="">
-        {% else %}
-            <img src="{% static 'img/favicon.ico' %}" alt="">
-        {% endif %}
-    </div>
+    <img class="user-photo comment-author-photo" alt="" src="{% if comment.user.photo %}{{ comment.user.photo.url }}
+                                                  {% else %}{% static 'img/default_avatar.jpg' %}{% endif %}">
     <div class="comment-details">
-        <div class="comment-author">
-            <h5 class="mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
-        </div>
-        <div class="comment-date">
-            <p class="mb-2"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>
-        </div>
-        <div class="comment-body">
-            <p class="mb-1">{{ comment.body }}</p>
-        </div>
+        <h5 class="comment-author mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+        <p class="comment-date mb-2"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>
+        <p class="comment-body mb-1">{{ comment.body }}</p>
         <div class="comment-tools pb-2">
             {% block comment_tools %}{% endblock %}
             {% if comment.children %}

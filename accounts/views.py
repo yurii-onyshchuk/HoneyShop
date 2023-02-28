@@ -49,6 +49,22 @@ class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
         return User.objects.filter(pk=self.request.user.pk)
 
 
+@login_required
+def user_avatar_change(request):
+    if request.method == 'POST':
+        user = User.objects.get(pk=request.user.pk)
+        user.photo = request.FILES['user_photo']
+        user.save_thumbnail()
+    return redirect('personal_info', slug=request.user.slug)
+
+
+@login_required
+def user_avatar_delete(request):
+    if request.method == 'POST':
+        User.objects.get(pk=request.user.pk).photo.delete(save=True)
+    return redirect('personal_info', slug=request.user.slug)
+
+
 class PersonalSafetyView(LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Безпека облікового запису',
                      'subtitle': 'Змінити пароль або видалити обліковий запис'}

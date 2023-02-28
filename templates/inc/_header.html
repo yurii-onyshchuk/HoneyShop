@@ -1,3 +1,4 @@
+{% load static %}
 <header>
     <div id="topbar" class="topbar d-flex align-items-center fixed-top">
         <div class="container-lg topbar-info  d-flex align-items-center justify-content-center justify-content-md-end">
@@ -33,12 +34,18 @@
                     <li class="nav-item user ms-3 ms-sm-4 ms-md-3">
                         {% if user.is_authenticated %}
                             <div class="dropdown">
-                                <a class="tool-link user-link" data-bs-toggle="dropdown" role="button" aria-expanded="false">
+                                <a class="tool-link user-link" data-bs-toggle="dropdown" role="button"
+                                   aria-expanded="false">
                                     <i class="fa-regular fa-user"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <h6 class="dropdown-header font">{{ user.first_name }} {{ user.last_name }}</h6>
+                                <ul class="dropdown-menu dropdown-menu-end pt-0">
+                                    <li class="border-bottom py-1 mb-1">
+                                        <a href="{% url 'personal_info' user.slug %}" style="padding-left: 11px">
+                                            <img class="d-inline-block user-photo" alt=""
+                                                 src="{% if user.photo %}{{ user.photo.url }}
+                                                  {% else %}{% static 'img/default_avatar.jpg' %}{% endif %}">
+                                            <h6 class="d-inline-block dropdown-header ps-1">{{ user.first_name }} {{ user.last_name }}</h6>
+                                        </a>
                                     </li>
                                     <li><a class="dropdown-item" href="{% url 'personal_cabinet' %}">
                                         <i class="bi bi-person me-2 fs-6"></i>Особистий кабінет</a></li>

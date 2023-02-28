@@ -10,13 +10,36 @@
             <h3><i class="bi bi-card-checklist fs-3 me-2"></i>{{ title }}</h3>
             <h6 class="text-muted text-start border-bottom pb-2">{{ subtitle }}</h6>
         </div>
-        <div class="user-photo text-center">
-            {% if user.photo %}
-                <img src="{{ user.photo.url }}" height="100px" alt="">
-            {% else %}
-                <img src="{% static 'img/favicon.ico' %}" height="100px" alt="">
-            {% endif %}
+        <div class="text-center">
+            <div class="dropdown mb-2">
+                <img class="user-photo" alt="" data-bs-toggle="dropdown" role="button" aria-expanded="false"
+                     src="{% if user.photo %}{{ user.photo.url }}
+                          {% else %}{% static 'img/default_avatar.jpg' %}{% endif %}">
+                <ul class="dropdown-menu">
+                    <li>
+                        <form action="{% url 'avatar_change' %}" method="POST" enctype='multipart/form-data'>
+                            {% csrf_token %}
+                            <input type="file" id="avatar-btn" onchange="form.submit()" name="user_photo"
+                                   accept="image/*" hidden>
+                            <label class="btn dropdown-item" for="avatar-btn">
+                                {% if user.photo %}<i class="bi bi-pencil-square me-2 fs-6"></i>Змінити фото
+                                {% else %}<i class="bi bi-plus-square me-2 fs-6"></i>Додати фото{% endif %}
+                            </label>
+                        </form>
+                    </li>
+                    {% if user.photo %}
+                        <li>
+                            <button class="btn btn-link dropdown-item" data-bs-toggle="modal"
+                                    data-bs-target="#avatar_delete">
+                                <i class="bi bi-x-square me-2 fs-6"></i>Видалити фото
+                            </button>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% include 'accounts/inc/_avatar_delete_confirm.html' %}
         </div>
+
         <div class="layout-form">
             <form method="POST" enctype='multipart/form-data'>
                 {% csrf_token %}

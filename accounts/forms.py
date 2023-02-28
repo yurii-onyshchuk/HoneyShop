@@ -36,7 +36,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('photo', 'username', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',)
+        fields = ('username', 'first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',)
         widgets = {'date_of_birth': forms.DateInput()}
 
 

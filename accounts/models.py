@@ -4,6 +4,7 @@ from phonenumber_field import modelfields
 from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
 
 
 class User(AbstractUser):
@@ -13,7 +14,7 @@ class User(AbstractUser):
 
     slug = AutoSlugField(populate_from='username', verbose_name='URL', unique=True)
     phone_number = modelfields.PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Номер телефону')
-    photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=True, verbose_name='Основна світлина')
+    photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=False, verbose_name='Основна світлина')
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата народження')
 
     class Meta:
@@ -22,6 +23,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return str(self.username)
+
+    def save_thumbnail(self):
+        super().save()
+        photo = Image.open(self.photo.path)
+        if photo.height > 200 or photo.width > 200:
+            output_size = (200, 200)
+            photo.thumbnail(output_size)
+            photo.save(self.photo.path)
 
 
 class Address(models.Model):

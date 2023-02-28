@@ -17,6 +17,8 @@ urlpatterns = [
     path('addresses/set_default/<int:pk>/', views.set_default_address, name='set_default'),
 
     path('<str:slug>/personal-info/', views.PersonalInfoUpdateView.as_view(), name='personal_info'),
+    path('avatar-change/', views.user_avatar_change, name='avatar_change'),
+    path('avatar-delete/', views.user_avatar_delete, name='avatar_delete'),
     path('<str:slug>/personal-safety/', views.PersonalSafetyView.as_view(), name='personal_safety'),
     path('<str:slug>/delete-account/', views.DeleteAccount.as_view(), name='delete_account'),
     path('password_change/',

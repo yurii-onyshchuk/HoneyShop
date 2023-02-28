@@ -1,0 +1,19 @@
+<div class="modal fade" id="avatar_delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Ви дійсно бажаєте видалити поточне зображення профілю?</p>
+                <div class="modal-footer justify-content-center">
+                    <form action="{% url 'avatar_delete' %}">
+                        {% csrf_token %}
+                        <input class="btn btn-light" type="reset" data-bs-dismiss="modal" value="Скасувати"/>
+                        <input class="btn btn-warning btn-main" type="submit" value="Видалити"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

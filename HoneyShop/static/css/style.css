@@ -84,6 +84,12 @@ a:hover {
     line-height: 1.25;
 }
 
+.user-photo {
+    border-radius: 50%;
+    border: 1px solid #e5e5e5;
+    object-fit: cover;
+}
+
 /*--------------------------------------------------------------
 # Top Bar
 --------------------------------------------------------------*/
@@ -170,17 +176,22 @@ a:hover {
     color: #ffffff;
 }
 
-.navbar-toolbar .dropdown-item:hover,
-.navbar-toolbar .dropdown-item.active,
-.navbar-toolbar .dropdown-item.active:hover,
-.navbar-toolbar .dropdown-item i:hover {
+.dropdown-item:hover,
+.dropdown-item.active,
+.dropdown-item.active:hover,
+.dropdown-item i:hover {
     color: #d78300;
     background-color: #f3f3f3;
 }
 
-.navbar-toolbar .dropdown-item.active,
-.navbar-toolbar .dropdown-item.active:hover {
+.dropdown-item.active,
+.dropdown-item.active:hover {
     font-weight: 500;
+}
+
+.navbar .user-photo {
+    height: 30px;
+    width: 30px;
 }
 
 
@@ -407,24 +418,22 @@ button#to-wishlist:hover {
     position: relative;
 }
 
-.comments .comment-author h5 {
+.comments h5.comment-author {
     font-size: 15px;
+    color: #2c2c2c;
     font-weight: 600;
     text-decoration: none;
-    /*margin-bottom: 0.2rem;*/
 }
 
-.comments .comment-date p {
+.comments p.comment-date {
     font-size: 13px;
     font-weight: 500;
     color: #696363;
-    /*margin-bottom: 0.6rem;*/
 }
 
-.comments .comment-body p {
+.comments p.comment-body {
     font-size: 15px;
     font-weight: 500;
-    /*margin-bottom: 0.6rem;*/
 }
 
 .comments .comment-tools div.tool-item {
@@ -455,15 +464,14 @@ button#to-wishlist:hover {
     list-style: none;
 }
 
-.comments .comment-author-photo {
-    border-radius: 50%;
+.comments img.comment-author-photo {
     float: left;
-    height: 55px;
-    width: 55px;
+    height: 50px;
+    width: 50px;
 }
 
 .comments .comment-details {
-    margin-left: 70px;
+    margin-left: 65px;
 }
 
 [aria-expanded="false"] > .expanded,
@@ -515,6 +523,12 @@ button#to-wishlist:hover {
 /*--------------------------------------------------------------
 # Personal cabinet
 --------------------------------------------------------------*/
+.personal-info img.user-photo {
+    height: 100px;
+    width: 100px;
+
+}
+
 .order-list .order-item button {
     font-size: 16px;
 }
