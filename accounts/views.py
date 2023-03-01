@@ -43,7 +43,7 @@ class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
                      'subtitle': 'Керуйте своїми особистими та контактними даними'}
     template_name = 'accounts/personal_cabinet/personal_info.html'
     form_class = forms.UserForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('personal_cabinet')
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
