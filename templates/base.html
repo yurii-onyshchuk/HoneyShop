@@ -29,6 +29,11 @@
     {% block full_width_content %}
         <div class="container-lg">
             <div class="row">
+                {% if messages %}
+                    <div class="col-12">
+                        {% include 'inc/_alert.html' %}
+                    </div>
+                {% endif %}
                 {% block sidebar %}
                 {% endblock %}
                 <div class="col order-0 order-md-1">

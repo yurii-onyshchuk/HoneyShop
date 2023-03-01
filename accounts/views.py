@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -21,7 +22,12 @@ class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
         user = form.save()
         if user is not None:
             login(self.request, user)
+            messages.success(self.request, 'Успішна реєстрація!')
         return redirect('home')
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Помилка реєстрації!')
+        return super(UserSignUp, self).form_invalid(form)
 
 
 class UserAuthentication(LoginView):
@@ -43,10 +49,13 @@ class PersonalInfoUpdateView(LoginRequiredMixin, UpdateView):
                      'subtitle': 'Керуйте своїми особистими та контактними даними'}
     template_name = 'accounts/personal_cabinet/personal_info.html'
     form_class = forms.UserForm
-    success_url = reverse_lazy('personal_cabinet')
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Особисті дані успішно змінено!')
+        return reverse_lazy('personal_cabinet')
 
 
 @login_required
@@ -73,10 +82,13 @@ class PersonalSafetyView(LoginRequiredMixin, TemplateView):
 
 class DeleteAccount(LoginRequiredMixin, DeleteView):
     extra_context = {'title': 'Видалення облікового запису'}
-    success_url = reverse_lazy('login')
 
     def get_queryset(self):
         return User.objects.filter(pk=self.request.user.pk)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Акаунт успішно видалено!')
+        return reverse_lazy('login')
 
 
 class AddressesList(LoginRequiredMixin, ListView):
