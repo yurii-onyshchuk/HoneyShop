@@ -17,7 +17,7 @@ def show_categories():
 
 @register.inclusion_tag('shop/top_products_tpl.html', takes_context=True)
 def get_top_products(context, top_title, param, count):
-    product_list = Product.objects.filter(available__gt=0).order_by(param)[:count]
+    product_list = Product.objects.filter(quantity__gt=0).order_by(param)[:count]
     return {'user': context['user'],
             'cart': context['cart'],
             'cart_form': context['cart_form'],

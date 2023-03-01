@@ -27,14 +27,14 @@
         <a class="reviews mt-auto" href="{{ product.get_absolute_url }}">Відгуки({{ product.get_reviews_count }})</a>
         <h6 class="price mt-2">{{ product.price }} грн.</h6>
         <div class="availability mb-2 text-center">
-            {% if product.available %}
+            {% if product.quantity %}
                 <span class="available"><i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності</span>
             {% else %}
                 <span class="not-available">Немає в наявності</span>
             {% endif %}
         </div>
         <div class="buy-button text-center">
-            {% if product.available %}
+            {% if product.quantity %}
                 <form class="add-to-cart-form" data-index="{{ product.id }}">
                     {% csrf_token %}
                     {{ cart_form }}

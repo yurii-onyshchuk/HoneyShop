@@ -10,6 +10,7 @@ import cloudipsp
 from cart.cart import Cart
 from checkout.forms import CheckoutForm
 from order.models import Order, OrderItem
+from shop.models import Product
 from checkout.models import PaymentOptions
 from accounts.models import Address
 from checkout.utils import AllowOnlyRedirectMixin
@@ -46,8 +47,11 @@ class Checkout(LoginRequiredMixin, CreateView):
         order = form.save(commit=False)
         order.save()
         for item in cart:
-            OrderItem.objects.create(order_id=order.pk, product=item['product'], price=item['price'],
-                                     quantity=item['quantity'])
+            order_item = OrderItem.objects.create(order_id=order.pk, product=item['product'], price=item['price'],
+                                                  quantity=item['quantity'])
+            product = Product.objects.get(id=item['product'].id)
+            product.quantity = product.quantity - order_item.quantity
+            product.save()
         cart.clear()
         return super().form_valid(form)
 

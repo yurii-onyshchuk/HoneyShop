@@ -6,7 +6,7 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 
 class ProductAdminForm(forms.ModelForm):
-    description = forms.CharField(label='Вміст', widget=CKEditorUploadingWidget())
+    description = forms.CharField(label='Опис', required=False, widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Product
@@ -16,11 +16,11 @@ class ProductAdminForm(forms.ModelForm):
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     save_on_top = True
-    list_display = ('id', 'title', 'price', 'category', 'available', 'created_at', 'get_photo')
+    list_display = ('id', 'title', 'price', 'category', 'quantity', 'created_at', 'get_photo')
     list_display_links = ('id', 'title',)
-    list_filter = ('category', 'available',)
+    list_filter = ('category', 'quantity',)
     search_fields = ('title',)
-    fields = ('title', 'slug', 'price', 'available', 'category', 'description', 'photo', 'get_photo', 'sales', 'views',
+    fields = ('title', 'slug', 'price', 'quantity', 'category', 'description', 'photo', 'get_photo', 'sales', 'views',
               'created_at', 'users_wishlist')
     readonly_fields = ('created_at', 'views', 'sales', 'get_photo', 'users_wishlist')
     form = ProductAdminForm
