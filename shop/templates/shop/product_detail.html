@@ -9,69 +9,71 @@
 
 {% block content %}
     {% include 'shop/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук товарів..." %}
-    <article class="product-detail">
-        <h2 class="page-title">{{ title }}</h2>
-        <div class="row">
-            <div class="col-md-5">
-                {% if product.photo %}
-                    <a href="{{ product.photo.url }}">
-                        <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
-                    </a>
-                {% else %}
-                    <img src="{% static 'img/no-product-image.png' %}" class="card-img border" alt="...">
-                {% endif %}
-            </div>
-            <div class="col-md-7 mt-xl-4">
-                <div class="mb-3">
-                    {% if product.available %}
-                        <span class="available">
+    <article class="product-detail-area">
+        <section class="product-detail">
+            <h2 class="page-title">{{ title }}</h2>
+            <div class="row">
+                <div class="col-md-5">
+                    {% if product.photo %}
+                        <a href="{{ product.photo.url }}">
+                            <img src="{{ product.photo.url }}" class="card-img-top" alt="...">
+                        </a>
+                    {% else %}
+                        <img src="{% static 'img/no-product-image.png' %}" class="card-img border" alt="...">
+                    {% endif %}
+                </div>
+                <div class="col-md-7 mt-xl-4">
+                    <div class="mb-3">
+                        {% if product.available %}
+                            <span class="available">
                             <i class="fa fa-check-circle-o me-2" aria-hidden="true"></i>В наявності
                         </span>
-                    {% else %}
-                        <span class="not-available">Немає в наявності</span>
-                    {% endif %}
-                </div>
-                <h4 class="price mt-2">{{ product.price }} грн.</h4>
-                <div class="mb-4 text-center text-md-start">
-                    {% if product.available %}
-                        <div class="d-inline-block mb-3">
-                            <form class="add-to-cart-form" data-index="{{ product.id }}">
-                                {% csrf_token %}
-                                {{ cart_form }}
-                                <button id="add-to-cart" type="button"
-                                        class="btn btn-warning {% if product.id in cart_item_ids %}d-none{% endif %}"
-                                        data-index="{{ product.id }}"
-                                        data-url="{% url 'shop:cart:cart_add' %}">
-                                    Купити
-                                    <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
-                                </button>
-                                <a id="to-cart-link" type="button"
-                                   class="btn btn-success {% if not product.id in cart_item_ids %}d-none{% endif %}"
-                                   data-index="{{ product.id }}"
-                                   href="{% url 'shop:cart:cart_detail' %}">
-                                    В корзині
-                                    <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
-                                </a>
-                            </form>
-                        </div>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                        <div class="d-inline-block ms-3 ms-md-0 ms-lg-3">
-                            <form id="to-wishlist-form"
-                                  data-index="{{ product.id }}">
-                                {% csrf_token %}
-                                <button id="to-wishlist" type="button" class="btn btn-link-mod"
-                                        data-index="{{ product.id }}"
-                                        data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
-                                    <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart fa-2xl"
-                                       data-index="{{ product.id }}"></i>
-                                </button>
-                            </form>
-                        </div>
-                    {% endif %}
+                        {% else %}
+                            <span class="not-available">Немає в наявності</span>
+                        {% endif %}
+                    </div>
+                    <h4 class="price mt-2">{{ product.price }} грн.</h4>
+                    <div class="mb-4 text-center text-md-start">
+                        {% if product.available %}
+                            <div class="d-inline-block mb-3">
+                                <form class="add-to-cart-form" data-index="{{ product.id }}">
+                                    {% csrf_token %}
+                                    {{ cart_form }}
+                                    <button id="add-to-cart" type="button"
+                                            class="btn btn-warning {% if product.id in cart_item_ids %}d-none{% endif %}"
+                                            data-index="{{ product.id }}"
+                                            data-url="{% url 'shop:cart:cart_add' %}">
+                                        Купити
+                                        <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
+                                    </button>
+                                    <a id="to-cart-link" type="button"
+                                       class="btn btn-success {% if not product.id in cart_item_ids %}d-none{% endif %}"
+                                       data-index="{{ product.id }}"
+                                       href="{% url 'shop:cart:cart_detail' %}">
+                                        В корзині
+                                        <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <div class="d-inline-block ms-3 ms-md-0 ms-lg-3">
+                                <form id="to-wishlist-form"
+                                      data-index="{{ product.id }}">
+                                    {% csrf_token %}
+                                    <button id="to-wishlist" type="button" class="btn btn-link-mod"
+                                            data-index="{{ product.id }}"
+                                            data-url="{% url 'shop:add_or_remove_to_wishlist' %}">
+                                        <i class="fa-regular {% if product in wish_list %}fa-solid{% endif %} fa-heart fa-2xl"
+                                           data-index="{{ product.id }}"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            <div class="product-description col-12 mt-3">
+            <div class="product-description mt-3">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#description">Опис</a>
@@ -83,51 +85,56 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane container active" id="description">
+                    <div class="tab-pane active" id="description">
                         {% if product.description %}
                             <div class="mt-3">{{ product.description|safe }}</div>
                         {% else %}
                             <div class="py-3 mb-3 border-bottom">Опис даного товару відсутній</div>
                         {% endif %}
                     </div>
-                    <div class="tab-pane container fade" id="reviews">
-                        <section class="comments mb-3">
+                    <div class="tab-pane fade" id="reviews">
+                        <section class="comments">
                             <a name="comments"></a>
-                            <div class="row mt-3">
-                                <div class="col">
-                                    <div class="pb-3">
-                                        {% if user.is_authenticated %}
-                                            <button class="btn btn-warning btn-main" data-bs-toggle="modal"
-                                                    data-bs-target="#add-review">
-                                                Залишити відгук
-                                            </button>
-                                            {% include 'shop/inc/_modal_add_review.html' %}
-                                        {% else %}
-                                            <p>Авторизуйтеся, щоб залишити відгук</p>
-                                            <a href="{% url 'login' %}?next={{ request.path }}#comments"
-                                               class="btn btn-warning btn-main">
-                                                Авторизуватися
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                    <ul class="comment-list border-bottom ps-0">
-                                        {% for review in reviews %}
-                                            {% if review.is_parent %}
-                                                {% include 'shop/inc/_single_comment.html' with comment=review parent=review %}
-                                            {% endif %}
-                                        {% empty %}
-                                            <div class="py-3 border-top">
-                                                Немає відгуків про даний товар
-                                            </div>
-                                        {% endfor %}
-                                    </ul>
-                                    {% include 'inc/_pagination.html' with page_obj=reviews anchor='#comments' %}
-                                </div>
+                            <div class="border-bottom py-3">
+                                {% if user.is_authenticated %}
+                                    <button class="btn btn-warning btn-main" data-bs-toggle="modal"
+                                            data-bs-target="#add-review"> Залишити відгук
+                                    </button>
+                                    {% include 'shop/inc/_modal_add_review.html' %}
+                                {% else %}
+                                    <p>Авторизуйтеся, щоб залишити відгук</p>
+                                    <a class="btn btn-warning btn-main"
+                                       href="{% url 'login' %}?next={{ request.path }}#comments"> Авторизуватися</a>
+                                    {% include 'accounts/inc/_modal_authentication.html' with massage='Авторизуйтеся, щоб залишити відгук' anchor='#comments' %}
+                                {% endif %}
                             </div>
+                            <ul class="comment-list">
+                                {% for review in reviews %}
+                                    {% if review.is_parent %}
+                                        <li class="comment border-bottom py-2">
+                                            {% include 'shop/inc/_single_comment.html' with comment=review parent=review %}
+                                            {% if review.children %}
+                                                <ul class="reply-list">
+                                                    {% for reply in review.children %}
+                                                        <li class="collapse" id="reply-list-{{ review.id }}">
+                                                            <div class="reply border-top pt-2 mt-2">
+                                                                {% include 'shop/inc/_single_comment.html' with comment=reply parent=review %}
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% empty %}
+                                    <div class="border-bottom py-3">Немає відгуків про даний товар</div>
+                                {% endfor %}
+                            </ul>
+                            {% include 'inc/_pagination.html' with page_obj=reviews anchor='#comments' %}
                         </section>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </article>
 {% endblock %}

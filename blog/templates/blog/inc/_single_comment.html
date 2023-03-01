@@ -35,9 +35,4 @@
             </button>
         {% endif %}
     </div>
-    {% include 'accounts/inc/_modal_authentication.html' with massage='Авторизуйтеся, щоб відреагувати в коментарях' anchor='#comments' %}
-{% endblock %}
-
-{% block single_comment %}
-    {% include 'blog/inc/_single_comment.html' with comment=reply parent=comment %}
 {% endblock %}

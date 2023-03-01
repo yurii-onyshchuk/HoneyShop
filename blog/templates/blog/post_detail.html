@@ -10,55 +10,74 @@
 
 {% block content %}
     {% include 'blog/inc/_search_box.html' with class='d-block d-md-none' placeholder="Пошук статтей..." %}
-    <article class="post-detail">
-        <h2 class="page-title">{{ title }}</h2>
-        <ul class="post-info ps-0 mb-2 text-start">
-            <li class="me-4 mb-2">
-                <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
-            </li>
-            <li class="me-4 mb-2">
-                <i class="fa fa-eye me-2"></i>{{ post.views }}
-            </li>
-            <li class="mb-2">
-                <i class="fa fa-cubes me-2"></i>
-                <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
-            </li>
-        </ul>
-        {% if post.photo %}
-            <a class="d-block mb-3" href="{{ post.photo.url }}">
-                <img src="{{ post.photo.url }}" class="post-image card-img-top" alt="...">
-            </a>
-        {% endif %}
-        <div class="post-content">{{ post.content|safe }}</div>
-        <section class="comments mb-3">
+    <article class="post-detail-area">
+        <section class="post-detail">
+            <h2 class="page-title">{{ post.title }}</h2>
+            <ul class="post-info ps-0 mb-2 text-start">
+                <li class="me-4 mb-2">
+                    <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
+                </li>
+                <li class="me-4 mb-2">
+                    <i class="fa fa-eye me-2"></i>{{ post.views }}
+                </li>
+                <li class="mb-2">
+                    <i class="fa fa-cubes me-2"></i>
+                    <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+                </li>
+            </ul>
+            {% if post.photo %}
+                <a class="d-block mb-3" href="{{ post.photo.url }}">
+                    <img src="{{ post.photo.url }}" class="post-image card-img-top" alt="...">
+                </a>
+            {% endif %}
+            <div class="post-content">{{ post.content|safe }}</div>
+        </section>
+        <section class="comments">
             <a name="comments"></a>
             {% if user.is_authenticated %}
-                <h6 class="mt-4"><a name="comments">Залишити коментар</a></h6>
-                <form method="POST">
-                    <div class="comment">
-                        {% csrf_token %}
-                        <input type="hidden" name="parent" id="contactparent" value="">
-                        {{ form|crispy }}
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-warning btn-main" value="Надіслати">Надіслати</button>
+                <div class="mt-4 mb-2">
+                    <h6>Залишити коментар</h6>
+                    <form method="POST">
+                        <div class="comment">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent" id="contactparent" value="">
+                            {{ form|crispy }}
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-warning btn-main" value="Надіслати">Надіслати
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             {% else %}
-                <div class="border-top border-bottom py-3 mb-4">
-                    <p>Авторизуйтеся, щоб залишити коментар</p>
+                <div class="my-4">
+                    <h6>Авторизуйтеся, щоб залишити коментар</h6>
                     <a class="btn btn-warning btn-main"
                        href="{% url 'login' %}?next={{ request.path }}#comments">Авторизуватися</a>
+                    {% include 'accounts/inc/_modal_authentication.html' with massage='Авторизуйтеся, щоб відреагувати в коментарях' anchor='#comments' %}
                 </div>
             {% endif %}
-            <h6 class="mb-0 pb-2">Коментарі ({{ post.get_comment_count }})</h6>
-            <ul class="comment-list border-bottom ps-0">
+            <h6 class="border-bottom pb-1">Коментарі ({{ post.get_comment_count }})</h6>
+            <ul class="comment-list">
                 {% for comment in comments %}
                     {% if comment.is_parent %}
-                        {% include 'blog/inc/_single_comment.html' with comment=comment parent=comment %}
+                        <li class="comment border-bottom py-2">
+                            {% include 'blog/inc/_single_comment.html' with comment=comment parent=comment %}
+                            {% if comment.children %}
+                                <ul class="reply-list">
+                                    {% for reply in comment.children %}
+                                        <li class="collapse" id="reply-list-{{ comment.id }}">
+                                            <div class="reply border-top pt-2 mt-2">
+                                                {% include 'blog/inc/_single_comment.html' with comment=reply parent=comment %}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </li>
                     {% endif %}
                 {% empty %}
-                    <div class="py-3 border-top">Немає коментарів</div>
+                    <div class="border-bottom pt-2 pb-3">Немає коментарів</div>
                 {% endfor %}
             </ul>
             {% include 'inc/_pagination.html' with page_obj=comments anchor='#comments' %}

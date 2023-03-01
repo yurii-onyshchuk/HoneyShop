@@ -9,9 +9,4 @@
         </button>
     </div>
     {% include 'shop/inc/_modal_add_replay.html' %}
-    {% include 'accounts/inc/_modal_authentication.html' with massage='Авторизуйтеся, щоб залишити відгук' anchor='#comments' %}
-{% endblock %}
-
-{% block single_comment %}
-    {% include 'shop/inc/_single_comment.html' with comment=reply parent=comment %}
 {% endblock %}

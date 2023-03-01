@@ -414,7 +414,7 @@ button#to-wishlist:hover {
 /*--------------------------------------------------------------
 # Comments part
 --------------------------------------------------------------*/
-.comments ul li .comment {
+.comments ul li.comment {
     position: relative;
 }
 
@@ -459,9 +459,16 @@ button#to-wishlist:hover {
     font-size: 13px;
 }
 
-
-.comments ul li {
+.comments ul.comment-list {
     list-style: none;
+    overflow: hidden;
+    padding-left: 0;
+}
+
+.comments ul.reply-list {
+    list-style: none;
+    overflow: hidden;
+    padding-left: 3.5rem;
 }
 
 .comments img.comment-author-photo {
@@ -526,7 +533,6 @@ button#to-wishlist:hover {
 .personal-info img.user-photo {
     height: 100px;
     width: 100px;
-
 }
 
 .order-list .order-item button {
@@ -562,7 +568,7 @@ footer .footer_social a i:hover {
     font-size: 13px;
 }
 
-.footer_social a {
+.footer-social a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -575,16 +581,16 @@ footer .footer_social a i:hover {
     font-size: 18px;
 }
 
-.footer_menu_box li {
+.footer-menu-box li {
     font-weight: 700;
     padding-bottom: 0.5rem;
 }
 
-.footer_contact h5 {
+.footer-contact h5 {
     font-weight: 700;
 }
 
-.footer_contact_box li {
+.footer-contact-box li {
     font-weight: 500;
     font-size: 14px;
     padding-bottom: 0.5rem;

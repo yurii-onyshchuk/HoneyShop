@@ -1,38 +1,27 @@
 {% load static %}
 
-<li class="comment list-unstyled border-top pt-2">
-    <img class="user-photo comment-author-photo" alt="" src="{% if comment.user.photo %}{{ comment.user.photo.url }}
+<img class="user-photo comment-author-photo" alt="" src="{% if comment.user.photo %}{{ comment.user.photo.url }}
                                                   {% else %}{% static 'img/default_avatar.jpg' %}{% endif %}">
-    <div class="comment-details">
-        <h5 class="comment-author mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
-        <p class="comment-date mb-2"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>
-        <p class="comment-body mb-1">{{ comment.body }}</p>
-        <div class="comment-tools pb-2">
-            {% block comment_tools %}{% endblock %}
-            {% if comment.children %}
-                <div class="reply-list-collapse-button tool-item me-0">
-                    <button class="btn btn-link-mod" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#reply-list-{{ comment.id }}" aria-expanded="false"
-                            aria-controls="reply-list-{{ comment.id }}">
+<div class="comment-details">
+    <h5 class="comment-author mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+    <p class="comment-date mb-0"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>
+    <p class="comment-body my-2">{{ comment.body }}</p>
+    <div class="comment-tools">
+        {% block comment_tools %}{% endblock %}
+        {% if comment.children %}
+            <div class="reply-list-collapse-button tool-item me-0">
+                <button class="btn btn-link-mod" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#reply-list-{{ comment.id }}" aria-expanded="false"
+                        aria-controls="reply-list-{{ comment.id }}">
                             <span class="collapsed">
                                 <i class="fa-solid fa-chevron-down fa-sm"></i>
                                 Показати всі відповіді ({{ comment.children.count }})
                             </span>
-                        <span class="expanded">
+                    <span class="expanded">
                                 <i class="fa-solid fa-chevron-up fa-xs"></i>Згорнути всі відповіді ({{ comment.children.count }})
                             </span>
-                    </button>
-                </div>
-            {% endif %}
-        </div>
-        {% if comment.children %}
-            <ul class="reply-list collapse ps-0" id="reply-list-{{ comment.id }}">
-                {% for reply in comment.children %}
-                    <li>
-                        {% block single_comment %}{% endblock %}
-                    </li>
-                {% endfor %}
-            </ul>
+                </button>
+            </div>
         {% endif %}
     </div>
-</li>
+</div>
