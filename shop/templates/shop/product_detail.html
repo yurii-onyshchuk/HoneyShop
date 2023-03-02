@@ -36,22 +36,15 @@
                     <div class="mb-4 text-center text-md-start">
                         {% if product.quantity %}
                             <div class="d-inline-block mb-3">
-                                <form class="add-to-cart-form" data-index="{{ product.id }}">
+                                <form class="add-to-cart" data-index="{{ product.id }}"
+                                      data-url="{% url 'shop:cart:cart_add' %}">
                                     {% csrf_token %}
-                                    {{ cart_form }}
-                                    <button id="add-to-cart" type="button"
-                                            class="btn btn-warning {% if product.id in cart_item_ids %}d-none{% endif %}"
-                                            data-index="{{ product.id }}"
-                                            data-url="{% url 'shop:cart:cart_add' %}">
-                                        Купити
-                                        <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
+                                    <button class="btn btn-warning btn-main{% if product.id in cart_item_ids %} d-none{% endif %}">
+                                        Купити <i class="fa-solid fa-basket-shopping ps-1"></i>
                                     </button>
-                                    <a id="to-cart-link" type="button"
-                                       class="btn btn-success {% if not product.id in cart_item_ids %}d-none{% endif %}"
-                                       data-index="{{ product.id }}"
+                                    <a class="btn btn-success{% if not product.id in cart_item_ids %} d-none{% endif %}"
                                        href="{% url 'shop:cart:cart_detail' %}">
-                                        В корзині
-                                        <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
+                                        В корзині <i class="fa-solid fa-check ps-1"></i>
                                     </a>
                                 </form>
                             </div>

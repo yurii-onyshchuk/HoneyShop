@@ -26,21 +26,20 @@ $(document).ready(function () {
     })
 
     // Add to cart
-    $(document).on('click', '#add-to-cart', function (e) {
-        const product_id = $(this).attr('data-index')
+    $(document).on('click', '.add-to-cart button', function (e) {
+        const product_id = $(this).parent().attr('data-index')
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: $(this).attr('data-url'),
+            url: $(this).parent().attr('data-url'),
             data: {
                 product_id: product_id,
-                quantity: $('#id_quantity').val(),
-                csrfmiddlewaretoken: $('.add-to-cart-form[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                csrfmiddlewaretoken: $('form.add-to-cart[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
             },
             success: function (json) {
-                const add_to_cart_button = $('#add-to-cart[data-index="' + product_id + '"]')
-                const to_cart_link = $('#to-cart-link[data-index="' + product_id + '"]')
+                const add_to_cart_button = $('form.add-to-cart[data-index="' + product_id + '"] button')
+                const to_cart_link = $('form.add-to-cart[data-index="' + product_id + '"] a')
                 add_to_cart_button.addClass('d-none')
                 to_cart_link.removeClass('d-none')
 

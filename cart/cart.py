@@ -26,12 +26,9 @@ class Cart:
             item['total_price'] = item['price'] * item['quantity']
             yield item
 
-    def add(self, product, quantity):
+    def add(self, product):
         product_id = str(product.id)
-        if product_id in self.cart:
-            self.cart[product_id]['quantity'] += quantity
-        else:
-            self.cart[product_id] = {'quantity': quantity, 'price': str(product.price)}
+        self.cart[product_id] = {'quantity': 1, 'price': str(product.price)}
         self.save()
 
     def update(self, product, quantity):

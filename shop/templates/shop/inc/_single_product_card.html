@@ -35,20 +35,13 @@
         </div>
         <div class="buy-button text-center">
             {% if product.quantity %}
-                <form class="add-to-cart-form" data-index="{{ product.id }}">
+                <form class="add-to-cart" data-index="{{ product.id }}" data-url="{% url 'shop:cart:cart_add' %}">
                     {% csrf_token %}
-                    {{ cart_form }}
-                    <button id="add-to-cart" type="button" data-index="{{ product.id }}"
-                            class="btn btn-warning btn-main btn-sm {% if product.id in cart_item_ids %}d-none{% endif %}"
-                            data-url="{% url 'shop:cart:cart_add' %}">
-                        Купити
-                        <i class="fa-solid fa-basket-shopping ps-1" data-index="{{ product.id }}"></i>
+                    <button class="btn btn-warning btn-main btn-sm{% if product.id in cart_item_ids %} d-none{% endif %}">
+                        Купити<i class="fa-solid fa-basket-shopping ps-1"></i>
                     </button>
-                    <a href="{% url 'shop:cart:cart_detail' %}"
-                       id="to-cart-link" type="button" data-index="{{ product.id }}"
-                       class="btn btn-success btn-sm {% if not product.id in cart_item_ids %}d-none{% endif %}">
-                        В корзині
-                        <i class="fa-solid fa-check ps-1" data-index="{{ product.id }}"></i>
+                    <a class="btn btn-success btn-sm{% if not product.id in cart_item_ids %} d-none{% endif %}"
+                       href="{% url 'shop:cart:cart_detail' %}">В корзині<i class="fa-solid fa-check ps-1"></i>
                     </a>
                 </form>
             {% endif %}
