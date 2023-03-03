@@ -47,6 +47,18 @@ class Cart:
         self.session[settings.CART_SESSION_ID] = self.cart
         self.session.modified = True
 
+    def get_product_quantity(self, product):
+        product_id = str(product.id)
+        if product_id in self.cart:
+            quantity = self.cart[product_id]['quantity']
+            return quantity
+
+    def get_product_total_price(self, product):
+        product_id = str(product.id)
+        quantity = self.get_product_quantity(product)
+        price = self.cart[product_id]['price']
+        return Decimal(price) * quantity
+
     def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
 

@@ -16,6 +16,66 @@ $(window).scroll(function () {
 
 
 $(document).ready(function () {
+    $('.minus').click(function (e) {
+        const $input = $(this).parent().find('input');
+        const product_id = $(this).parent().parent().attr('data-index')
+        let count = parseInt($input.val()) - 1;
+        count = count < 1 ? 1 : count;
+        $input.val(count);
+        $input.change();
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).parent().parent().attr('data-url'),
+            data: {
+                quantity: $input.val(),
+                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                product_total_price[0].innerHTML = json.product_total_price
+                const total_price = document.getElementById("total-price")
+                total_price.innerHTML = json.total_price
+                const cart_total = document.getElementById("cart-total")
+                cart_total.innerHTML = json.cart_total
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+        return false;
+    });
+    $('.plus').click(function (e) {
+        const $input = $(this).parent().find('input');
+        const product_id = $(this).parent().parent().attr('data-index')
+        $input.val(parseInt($input.val()) + 1);
+        $input.change();
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).parent().parent().attr('data-url'),
+            data: {
+                quantity: $input.val(),
+                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                product_total_price[0].innerHTML = json.product_total_price
+                const total_price = document.getElementById("total-price")
+                total_price.innerHTML = json.total_price
+                const cart_total = document.getElementById("cart-total")
+                cart_total.innerHTML = json.cart_total
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+        cart_update_ajax($input, product_id)
+        return false;
+    });
+});
+
+$(document).ready(function () {
     // Add active link at navbar
     $('.nav-item a').each(function () {
         let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
@@ -43,7 +103,6 @@ $(document).ready(function () {
                 add_to_cart_button.addClass('d-none')
                 to_cart_link.removeClass('d-none')
 
-
                 const cart_total = document.getElementById("cart-total")
                 cart_total.innerHTML = json.cart_total
                 if (json.cart_total > '0') {
@@ -51,7 +110,6 @@ $(document).ready(function () {
                 } else {
                     cart_total.style.display = 'none'
                 }
-
             },
             error: function (xhr, errmsg, err) {
             }
@@ -63,14 +121,11 @@ $(document).ready(function () {
         const product_id = $(this).attr('data-index')
         e.preventDefault();
         $.ajax({
-            type: 'POST',
-            url: $(this).attr('data-url'),
-            data: {
+            type: 'POST', url: $(this).attr('data-url'), data: {
                 product_id: product_id,
                 csrfmiddlewaretoken: $('#to-wishlist-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const wishlist_total = document.getElementById("wishlist-total")
                 wishlist_total.innerHTML = json.wishlist_total
 
@@ -87,8 +142,7 @@ $(document).ready(function () {
                 } else {
                     $('#to-wishlist i[data-index="' + product_id + '"]').removeClass('fa-solid')
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
     })
@@ -98,14 +152,11 @@ $(document).ready(function () {
         const comment_id = $(this).attr('data-index')
         e.preventDefault();
         $.ajax({
-            type: 'POST',
-            url: $(this).attr('data-url'),
-            data: {
+            type: 'POST', url: $(this).attr('data-url'), data: {
                 comment_id: comment_id,
                 csrfmiddlewaretoken: $('#like-form input[name="csrfmiddlewaretoken"]').attr('data-index', comment_id).val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const like_total = document.getElementById("like-total-" + comment_id)
                 like_total.innerText = json.like_total
 
@@ -120,8 +171,7 @@ $(document).ready(function () {
                 } else {
                     $('#like i[data-index="' + comment_id + '"]').removeClass('fa-solid')
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
     })

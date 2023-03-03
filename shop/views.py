@@ -10,7 +10,7 @@ from django.views.generic.edit import FormMixin
 
 from .models import Product, Category, Review
 from .forms import ReviewForm
-from cart.forms import CartAddProductForm
+from cart.forms import CartUpdateProductForm
 
 
 class ProductList(ListView):
@@ -19,7 +19,7 @@ class ProductList(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cart_form'] = CartAddProductForm
+        context['cart_form'] = CartUpdateProductForm
         return context
 
 
@@ -72,7 +72,7 @@ class DetailProduct(FormMixin, DetailView):
         paginator = Paginator(_list, 10)
         page = self.request.GET.get('page')
         context['reviews'] = paginator.get_page(page)
-        context['cart_form'] = CartAddProductForm
+        context['cart_form'] = CartUpdateProductForm
         context['title'] = self.object.title
         return context
 

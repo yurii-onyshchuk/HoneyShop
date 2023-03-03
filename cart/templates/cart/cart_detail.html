@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load shop_tags %}
+{% load crispy_forms_filters %}
 
 {% block content %}
     <div class="cart max-w-1000 mb-5">
@@ -33,23 +34,18 @@
                                                     <p class="price mb-0">{{ item.price }} грн.</p>
                                                 </div>
                                                 <div class="col-8 col-lg-4 align-self-center">
-                                                    <form action="{% url 'shop:cart:cart_update' product.id %}"
-                                                          method="POST">
+                                                    <form class="update_quantity" data-index="{{ product.id }}"
+                                                          data-url="{% url 'shop:cart:cart_update' product.id %}">
                                                         {% csrf_token %}
-                                                        <input type="number" name="quantity"
-                                                               value="{{ item.quantity }}"
-                                                               class="form-control" min="1" max="20"
-                                                               aria-label="quantity">
-                                                        шт.
-                                                        <button class="btn btn-link-mod ms-1" type="submit">
-                                                            <i class="fa fa fa-refresh fa-xl" aria-hidden="true"
-                                                               title="Оновити"></i>
-                                                        </button>
+                                                        {{ cart_form }}
                                                     </form>
                                                 </div>
                                                 <div class="col-4 col-lg-3 align-self-center px-0">
-                                                    <h6 class="total-price mb-0">{{ item.total_price }}
-                                                        грн.</h6>
+                                                    <h6 class="total-price mb-0">
+                                                        <span id="product-total-price" data-index="{{ product.id }}">
+                                                            {{ item.total_price }}
+                                                        </span> грн.
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +63,9 @@
                             {% endwith %}
                         {% endfor %}
                     </ul>
-                    <h4 class="total-price text-end"> Разом {{ cart.get_total_price }} грн </h4>
+                    <h4 class="total-price text-end">
+                        Разом <span id="total-price">{{ cart.get_total_price }}</span> грн
+                    </h4>
                     <div class="row mb-4">
                         <div class="col">
                             <a href="{% url 'shop:shop' %}" class="btn btn-light btn-sm border">Продовжити
