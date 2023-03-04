@@ -37,7 +37,16 @@
                                                     <form class="update_quantity" data-index="{{ product.id }}"
                                                           data-url="{% url 'shop:cart:cart_update' product.id %}">
                                                         {% csrf_token %}
-                                                        {{ cart_form }}
+                                                        <div class="quantity">
+                                                            <button class="minus{% if item.quantity == 1 %} no-active{% endif %}">
+                                                                -
+                                                            </button>
+                                                            <input type="text" value="{{ item.quantity }}"
+                                                                   class="form-control" aria-label="quantity" readonly/>
+                                                            <button class="plus{% if item.quantity == product.quantity %} no-active{% endif %}">
+                                                                +
+                                                            </button>
+                                                        </div>
                                                     </form>
                                                 </div>
                                                 <div class="col-4 col-lg-3 align-self-center px-0">

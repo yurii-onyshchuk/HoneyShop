@@ -374,6 +374,11 @@ button#to-wishlist:hover {
     user-select: none;
 }
 
+.cart .cart-item .no-active {
+    color: #cecece;
+    cursor: default;
+}
+
 .cart .cart-item input {
     display: inline-block;
     font-size: 15px;

@@ -1,81 +1,5 @@
-// Add scrolled effect for header
-const topbar = $("#topbar");
-const navbar = $("#navbar");
-const scrollChange = 50;
-$(window).scroll(function () {
-    const scroll = $(window).scrollTop();
-
-    if (scroll >= scrollChange) {
-        topbar.addClass('topbar-scrolled');
-        navbar.addClass('navbar-scrolled');
-    } else {
-        topbar.removeClass("topbar-scrolled");
-        navbar.removeClass("navbar-scrolled");
-    }
-});
-
-
 $(document).ready(function () {
-    $('.minus').click(function (e) {
-        const $input = $(this).parent().find('input');
-        const product_id = $(this).parent().parent().attr('data-index')
-        let count = parseInt($input.val()) - 1;
-        count = count < 1 ? 1 : count;
-        $input.val(count);
-        $input.change();
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: $(this).parent().parent().attr('data-url'),
-            data: {
-                quantity: $input.val(),
-                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
-                action: 'post'
-            },
-            success: function (json) {
-                const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
-                product_total_price[0].innerHTML = json.product_total_price
-                const total_price = document.getElementById("total-price")
-                total_price.innerHTML = json.total_price
-                const cart_total = document.getElementById("cart-total")
-                cart_total.innerHTML = json.cart_total
-            },
-            error: function (xhr, errmsg, err) {
-            }
-        });
-        return false;
-    });
-    $('.plus').click(function (e) {
-        const $input = $(this).parent().find('input');
-        const product_id = $(this).parent().parent().attr('data-index')
-        $input.val(parseInt($input.val()) + 1);
-        $input.change();
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: $(this).parent().parent().attr('data-url'),
-            data: {
-                quantity: $input.val(),
-                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
-                action: 'post'
-            },
-            success: function (json) {
-                const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
-                product_total_price[0].innerHTML = json.product_total_price
-                const total_price = document.getElementById("total-price")
-                total_price.innerHTML = json.total_price
-                const cart_total = document.getElementById("cart-total")
-                cart_total.innerHTML = json.cart_total
-            },
-            error: function (xhr, errmsg, err) {
-            }
-        });
-        cart_update_ajax($input, product_id)
-        return false;
-    });
-});
 
-$(document).ready(function () {
     // Add active link at navbar
     $('.nav-item a').each(function () {
         let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
@@ -175,7 +99,109 @@ $(document).ready(function () {
             }
         });
     })
-});
+
+    // Increase the quantity of product in the cart
+    $(document).on('click', '.plus', function (e) {
+        const minus = $(this).parent().find('button.minus')
+        const plus = $(this)
+        const product_id = plus.parent().parent().attr('data-index')
+        const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+        const new_quantuty = parseInt(input.val()) + 1
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).parent().parent().attr('data-url'),
+            data: {
+                quantity: new_quantuty,
+                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                const diff = json.available_quantity - new_quantuty
+                if (diff >= 0) {
+                    input.val(new_quantuty);
+                    input.change();
+                    const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                    product_total_price[0].innerHTML = json.product_total_price
+                    const total_price = document.getElementById("total-price")
+                    total_price.innerHTML = json.total_price
+                    const cart_total = document.getElementById("cart-total")
+                    cart_total.innerHTML = json.cart_total
+                }
+                if (diff <= 0) {
+                    plus.addClass('no-active')
+                }
+                if (diff > 0) {
+                    plus.removeClass('no-active')
+                }
+                if (new_quantuty >= 2) {
+                    minus.removeClass('no-active')
+                }
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+        return false;
+    })
+
+    // Reduce the quantity of product in the cart
+    $(document).on('click', '.minus', function (e) {
+        const minus = $(this)
+        const plus = $(this).parent().find('button.plus')
+        const product_id = $(this).parent().parent().attr('data-index')
+        const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+
+        let new_quantuty = parseInt(input.val()) - 1;
+        new_quantuty = new_quantuty < 1 ? 1 : new_quantuty;
+
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: $(this).parent().parent().attr('data-url'),
+            data: {
+                quantity: new_quantuty,
+                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                action: 'post'
+            },
+            success: function (json) {
+                const diff = json.available_quantity - new_quantuty
+                if (diff > 0) {
+                    input.val(new_quantuty);
+                    input.change();
+                    plus.removeClass('no-active')
+                    const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                    product_total_price[0].innerHTML = json.product_total_price
+                    const total_price = document.getElementById("total-price")
+                    total_price.innerHTML = json.total_price
+                    const cart_total = document.getElementById("cart-total")
+                    cart_total.innerHTML = json.cart_total
+                }
+                if (new_quantuty === 1) {
+                    minus.addClass('no-active')
+                }
+            },
+            error: function (xhr, errmsg, err) {
+            }
+        });
+        return false;
+    })
+})
+
+// Add scrolled effect for header
+const topbar = $("#topbar");
+const navbar = $("#navbar");
+const scrollChange = 50;
+$(window).scroll(function () {
+    const scroll = $(window).scrollTop();
+
+    if (scroll >= scrollChange) {
+        topbar.addClass('topbar-scrolled');
+        navbar.addClass('navbar-scrolled');
+    } else {
+        topbar.removeClass("topbar-scrolled");
+        navbar.removeClass("navbar-scrolled");
+    }
+})
 
 function addReply(user, comment_id) {
     document.getElementById("contactparent").value = comment_id;
