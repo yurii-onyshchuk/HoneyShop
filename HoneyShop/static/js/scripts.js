@@ -106,7 +106,7 @@ $(document).ready(function () {
         const plus = $(this)
         const product_id = plus.parent().parent().attr('data-index')
         const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
-        const new_quantuty = parseInt(input.val()) + 1
+        const new_quantuty = parseInt(input.val() || 0) + 1
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -151,7 +151,7 @@ $(document).ready(function () {
         const product_id = $(this).parent().parent().attr('data-index')
         const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
 
-        let new_quantuty = parseInt(input.val()) - 1;
+        let new_quantuty = parseInt(input.val() || 2) - 1;
         new_quantuty = new_quantuty < 1 ? 1 : new_quantuty;
 
         e.preventDefault();
@@ -185,6 +185,68 @@ $(document).ready(function () {
         });
         return false;
     })
+
+
+    $('form.update_quantity').keydown(function (e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            const minus = $(this).find('button.minus')
+            const plus = $(this).find('button.plus')
+            const product_id = $(this).attr('data-index')
+            const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+            const new_quantuty = parseInt(input.val() || 1)
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('data-url'),
+                data: {
+                    quantity: new_quantuty,
+                    csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                    action: 'post'
+                },
+                success: function (json) {
+                    const diff = json.available_quantity - new_quantuty
+                    if (diff >= 0) {
+                        input.val(new_quantuty);
+                        input.change();
+                        const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                        product_total_price[0].innerHTML = json.product_total_price
+                        const total_price = document.getElementById("total-price")
+                        total_price.innerHTML = json.total_price
+                        const cart_total = document.getElementById("cart-total")
+                        cart_total.innerHTML = json.cart_total
+                    }
+                    if (diff <= 0) {
+                        plus.addClass('no-active')
+                    }
+                    if (diff < 0) {
+                        input.val(parseInt(json.available_quantity));
+                        input.change();
+                        plus.addClass('no-active')
+                        const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
+                        product_total_price[0].innerHTML = json.product_total_price
+                        const total_price = document.getElementById("total-price")
+                        total_price.innerHTML = json.total_price
+                        const cart_total = document.getElementById("cart-total")
+                        cart_total.innerHTML = json.cart_total
+                    }
+                    if (diff > 0) {
+                        plus.removeClass('no-active')
+                    }
+                    if (new_quantuty >= 2) {
+                        minus.removeClass('no-active')
+                    }
+                    if (new_quantuty === 1) {
+                        minus.addClass('no-active')
+                    }
+                },
+                error: function (xhr, errmsg, err) {
+                }
+            });
+            return false;
+        }
+    });
+
+
 })
 
 // Add scrolled effect for header

@@ -390,6 +390,18 @@ button#to-wishlist:hover {
     vertical-align: middle;
 }
 
+/* Chrome, Safari, Edge, Opera */
+.cart .cart-item input::-webkit-outer-spin-button,
+.cart .cart-item input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.cart .cart-item input[type=number] {
+    -moz-appearance: textfield;
+}
+
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/

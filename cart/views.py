@@ -23,7 +23,10 @@ def cart_update(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     if product.quantity >= int(request.POST['quantity']):
-        cart.update(product=product, quantity=int(request.POST['quantity']))
+        quantity = int(request.POST['quantity'])
+    else:
+        quantity = int(product.quantity)
+    cart.update(product=product, quantity=quantity)
     json = {'available_quantity': product.quantity,
             'product_total_price': cart.get_product_total_price(product),
             'total_price': cart.get_total_price(),

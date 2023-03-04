@@ -31,7 +31,7 @@
                                                     <a href="{{ product.get_absolute_url }}">
                                                         <h6 class="title d-inline-block mb-0 mt-2">{{ product.title }}</h6>
                                                     </a>
-                                                    <p class="price mb-0">{{ item.price }} грн.</p>
+                                                    <p class="price mb-0">{{ item.price }} грн</p>
                                                 </div>
                                                 <div class="col-8 col-lg-4 align-self-center">
                                                     <form class="update_quantity" data-index="{{ product.id }}"
@@ -41,8 +41,8 @@
                                                             <button class="minus{% if item.quantity == 1 %} no-active{% endif %}">
                                                                 -
                                                             </button>
-                                                            <input type="text" value="{{ item.quantity }}"
-                                                                   class="form-control" aria-label="quantity" readonly/>
+                                                            <input type="number" value="{{ item.quantity }}"
+                                                                   class="form-control" aria-label="quantity"/>
                                                             <button class="plus{% if item.quantity == product.quantity %} no-active{% endif %}">
                                                                 +
                                                             </button>
@@ -53,7 +53,7 @@
                                                     <h6 class="total-price mb-0">
                                                         <span id="product-total-price" data-index="{{ product.id }}">
                                                             {{ item.total_price }}
-                                                        </span> грн.
+                                                        </span> грн
                                                     </h6>
                                                 </div>
                                             </div>
