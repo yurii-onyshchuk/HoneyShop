@@ -27,7 +27,7 @@ class Product(models.Model):
     photo = models.ImageField(upload_to='photos/shop/%Y/%m', blank=True, verbose_name='Фото')
     description = models.TextField(blank=True, verbose_name='Опис')
     price = models.DecimalField(verbose_name='Ціна', max_digits=7, decimal_places=0)
-    quantity = models.DecimalField(default=0, verbose_name='Доступна кількість', max_digits=7, decimal_places=2)
+    quantity = models.IntegerField(default=0, verbose_name='Доступна кількість')
     sales = models.IntegerField(default=0, verbose_name='Продажі')
     views = models.IntegerField(default=0, verbose_name='Перегляди')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')

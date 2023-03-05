@@ -9,66 +9,20 @@ $(document).ready(function () {
         }
     })
 
-    // Add to cart
-    $(document).on('click', '.add-to-cart button', function (e) {
-        const product_id = $(this).parent().attr('data-index')
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: $(this).parent().attr('data-url'),
-            data: {
-                product_id: product_id,
-                csrfmiddlewaretoken: $('form.add-to-cart[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
-                action: 'post'
-            },
-            success: function (json) {
-                const add_to_cart_button = $('form.add-to-cart[data-index="' + product_id + '"] button')
-                const to_cart_link = $('form.add-to-cart[data-index="' + product_id + '"] a')
-                add_to_cart_button.addClass('d-none')
-                to_cart_link.removeClass('d-none')
+    // Add scrolled effect for header
+    const topbar = $("#topbar");
+    const navbar = $("#navbar");
+    const scrollChange = 50;
+    $(window).scroll(function () {
+        const scroll = $(window).scrollTop();
 
-                const cart_total = document.getElementById("cart-total")
-                cart_total.innerHTML = json.cart_total
-                if (json.cart_total > '0') {
-                    cart_total.style.display = 'block'
-                } else {
-                    cart_total.style.display = 'none'
-                }
-            },
-            error: function (xhr, errmsg, err) {
-            }
-        });
-    })
-
-    // Add to wishlist
-    $(document).on('click', '#to-wishlist', function (e) {
-        const product_id = $(this).attr('data-index')
-        e.preventDefault();
-        $.ajax({
-            type: 'POST', url: $(this).attr('data-url'), data: {
-                product_id: product_id,
-                csrfmiddlewaretoken: $('#to-wishlist-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
-                action: 'post'
-            }, success: function (json) {
-                const wishlist_total = document.getElementById("wishlist-total")
-                wishlist_total.innerHTML = json.wishlist_total
-
-                if (json.wishlist_total > '0') {
-                    wishlist_total.style.display = 'block'
-                    console.log('block')
-                } else {
-                    wishlist_total.style.display = 'none'
-                    console.log('none')
-                }
-
-                if (json.action_result === 'added') {
-                    $('#to-wishlist i[data-index="' + product_id + '"]').addClass('fa-solid')
-                } else {
-                    $('#to-wishlist i[data-index="' + product_id + '"]').removeClass('fa-solid')
-                }
-            }, error: function (xhr, errmsg, err) {
-            }
-        });
+        if (scroll >= scrollChange) {
+            topbar.addClass('topbar-scrolled');
+            navbar.addClass('navbar-scrolled');
+        } else {
+            topbar.removeClass("topbar-scrolled");
+            navbar.removeClass("navbar-scrolled");
+        }
     })
 
     // Click like at post comment
@@ -100,171 +54,162 @@ $(document).ready(function () {
         });
     })
 
-    // Increase the quantity of product in the cart
-    $(document).on('click', '.plus', function (e) {
-        const minus = $(this).parent().find('button.minus')
-        const plus = $(this)
-        const product_id = plus.parent().parent().attr('data-index')
-        const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
-        const new_quantuty = parseInt(input.val() || 0) + 1
+    // Add the product to wishlist
+    $(document).on('click', '#to-wishlist', function (e) {
+        const product_id = $(this).attr('data-index')
+        e.preventDefault();
+        $.ajax({
+            type: 'POST', url: $(this).attr('data-url'), data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: $('#to-wishlist-form input[name="csrfmiddlewaretoken"]').attr('data-index', product_id).val(),
+                action: 'post'
+            }, success: function (json) {
+                const wishlist_total = document.getElementById("wishlist-total")
+                wishlist_total.innerHTML = json.wishlist_total
+
+                if (json.wishlist_total > '0') {
+                    wishlist_total.style.display = 'block'
+                    console.log('block')
+                } else {
+                    wishlist_total.style.display = 'none'
+                    console.log('none')
+                }
+
+                if (json.action_result === 'added') {
+                    $('#to-wishlist i[data-index="' + product_id + '"]').addClass('fa-solid')
+                } else {
+                    $('#to-wishlist i[data-index="' + product_id + '"]').removeClass('fa-solid')
+                }
+            }, error: function (xhr, errmsg, err) {
+            }
+        });
+    })
+
+    // Add the product to cart
+    $(document).on('click', '.add-to-cart button', function (e) {
+        const product_id = $(this).parent().attr('data-index')
         e.preventDefault();
         $.ajax({
             type: 'POST',
-            url: $(this).parent().parent().attr('data-url'),
+            url: $(this).parent().attr('data-url'),
             data: {
-                quantity: new_quantuty,
-                csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
+                product_id: product_id,
+                csrfmiddlewaretoken: $('form.add-to-cart[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
             },
             success: function (json) {
-                const diff = json.available_quantity - new_quantuty
-                if (diff >= 0) {
-                    input.val(new_quantuty);
-                    input.change();
-                    const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
-                    product_total_price[0].innerHTML = json.product_total_price
-                    const total_price = document.getElementById("total-price")
-                    total_price.innerHTML = json.total_price
-                    const cart_total = document.getElementById("cart-total")
-                    cart_total.innerHTML = json.cart_total
-                }
-                if (diff <= 0) {
-                    plus.addClass('no-active')
-                }
-                if (diff > 0) {
-                    plus.removeClass('no-active')
-                }
-                if (new_quantuty >= 2) {
-                    minus.removeClass('no-active')
+                const add_to_cart_button = $('form.add-to-cart[data-index="' + product_id + '"] button')
+                const to_cart_link = $('form.add-to-cart[data-index="' + product_id + '"] a')
+                add_to_cart_button.addClass('d-none')
+                to_cart_link.removeClass('d-none')
+
+                const cart_total_quantity = document.getElementById("cart-total")
+                cart_total_quantity.innerHTML = json.cart_total_quantity
+                if (json.cart_total_quantity > '0') {
+                    cart_total_quantity.style.display = 'block'
+                } else {
+                    cart_total_quantity.style.display = 'none'
                 }
             },
             error: function (xhr, errmsg, err) {
             }
         });
-        return false;
+    })
+
+    // Increase the quantity of product in the cart
+    $(document).on('click', '.plus', function (e) {
+        e.preventDefault();
+        if (!($(this).hasClass('no-active'))) {
+            const product_id = $(this).parent().parent().attr('data-index')
+            const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+            const new_input_quantity = parseInt(input.val() || 0) + 1
+            ajax_handler(e, input, product_id, new_input_quantity)
+            return false;
+        }
     })
 
     // Reduce the quantity of product in the cart
     $(document).on('click', '.minus', function (e) {
-        const minus = $(this)
-        const plus = $(this).parent().find('button.plus')
+        e.preventDefault();
+        if (!($(this).hasClass('no-active'))) {
+            const product_id = $(this).parent().parent().attr('data-index')
+            const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+            let new_input_quantity = parseInt(input.val() || 2) - 1;
+            new_input_quantity = new_input_quantity < 1 ? 1 : new_input_quantity;
+            ajax_handler(e, input, product_id, new_input_quantity)
+            return false;
+        }
+    })
+
+    // Change the quantity of product in the cart by "focusout"
+    $(document).on('focusout', 'form.update_quantity input', function (e) {
         const product_id = $(this).parent().parent().attr('data-index')
         const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+        let new_input_quantity = parseInt(input.val() || 1)
+        ajax_handler(e, input, product_id, new_input_quantity)
+        return false;
+    })
 
-        let new_quantuty = parseInt(input.val() || 2) - 1;
-        new_quantuty = new_quantuty < 1 ? 1 : new_quantuty;
+    // Change the quantity of product in the cart by "Enter" key
+    $('form.update_quantity').keydown(function (e) {
+        if (e.keyCode === 13) {
+            const product_id = $(this).attr('data-index')
+            const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
+            input.focusout()
+            input.blur()
+            return false;
+        }
+    })
 
-        e.preventDefault();
+    // AJAX handler for changing the quantity of product in the cart
+    function ajax_handler(e, input, product_id, new_input_quantity) {
         $.ajax({
             type: 'POST',
-            url: $(this).parent().parent().attr('data-url'),
+            url: input.parent().parent().attr('data-url'),
             data: {
-                quantity: new_quantuty,
+                input_quantity: new_input_quantity,
                 csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
             },
             success: function (json) {
-                const diff = json.available_quantity - new_quantuty
-                if (diff > 0) {
-                    input.val(new_quantuty);
-                    input.change();
-                    plus.removeClass('no-active')
+                const diff = json.available_product_quantity - json.product_quantity
+                if (diff >= 0) {
+                    input.val(json.product_quantity);
+                    change_active_status(input, diff)
                     const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
                     product_total_price[0].innerHTML = json.product_total_price
-                    const total_price = document.getElementById("total-price")
-                    total_price.innerHTML = json.total_price
-                    const cart_total = document.getElementById("cart-total")
-                    cart_total.innerHTML = json.cart_total
-                }
-                if (new_quantuty === 1) {
-                    minus.addClass('no-active')
+                    const cart_total_price = document.getElementById("total-price")
+                    cart_total_price.innerHTML = json.cart_total_price
+                    const cart_total_quantity = document.getElementById("cart-total")
+                    cart_total_quantity.innerHTML = json.cart_total_quantity
                 }
             },
             error: function (xhr, errmsg, err) {
             }
         });
         return false;
-    })
+    }
 
-
-    $('form.update_quantity').keydown(function (e) {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            const minus = $(this).find('button.minus')
-            const plus = $(this).find('button.plus')
-            const product_id = $(this).attr('data-index')
-            const input = $('form.update_quantity[data-index="' + product_id + '"] .quantity input')
-            const new_quantuty = parseInt(input.val() || 1)
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('data-url'),
-                data: {
-                    quantity: new_quantuty,
-                    csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
-                    action: 'post'
-                },
-                success: function (json) {
-                    const diff = json.available_quantity - new_quantuty
-                    if (diff >= 0) {
-                        input.val(new_quantuty);
-                        input.change();
-                        const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
-                        product_total_price[0].innerHTML = json.product_total_price
-                        const total_price = document.getElementById("total-price")
-                        total_price.innerHTML = json.total_price
-                        const cart_total = document.getElementById("cart-total")
-                        cart_total.innerHTML = json.cart_total
-                    }
-                    if (diff <= 0) {
-                        plus.addClass('no-active')
-                    }
-                    if (diff < 0) {
-                        input.val(parseInt(json.available_quantity));
-                        input.change();
-                        plus.addClass('no-active')
-                        const product_total_price = $('#product-total-price[data-index="' + product_id + '"]')
-                        product_total_price[0].innerHTML = json.product_total_price
-                        const total_price = document.getElementById("total-price")
-                        total_price.innerHTML = json.total_price
-                        const cart_total = document.getElementById("cart-total")
-                        cart_total.innerHTML = json.cart_total
-                    }
-                    if (diff > 0) {
-                        plus.removeClass('no-active')
-                    }
-                    if (new_quantuty >= 2) {
-                        minus.removeClass('no-active')
-                    }
-                    if (new_quantuty === 1) {
-                        minus.addClass('no-active')
-                    }
-                },
-                error: function (xhr, errmsg, err) {
-                }
-            });
-            return false;
+    // Change active status of "+/-" buttons in the cart
+    function change_active_status(input, diff) {
+        const minus = input.parent().find('button.minus')
+        const plus = input.parent().find('button.plus')
+        if (diff <= 0) {
+            plus.addClass('no-active')
         }
-    });
-
-
-})
-
-// Add scrolled effect for header
-const topbar = $("#topbar");
-const navbar = $("#navbar");
-const scrollChange = 50;
-$(window).scroll(function () {
-    const scroll = $(window).scrollTop();
-
-    if (scroll >= scrollChange) {
-        topbar.addClass('topbar-scrolled');
-        navbar.addClass('navbar-scrolled');
-    } else {
-        topbar.removeClass("topbar-scrolled");
-        navbar.removeClass("navbar-scrolled");
+        if (diff > 0) {
+            plus.removeClass('no-active')
+        }
+        if (parseInt(input.val()) === 1) {
+            minus.addClass('no-active')
+        }
+        if (parseInt(input.val()) >= 2) {
+            minus.removeClass('no-active')
+        }
     }
 })
 
+// Add replay at comment
 function addReply(user, comment_id) {
     document.getElementById("contactparent").value = comment_id;
     const comment_form = document.getElementById("contactcomment")
@@ -272,16 +217,4 @@ function addReply(user, comment_id) {
     const end = comment_form.value.length;
     comment_form.setSelectionRange(end, end);
     comment_form.focus()
-}
-
-//Lightbox
-document.getElementById('lightbox-links').onclick = function (event) {
-    event = event || window.event
-    const target = event.target || event.srcElement;
-    const link = target.src ? target.parentNode : target;
-    const options = {index: link, event: event};
-    const links = this.getElementsByTagName('a');
-    blueimp.Gallery(links, options)
-    const blueimp_gallery = document.getElementById('blueimp-gallery')
-    blueimp_gallery.classList.add('blueimp-gallery-controls')
 }

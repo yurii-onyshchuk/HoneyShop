@@ -15,23 +15,27 @@ def cart_add(request):
     cart = Cart(request)
     product = get_object_or_404(Product, id=request.POST['product_id'])
     cart.add(product=product)
-    return JsonResponse({'cart_total': cart.__len__()})
+    return JsonResponse({'cart_total_quantity': len(cart)})
 
 
 @require_POST
 def cart_update(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    if product.quantity >= int(request.POST['quantity']):
-        quantity = int(request.POST['quantity'])
+    input_quantity = int(request.POST['input_quantity'])
+    if input_quantity <= 0:
+        product_quantity = 1
+    elif product.quantity <= input_quantity:
+        product_quantity = int(product.quantity)
     else:
-        quantity = int(product.quantity)
-    cart.update(product=product, quantity=quantity)
-    json = {'available_quantity': product.quantity,
-            'product_total_price': cart.get_product_total_price(product),
-            'total_price': cart.get_total_price(),
-            'cart_total': cart.__len__()}
-    return JsonResponse(json)
+        product_quantity = input_quantity
+    cart.update(product=product, quantity=product_quantity)
+    response = {'available_product_quantity': product.quantity,
+                'product_quantity': cart[product.id]['quantity'],
+                'product_total_price': cart.get_product_total_price(product),
+                'cart_total_price': cart.get_total_price(),
+                'cart_total_quantity': len(cart)}
+    return JsonResponse(response)
 
 
 def cart_delete(request, product_id):
