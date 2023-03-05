@@ -5,8 +5,8 @@
 
 {% block content %}
     <div class="payment-success text-center">
-        <img src="{% static 'img/payment-success.png' %}" height="150px" alt="">
-        <h5 class="my-3">Замовлення успішно оформлене та оплачене</h5>
+        <img src="{% static 'img/payment-error.png' %}" height="150px" alt="">
+        <h5 class="my-3">При оплаті замовлення виникла помилка. Замовлення оформлене, але не оплачене</h5>
         <p>Відслідковуйте статус замовлення в <a class="fw-bold" href="{% url 'order_list' %}">Особистому кабінеті</a>
         </p>
     </div>

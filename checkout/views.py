@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
@@ -70,11 +71,29 @@ def payment(request, pk):
     api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
     checkout = cloudipsp.Checkout(api=api)
     data = {
-        'currency': 'UAH',
+        'order_desc': f'Замовленння №{order.id}',
         'amount': int(order.total_price * 100),
+        'currency': 'UAH',
+        'server_callback_url': request.build_absolute_uri(reverse_lazy('callback')),
     }
     url = checkout.url(data).get('checkout_url')
     return redirect(url)
+
+
+def callback(request):
+    if request.method == 'POST':
+        data = request.POST
+        api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
+        status = cloudipsp.Order(api).status(data)
+        if status == 'approved':
+            order = Order.objects.get(id=data['order_id'])
+            order.billing_status = True
+            order.save()
+            return reverse_lazy('payment_success')
+        else:
+            return reverse_lazy('payment_error')
+    else:
+        return HttpResponseNotAllowed(['POST'])
 
 
 class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
@@ -87,4 +106,10 @@ class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
 class PaymentSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Оплата успішна'}
     template_name = 'checkout/payment_success.html'
+    redirect_url = reverse_lazy('order_list')
+
+
+class PaymentError(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+    extra_context = {'title': 'Помилка оплати'}
+    template_name = 'checkout/payment_error.html'
     redirect_url = reverse_lazy('order_list')
