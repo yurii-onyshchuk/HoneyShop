@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
@@ -55,6 +56,10 @@ class Checkout(LoginRequiredMixin, CreateView):
             product.save()
         cart.clear()
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Виправте помилки в полях форми, що показані нижче! ')
+        return super(Checkout, self).form_invalid(form)
 
     def get_success_url(self):
         method = PaymentOptions.objects.get(pk=int(self.request.POST.get('payment_option'))).method
