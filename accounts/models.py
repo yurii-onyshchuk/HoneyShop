@@ -22,7 +22,7 @@ class User(AbstractUser):
         verbose_name_plural = 'Користувачі'
 
     def __str__(self):
-        return str(self.username)
+        return f'{self.first_name} {self.last_name}'
 
     def save_thumbnail(self):
         super().save()

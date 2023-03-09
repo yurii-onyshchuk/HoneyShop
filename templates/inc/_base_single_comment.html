@@ -3,7 +3,7 @@
 <img class="user-photo comment-author-photo" alt="" src="{% if comment.user.photo %}{{ comment.user.photo.url }}
                                                   {% else %}{% static 'img/default_avatar.jpg' %}{% endif %}">
 <div class="comment-details">
-    <h5 class="comment-author mb-1">{{ comment.user.first_name }} {{ comment.user.last_name }}</h5>
+    <h5 class="comment-author mb-1">{{ comment.get_user }}</h5>
     <p class="comment-date mb-0"><i class="fa fa-calendar-alt me-2"></i>{{ comment.created_at }}</p>
     <p class="comment-body my-2">{{ comment.body }}</p>
     <div class="comment-tools">

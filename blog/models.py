@@ -46,7 +46,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name='Пост')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET('Видалений користувач'),
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                              related_name='user_comments', verbose_name='Користувач')
     body = models.TextField(verbose_name='Коментар')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата додавання')
@@ -62,6 +62,12 @@ class Comment(models.Model):
         verbose_name = 'Коментар'
         verbose_name_plural = 'Коментарі'
         ordering = ['-created_at']
+
+    def get_user(self):
+        if self.user:
+            return self.user
+        else:
+            return "Видалений аккаунт"
 
     @property
     def children(self):
