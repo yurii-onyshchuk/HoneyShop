@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.http import JsonResponse
-from django.urls import reverse_lazy
-from django.shortcuts import redirect, get_object_or_404
 from django.db.models import F
+from django.http import JsonResponse
+from django.shortcuts import redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 
-from .models import Product, Category, Review
 from .forms import ReviewForm
+from .models import Product, Category, Review
 
 
 class ProductList(ListView):

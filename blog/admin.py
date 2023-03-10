@@ -1,8 +1,10 @@
+from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import *
-from django import forms
+
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+from .models import *
 
 
 class PostAdminForm(forms.ModelForm):

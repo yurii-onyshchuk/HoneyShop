@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView
-from django.db.models import F
 from django.views.generic.edit import FormMixin
 
-from .models import Post, Category, Comment
 from .forms import CommentForm
+from .models import Post, Category, Comment
 
 
 class PostList(ListView):
@@ -41,6 +41,7 @@ class Search(PostList):
         context['q'] = self.request.GET.get('q')
         return context
 
+
 class SinglePost(FormMixin, DetailView):
     model = Post
     form_class = CommentForm
@@ -70,7 +71,6 @@ class SinglePost(FormMixin, DetailView):
 
     def get_success_url(self):
         return reverse_lazy('blog:post', kwargs={'slug': self.kwargs['slug']})
-
 
 
 @login_required

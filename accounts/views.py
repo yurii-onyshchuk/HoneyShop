@@ -6,6 +6,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, TemplateView, ListView, DeleteView
+
 from . import forms
 from .models import User, Address
 from .utils import RedirectAuthenticatedUserMixin

@@ -11,11 +11,11 @@ import cloudipsp
 
 from cart.cart import Cart
 from checkout.forms import CheckoutForm
+from checkout.utils import AllowOnlyRedirectMixin
+from accounts.models import Address
+from checkout.models import PaymentOptions
 from order.models import Order, OrderItem
 from shop.models import Product
-from checkout.models import PaymentOptions
-from accounts.models import Address
-from checkout.utils import AllowOnlyRedirectMixin
 
 
 class Checkout(LoginRequiredMixin, CreateView):

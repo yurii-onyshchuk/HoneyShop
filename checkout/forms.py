@@ -1,6 +1,7 @@
 from django import forms
-from order.models import Order
+
 from checkout.models import PaymentOptions, DeliveryOptions
+from order.models import Order
 
 
 class CheckoutForm(forms.ModelForm):

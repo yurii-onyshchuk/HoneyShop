@@ -1,10 +1,11 @@
+from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import get_template
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, FormView
+
 from .forms import ContactForm
-from django.core.mail import send_mail
-from django.conf import settings
-from django.template.loader import get_template
-from django.contrib import messages
 
 
 class Home(TemplateView):

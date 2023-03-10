@@ -1,10 +1,11 @@
 from django.conf import settings
-from django.db import models
-from phonenumber_field import modelfields
-from autoslug import AutoSlugField
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from autoslug import AutoSlugField
 from PIL import Image
+from phonenumber_field import modelfields
 
 from accounts.managers import CustomUserManager
 

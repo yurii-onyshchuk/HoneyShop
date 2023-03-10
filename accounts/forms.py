@@ -1,8 +1,11 @@
 import re
+
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm
+
 from phonenumber_field.formfields import PhoneNumberField
+
 from .models import User, Address
 
 
