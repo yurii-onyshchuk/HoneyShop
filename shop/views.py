@@ -92,7 +92,7 @@ class DetailProduct(FormMixin, DetailView):
 @login_required
 def wishlist_button_action(request):
     product = get_object_or_404(Product, id=request.POST['product_id'])
-    if product.users_wishlist.filter(username=request.user.username).exists():
+    if product.users_wishlist.filter(pk=request.user.pk).exists():
         product.users_wishlist.remove(request.user)
         action_result = 'removed'
     else:

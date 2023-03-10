@@ -76,7 +76,7 @@ class SinglePost(FormMixin, DetailView):
 @login_required
 def like_comment(request):
     comment = get_object_or_404(Comment, id=request.POST['comment_id'])
-    if comment.users_like.filter(username=request.user.username).exists():
+    if comment.users_like.filter(pk=request.user.pk).exists():
         comment.users_like.remove(request.user)
         action_result = 'removed'
     else:

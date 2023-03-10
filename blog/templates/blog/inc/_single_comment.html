@@ -24,7 +24,7 @@
     </div>
     <div class="reply tool-item">
         {% if user.is_authenticated %}
-            <button onclick="addReply('{{ comment.user }}', '{{ parent.id }}')"
+            <button onclick="addReply('{{ comment.get_user }}', '{{ parent.id }}')"
                     class="btn btn-link-mod" title="Відповісти">
                 <i class="fa fa-reply" aria-hidden="true"></i>
             </button>
