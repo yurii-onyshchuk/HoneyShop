@@ -4,7 +4,8 @@ from .models import User, Address
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name', 'last_name', 'email', 'phone_number', 'slug']
+    list_display = ['email', 'first_name', 'last_name', 'phone_number', 'slug', ]
+    list_display_links = ['email', ]
 
 
 @admin.register(Address)

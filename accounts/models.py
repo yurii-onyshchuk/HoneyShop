@@ -6,16 +6,24 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from PIL import Image
 
+from accounts.managers import CustomUserManager
+
 
 class User(AbstractUser):
+    username = None
     first_name = models.CharField(_("first name"), max_length=150, blank=False)
     last_name = models.CharField(_("last name"), max_length=150, blank=False)
-    email = models.EmailField(_("email address"), blank=False)
+    email = models.EmailField(_("email address"), blank=False, unique=True)
 
-    slug = AutoSlugField(populate_from='username', verbose_name='URL', unique=True)
+    slug = AutoSlugField(populate_from='phone_number', verbose_name='slug', unique=True)
     phone_number = modelfields.PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Номер телефону')
-    photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=False, verbose_name='Основна світлина')
+    photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=True, verbose_name='Основна світлина')
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата народження')
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['phone_number', ]
 
     class Meta:
         verbose_name = 'Користувач'

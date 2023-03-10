@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.shortcuts import redirect
@@ -15,7 +14,7 @@ from .utils import RedirectAuthenticatedUserMixin
 class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
     extra_context = {'title': 'Реєстрація'}
     template_name = 'accounts/signup.html'
-    form_class = forms.UserRegisterForm
+    form_class = forms.UserSignUpForm
     redirect_authenticated_user_url = reverse_lazy('home')
 
     def form_valid(self, form):
@@ -33,7 +32,7 @@ class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
 class UserAuthentication(LoginView):
     extra_context = {'title': 'Вхід'}
     template_name = 'accounts/login.html'
-    form_class = AuthenticationForm
+    form_class = forms.LoginForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('home')
 

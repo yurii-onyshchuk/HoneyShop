@@ -114,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailPhoneNumberBackend']
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
