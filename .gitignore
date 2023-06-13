@@ -1,6 +1,5 @@
 .idea
 venv
-media
 static
 *.pyc
 *.sqlite3
