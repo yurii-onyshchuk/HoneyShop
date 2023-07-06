@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import F
+from django.db.models import F, Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -33,7 +33,8 @@ class Search(PostList):
     allow_empty = True
 
     def get_queryset(self):
-        return Post.objects.filter(title__icontains=self.request.GET.get('q'))
+        q = self.request.GET.get('q')
+        return Post.objects.filter(Q(title__icontains=q) | Q(content__icontains=q))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
