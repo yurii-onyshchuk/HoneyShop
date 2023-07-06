@@ -26,6 +26,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250, verbose_name='URL', unique=True)
     photo = models.ImageField(upload_to='photos/shop/%Y/%m', blank=True, verbose_name='Фото')
     description = models.TextField(blank=True, verbose_name='Опис')
+    characteristic = models.TextField(blank=True, verbose_name='Характеристика')
     price = models.DecimalField(verbose_name='Ціна', max_digits=7, decimal_places=0)
     quantity = models.IntegerField(default=0, verbose_name='Доступна кількість')
     sales = models.IntegerField(default=0, verbose_name='Продажі')

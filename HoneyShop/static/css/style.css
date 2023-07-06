@@ -274,6 +274,10 @@ a:hover {
     text-align: justify;
 }
 
+.product-description .nav-link {
+    font-size: 14px;
+}
+
 .single-product.card:hover {
     box-shadow: 3px 5px 10px 5px #e0e0e0;
 }

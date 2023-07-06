@@ -72,6 +72,9 @@
                         <a class="nav-link active" data-bs-toggle="tab" href="#description">Опис</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#characteristic">Характеристики</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#reviews">
                             Відгуки ({{ product.get_reviews_count }})
                         </a>
@@ -85,6 +88,14 @@
                             <div class="py-3 mb-3 border-bottom">Опис даного товару відсутній</div>
                         {% endif %}
                     </div>
+                    <div class="tab-pane" id="characteristic">
+                        {% if product.characteristic %}
+                            <div class="my-3">{{ product.characteristic|safe }}</div>
+                        {% else %}
+                            <div class="py-3 mb-3 border-bottom">Характеристики даного товару відсутні</div>
+                        {% endif %}
+                    </div>
+
                     <div class="tab-pane fade" id="reviews">
                         <section class="comments">
                             <a name="comments"></a>

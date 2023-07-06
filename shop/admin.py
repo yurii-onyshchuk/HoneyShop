@@ -9,6 +9,7 @@ from .models import Category, Product, Review
 
 class ProductAdminForm(forms.ModelForm):
     description = forms.CharField(label='Опис', required=False, widget=CKEditorUploadingWidget())
+    characteristic = forms.CharField(label='Характеристика', required=False, widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Product
@@ -22,8 +23,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'title',)
     list_filter = ('category', 'quantity',)
     search_fields = ('title',)
-    fields = ('title', 'slug', 'price', 'quantity', 'category', 'description', 'photo', 'get_photo', 'sales', 'views',
-              'created_at', 'users_wishlist')
+    fields = ('title', 'slug', 'price', 'quantity', 'category', 'description', 'characteristic', 'photo', 'get_photo',
+              'sales', 'views', 'created_at', 'users_wishlist')
     readonly_fields = ('created_at', 'views', 'sales', 'get_photo', 'users_wishlist')
     form = ProductAdminForm
 
