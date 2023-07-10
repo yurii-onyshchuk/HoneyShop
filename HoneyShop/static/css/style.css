@@ -54,6 +54,12 @@ a:hover {
     transition: all 0.25s;
 }
 
+.text-background,
+.layout-form {
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgba(255, 255, 255, 0.7) 0 0 20px 15px;
+}
+
 .post-content p,
 .about-info p {
     text-align: justify;

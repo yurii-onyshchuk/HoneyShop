@@ -13,7 +13,7 @@
     <article class="post-detail-area">
         <section class="post-detail">
             <h2 class="page-title">{{ post.title }}</h2>
-            <ul class="post-info ps-0 mb-2 text-start">
+            <ul class="post-info d-inline-block text-background text-start ps-0 mb-2">
                 <li class="me-4 mb-2">
                     <i class="fa fa-calendar-alt me-2"></i>{{ post.created_at }}
                 </li>
@@ -30,7 +30,7 @@
                     <img src="{{ post.photo.url }}" class="post-image card-img-top" alt="...">
                 </a>
             {% endif %}
-            <div class="post-content">{{ post.content|safe }}</div>
+            <div class="post-content text-background">{{ post.content|safe }}</div>
         </section>
         <section class="comments">
             <a name="comments"></a>
