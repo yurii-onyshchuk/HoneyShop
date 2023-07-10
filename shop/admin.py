@@ -41,11 +41,11 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'parent', 'body', 'created_at', 'user')
+    list_display = ('id', 'body', 'parent', 'product', 'created_at', 'user',)
     list_display_links = ('id',)
-    list_filter = ('product', 'user')
+    list_filter = ('user', 'product',)
     search_fields = ('body',)
-    fields = ('product', 'parent', 'body', 'created_at', 'user',)
+    fields = ('body', 'parent', 'product', 'created_at', 'user',)
     readonly_fields = ('created_at',)
 
 
