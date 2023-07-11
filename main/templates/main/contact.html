@@ -11,15 +11,6 @@
             <div class="col-sm-6 contact-form mb-4 order-1 order-sm-0">
                 <div class="text-background">
                     <h5 class="text-center">Форма зв'язку</h5>
-                    {% if messages %}
-                        <ul class="messages list-unstyled mb-0">
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }} mt-3" role="alert">
-                                    <li class="{{ message.tags }} text-center">{{ message }}</li>
-                                </div>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
