@@ -1,3 +1,6 @@
+from importlib import import_module
+
+from allauth.socialaccount import providers
 from django.urls import path
 from django.contrib.auth.views import LogoutView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
     PasswordResetConfirmView, PasswordResetDoneView, PasswordResetCompleteView
@@ -44,3 +47,15 @@ urlpatterns = [
          PasswordResetCompleteView.as_view(template_name='accounts/password_reset/password_reset_complete.html', ),
          name='password_reset_complete'),
 ]
+
+# Provider urlpatterns, as separate attribute (from django-allauth).
+provider_urlpatterns = []
+for provider in providers.registry.get_list():
+    try:
+        prov_mod = import_module(provider.get_package() + ".urls")
+    except ImportError:
+        continue
+    prov_urlpatterns = getattr(prov_mod, "urlpatterns", None)
+    if prov_urlpatterns:
+        provider_urlpatterns += prov_urlpatterns
+urlpatterns += provider_urlpatterns

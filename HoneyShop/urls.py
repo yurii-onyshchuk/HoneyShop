@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('main.urls')),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('checkout/', include('checkout.urls')),
     path('order/', include('order.urls')),
+
 ]
 
 if settings.DEBUG:
