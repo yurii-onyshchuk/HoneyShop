@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from autoslug import AutoSlugField
 from PIL import Image
 from phonenumber_field import modelfields
 
@@ -16,7 +15,7 @@ class User(AbstractUser):
     last_name = models.CharField(_("last name"), max_length=150, blank=False)
     email = models.EmailField(_("email address"), blank=False, unique=True)
 
-    slug = AutoSlugField(populate_from='phone_number', verbose_name='slug', unique=True)
+    slug = models.SlugField('Cлаг', max_length = 16)
     phone_number = modelfields.PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Номер телефону')
     photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=True, verbose_name='Основна світлина')
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата народження')

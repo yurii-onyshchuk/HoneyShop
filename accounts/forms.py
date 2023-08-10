@@ -1,5 +1,6 @@
 import re
 
+from allauth.socialaccount.forms import SignupForm
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm
@@ -29,6 +30,22 @@ class UserSignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2')
+
+
+class UserSocialSignUpForm(SignupForm, forms.ModelForm):
+    email = forms.EmailField(widget=forms.HiddenInput)
+    phone_number = forms.CharField(label='Номер телефону')
+
+    def save(self, request):
+        user = super().save(request)
+        user.phone_number = self.cleaned_data['phone_number']
+        user.set_unusable_password()
+        user.save()
+        return user
+
+    class Meta:
+        model = User
+        fields = ('phone_number',)
 
 
 class LoginForm(AuthenticationForm):

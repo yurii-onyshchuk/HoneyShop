@@ -131,10 +131,14 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.UserSignUpForm'
 
 SOCIALACCOUNT_ADAPTER = 'accounts.adapter.MySocialAccountAdapter'
 SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
+SOCIALACCOUNT_FORMS = {
+    'signup': 'accounts.forms.UserSocialSignUpForm'
+}
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],

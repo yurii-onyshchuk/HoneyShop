@@ -21,7 +21,7 @@ class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
     def form_valid(self, form):
         user = form.save()
         if user is not None:
-            login(self.request, user)
+            login(self.request, user, backend='accounts.backends.EmailPhoneNumberBackend')
             messages.success(self.request, 'Успішна реєстрація!')
         return redirect('home')
 
