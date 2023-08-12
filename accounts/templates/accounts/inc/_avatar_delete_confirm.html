@@ -7,7 +7,7 @@
             <div class="modal-body text-center">
                 <p>Ви дійсно бажаєте видалити поточне зображення профілю?</p>
                 <div class="modal-footer justify-content-center">
-                    <form action="{% url 'avatar_delete' %}">
+                    <form action="{% url 'avatar_delete' %}" method="POST">
                         {% csrf_token %}
                         <input class="btn btn-light" type="reset" data-bs-dismiss="modal" value="Скасувати"/>
                         <input class="btn btn-warning btn-main" type="submit" value="Видалити"/>
