@@ -138,7 +138,7 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 
 SOCIALACCOUNT_FORMS = {
-    'signup': 'accounts.forms.UserSocialSignUpForm'
+    'signup': 'accounts.forms.SocialSignUpForm'
 }
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

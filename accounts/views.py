@@ -12,10 +12,10 @@ from .models import User, Address
 from .utils import RedirectAuthenticatedUserMixin
 
 
-class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
+class SignUpView(RedirectAuthenticatedUserMixin, CreateView):
     extra_context = {'title': 'Реєстрація'}
     template_name = 'accounts/signup.html'
-    form_class = forms.UserSignUpForm
+    form_class = forms.SignUpForm
     redirect_authenticated_user_url = reverse_lazy('home')
 
     def form_valid(self, form):
@@ -27,10 +27,10 @@ class UserSignUp(RedirectAuthenticatedUserMixin, CreateView):
 
     def form_invalid(self, form):
         messages.error(self.request, 'Помилка реєстрації!')
-        return super(UserSignUp, self).form_invalid(form)
+        return super(SignUpView, self).form_invalid(form)
 
 
-class UserAuthentication(LoginView):
+class CustomLoginView(LoginView):
     extra_context = {'title': 'Вхід'}
     template_name = 'accounts/login.html'
     form_class = forms.LoginForm
@@ -38,7 +38,7 @@ class UserAuthentication(LoginView):
     success_url = reverse_lazy('home')
 
 
-class PersonalCabinet(LoginRequiredMixin, TemplateView):
+class PersonalCabinetView(LoginRequiredMixin, TemplateView):
     extra_context = {'title': 'Особистий кабінет',
                      'subtitle': 'Керуйте своїми замовленнями та особистими даними'}
     template_name = 'accounts/personal_cabinet/personal_cabinet.html'
@@ -80,7 +80,7 @@ class PersonalSafetyView(LoginRequiredMixin, TemplateView):
     template_name = 'accounts/personal_cabinet/personal_safety.html'
 
 
-class DeleteAccount(LoginRequiredMixin, DeleteView):
+class AccountDeleteView(LoginRequiredMixin, DeleteView):
     extra_context = {'title': 'Видалення облікового запису'}
 
     def get_queryset(self):
@@ -91,7 +91,7 @@ class DeleteAccount(LoginRequiredMixin, DeleteView):
         return reverse_lazy('login')
 
 
-class AddressesList(LoginRequiredMixin, ListView):
+class AddressesListView(LoginRequiredMixin, ListView):
     extra_context = {'title': 'Мої адреси',
                      'subtitle': 'Керуйте своїми адресами та налаштуваннями доставки'}
     template_name = 'accounts/personal_cabinet/addresses_list.html'
@@ -101,7 +101,7 @@ class AddressesList(LoginRequiredMixin, ListView):
         return Address.objects.filter(user=self.request.user)
 
 
-class AddAddress(LoginRequiredMixin, CreateView):
+class AddAddressView(LoginRequiredMixin, CreateView):
     extra_context = {'title': 'Додавання адреси',
                      'subtitle': 'Додайте нову адресу та параметри доставки'}
     template_name = 'accounts/personal_cabinet/edit_addresses.html'
@@ -112,10 +112,10 @@ class AddAddress(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         if not Address.objects.filter(user=self.request.user, default_address=True):
             form.instance.default_address = True
-        return super(AddAddress, self).form_valid(form)
+        return super(AddAddressView, self).form_valid(form)
 
 
-class EditAddress(LoginRequiredMixin, UpdateView):
+class EditAddressView(LoginRequiredMixin, UpdateView):
     extra_context = {'title': 'Редагування адреси',
                      'subtitle': 'Змініть адресу та параметри доставки'}
     template_name = 'accounts/personal_cabinet/edit_addresses.html'

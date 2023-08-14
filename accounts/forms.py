@@ -10,9 +10,9 @@ from phonenumber_field.formfields import PhoneNumberField
 from .models import User, Address
 
 
-class UserSignUpForm(UserCreationForm):
+class SignUpForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
-        super(UserSignUpForm, self).__init__(*args, **kwargs)
+        super(SignUpForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'autofocus': False})
         self.fields['email'].help_text = ''
         self.fields['password1'].help_text = ''
@@ -32,7 +32,7 @@ class UserSignUpForm(UserCreationForm):
         fields = ('first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2')
 
 
-class UserSocialSignUpForm(SignupForm, forms.ModelForm):
+class SocialSignUpForm(SignupForm, forms.ModelForm):
     email = forms.EmailField(widget=forms.HiddenInput)
     phone_number = forms.CharField(label='Номер телефону')
 
@@ -60,13 +60,13 @@ class LoginForm(AuthenticationForm):
             return username
 
 
-class UserSetPasswordForm(SetPasswordForm):
+class CustomSetPasswordForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = ''
 
 
-class UserPasswordChangeForm(PasswordChangeForm):
+class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = ''
