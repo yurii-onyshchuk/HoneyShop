@@ -43,17 +43,6 @@ h5 {
     margin: 0 auto;
 }
 
-a {
-    color: #000000;
-    font-style: normal;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #d78300;
-    transition: all 0.25s;
-}
-
 .text-background,
 .layout-form {
     background-color: rgba(255, 255, 255, 0.7);
@@ -65,6 +54,31 @@ a:hover {
     text-align: justify;
     text-indent: 2.5rem;
     margin-bottom: 0.75rem;
+}
+
+a {
+    color: #000000;
+    font-style: normal;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d78300;
+    transition: all 0.25s;
+}
+
+a:active {
+    color: #9a6000;
+}
+
+a:active,
+.btn:active {
+    transform: scale(0.98);
+    transform-origin: center;
+}
+
+a:has(img):active {
+    transform: none;
 }
 
 .btn-main {
@@ -104,7 +118,11 @@ a:hover {
 
 .btn-social:active {
     background-color: rgba(255, 216, 56, 0.3);
-    scale: 0.99;
+    transform: scale(0.99);
+}
+
+.social-auth .btn-social svg {
+    margin-bottom: 2px;
 }
 
 .bi:before {
@@ -171,6 +189,18 @@ a:hover {
 
 .navbar a:hover {
     color: #d78300;
+}
+
+.navbar a.nav-link:active,
+.navbar i:active {
+    color: #be7500;
+    transform: scale(0.98);
+    transform-origin: center;
+    transition: revert;
+}
+
+.navbar i:active {
+    transform: scale(0.96);
 }
 
 .navbar .nav-link.active,
@@ -290,7 +320,8 @@ a:hover {
     margin-top: -100px;
 }
 
-.shop-section .card:hover {
+.home .card:hover,
+.single-product.card:hover {
     box-shadow: 3px 5px 10px 5px #e0e0e0;
 }
 
@@ -305,9 +336,6 @@ a:hover {
     font-size: 14px;
 }
 
-.single-product.card:hover {
-    box-shadow: 3px 5px 10px 5px #e0e0e0;
-}
 
 .available,
 .order-item .paid {
@@ -370,6 +398,10 @@ button#to-wishlist:hover {
     transform: scale(1.1);
 }
 
+button#to-wishlist:active {
+    transform: scale(1);
+}
+
 .cart input[type=number],
 .product-detail input[type=number] {
     display: inline;
@@ -405,9 +437,19 @@ button#to-wishlist:hover {
     user-select: none;
 }
 
+.cart .cart-item .minus:active,
+.cart .cart-item .plus:active {
+    transform: scale(0.95);
+    transform-origin: center;
+}
+
 .cart .cart-item .no-active {
     color: #cecece;
     cursor: default;
+}
+
+.cart .cart-item .no-active:active {
+    transform: revert;
 }
 
 .cart .cart-item input {
@@ -606,6 +648,17 @@ button#to-wishlist:hover {
 /*--------------------------------------------------------------
 # Personal cabinet
 --------------------------------------------------------------*/
+.personal-cabinet .card:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.home .card:active,
+.personal-cabinet .card:active {
+    transform: scale(0.99);
+    transition: all 0.2s;
+
+}
+
 .personal-info img.user-photo {
     height: 100px;
     width: 100px;
