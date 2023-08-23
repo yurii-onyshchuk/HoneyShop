@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col">
                                 {% if post.photo %}
-                                    <a href="{{ post.photo.url }}">
+                                    <a href="{{ post.get_absolute_url }}">
                                         <img src="{{ post.photo.url }}" class="card-img" alt="...">
                                     </a>
                                 {% else %}

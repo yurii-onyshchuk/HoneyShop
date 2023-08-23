@@ -14,6 +14,10 @@ body {
     color: #000000;
 }
 
+.brand:active {
+    transform: revert;
+}
+
 h2 {
     font-weight: 600;
 }
@@ -121,7 +125,7 @@ a:has(img):active {
     transform: scale(0.99);
 }
 
-.social-auth .btn-social svg {
+.btn-social svg {
     margin-bottom: 2px;
 }
 
@@ -656,7 +660,6 @@ button#to-wishlist:active {
 .personal-cabinet .card:active {
     transform: scale(0.99);
     transition: all 0.2s;
-
 }
 
 .personal-info img.user-photo {
