@@ -2,6 +2,12 @@ from django.db import models
 
 
 class DeliveryOptions(models.Model):
+    """Model for defining delivery options.
+
+    This model represents various methods of product delivery,
+    including in-store pickup, delivery service pickup, and home delivery.
+    """
+
     DELIVERY_CHOICES = [
         ("IN_STORE", "Самовивіз з магазину"),
         ("DELIVERY_SERVICE", "Самовивіз з служби доставки"),
@@ -22,6 +28,12 @@ class DeliveryOptions(models.Model):
 
 
 class PaymentOptions(models.Model):
+    """Model for defining payment options.
+
+    This model represents different methods of payment for orders,
+    including payment upon receipt, online payment, and prepayment.
+    """
+
     PAYMENT_CHOICES = [
         ("AFTER", "Оплата під час отримання товару"),
         ("ONLINE", "Онлайн оплата"),

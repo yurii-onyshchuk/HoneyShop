@@ -11,6 +11,12 @@ from .models import User, Address
 
 
 class SignUpForm(UserCreationForm):
+    """Form for user registration.
+
+    Customizes the UserCreationForm to remove help text and
+    add the ability to create a user with email, phone number, and password.
+    """
+
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs.update({'autofocus': False})
@@ -33,6 +39,11 @@ class SignUpForm(UserCreationForm):
 
 
 class SocialSignUpForm(SignupForm, forms.ModelForm):
+    """Form for social user registration.
+
+    Extends the SignupForm to add the ability to enter a phone number for social registration.
+    """
+
     email = forms.EmailField(widget=forms.HiddenInput)
     phone_number = forms.CharField(label='Номер телефону')
 
@@ -49,6 +60,11 @@ class SocialSignUpForm(SignupForm, forms.ModelForm):
 
 
 class LoginForm(AuthenticationForm):
+    """Form for user login.
+
+    Extends the AuthenticationForm to allow users to log in with an email or phone number.
+    """
+
     username = forms.CharField(label='Email або номер телефону')
 
     def clean_username(self):
@@ -61,12 +77,23 @@ class LoginForm(AuthenticationForm):
 
 
 class CustomSetPasswordForm(SetPasswordForm):
+    """Custom form for setting a new password.
+
+    Removes help text for setting a new password.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = ''
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
+    """Custom form for changing a password.
+
+    Removes help text for setting a new password and
+    excludes the old password field if the user has no usable password.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].help_text = ''
@@ -75,6 +102,8 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 
 
 class UserForm(forms.ModelForm):
+    """Form for editing user profile information."""
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'date_of_birth', 'email', 'phone_number',)
@@ -82,6 +111,8 @@ class UserForm(forms.ModelForm):
 
 
 class AddressForm(forms.ModelForm):
+    """Form for adding or editing user addresses."""
+
     class Meta:
         model = Address
         exclude = ['user', 'default_address']

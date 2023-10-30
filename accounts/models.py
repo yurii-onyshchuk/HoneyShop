@@ -10,12 +10,18 @@ from accounts.managers import CustomUserManager
 
 
 class User(AbstractUser):
+    """Custom user model with email, phone number, and additional fields.
+
+    This user model extends the AbstractUser and replaces the username
+    with email as the unique identifier.
+    """
+
     username = None
     first_name = models.CharField(_("first name"), max_length=150, blank=False)
     last_name = models.CharField(_("last name"), max_length=150, blank=False)
     email = models.EmailField(_("email address"), blank=False, unique=True)
 
-    slug = models.SlugField('Cлаг', max_length = 16)
+    slug = models.SlugField('Cлаг', max_length=16)
     phone_number = modelfields.PhoneNumberField(null=False, blank=False, unique=True, verbose_name='Номер телефону')
     photo = models.ImageField(upload_to='photos/accounts/%Y/%m', blank=True, verbose_name='Основна світлина')
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Дата народження')
@@ -33,6 +39,7 @@ class User(AbstractUser):
         return f'{self.first_name} {self.last_name}'
 
     def save_thumbnail(self):
+        """Resizes and saves the user's profile photo as a thumbnail."""
         super().save()
         photo = Image.open(self.photo.path)
         if photo.height > 200 or photo.width > 200:
@@ -42,6 +49,12 @@ class User(AbstractUser):
 
 
 class Address(models.Model):
+    """Model for storing user addresses.
+
+    This model stores user addresses, including recipient information, phone number, location details
+    and tracks the user's default address.
+    """
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Користувач')
     recipient_first_name = models.CharField(verbose_name="Ім'я отримувача", max_length=100)
     recipient_last_name = models.CharField(verbose_name="Прізвище отримувача", max_length=100)

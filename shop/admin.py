@@ -8,6 +8,8 @@ from .models import Category, Product, Review
 
 
 class ProductAdminForm(forms.ModelForm):
+    """Custom form for the Product admin."""
+
     description = forms.CharField(label='Опис', required=False, widget=CKEditorUploadingWidget())
     characteristic = forms.CharField(label='Характеристика', required=False, widget=CKEditorUploadingWidget())
 
@@ -17,6 +19,8 @@ class ProductAdminForm(forms.ModelForm):
 
 
 class ProductAdmin(admin.ModelAdmin):
+    """Admin configuration for managing products."""
+
     prepopulated_fields = {'slug': ('title',)}
     save_on_top = True
     list_display = ('id', 'title', 'price', 'category', 'quantity', 'created_at', 'get_photo')
@@ -37,10 +41,14 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    """Admin configuration for managing product categories."""
+
     prepopulated_fields = {'slug': ('title',)}
 
 
 class ReviewAdmin(admin.ModelAdmin):
+    """Admin configuration for managing product reviews."""
+
     list_display = ('id', 'body', 'parent', 'product', 'created_at', 'user',)
     list_display_links = ('id',)
     list_filter = ('user', 'product',)

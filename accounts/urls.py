@@ -54,7 +54,7 @@ urlpatterns = [
     path('social/signup/', allauth_views.signup, name='socialaccount_signup'),
 ]
 
-# Provider urlpatterns, as separate attribute (from django-allauth).
+# Provider urlpatterns, as a separate attribute (from django-allauth).
 provider_urlpatterns = []
 for provider in providers.registry.get_list():
     try:

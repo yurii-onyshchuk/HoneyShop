@@ -6,7 +6,10 @@ UserModel = get_user_model()
 
 
 class EmailPhoneNumberBackend(ModelBackend):
+    """Custom authentication backend for login using email or phone number."""
+
     def authenticate(self, request, username=None, password=None, **kwargs):
+        """Authenticate a user based on their email or phone number and password."""
         try:
             user = UserModel.objects.get(Q(email__iexact=username) | Q(phone_number__iexact=username))
         except UserModel.DoesNotExist:

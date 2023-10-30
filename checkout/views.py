@@ -19,17 +19,29 @@ from shop.models import Product
 
 
 class Checkout(LoginRequiredMixin, CreateView):
+    """View for processing and handling the order checkout.
+
+    This view is responsible for processing the order checkout,
+    collecting user input, and creating a new order.
+    """
+
     extra_context = {'title': 'Оформлення замовлення'}
     template_name = 'checkout/checkout.html'
     model = Order
     form_class = CheckoutForm
 
     def get(self, request, *args, **kwargs):
+        """Handle the GET request for order checkout.
+        Redirects to 'order_list' if the cart is empty.
+        """
         if not Cart(self.request):
             return redirect('order_list')
         return super().get(request, *args, **kwargs)
 
     def get_initial(self):
+        """Initialize the checkout form with default user data.
+        Retrieves the default user data, if available, and initializes the form fields.
+        """
         initial = super(Checkout, self).get_initial()
         initial = initial.copy()
         try:
@@ -43,6 +55,9 @@ class Checkout(LoginRequiredMixin, CreateView):
             return initial
 
     def form_valid(self, form):
+        """Handle a valid form submission.
+        Creates a new order, updates product quantities, and clears the cart.
+        """
         cart = Cart(self.request)
         form.instance.user = self.request.user
         form.instance.total_price = cart.get_total_price()
@@ -58,10 +73,16 @@ class Checkout(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        """Handle an invalid form submission.
+        Displays an error message if the form contains errors.
+        """
         messages.error(self.request, 'Виправте помилки в полях форми, що показані нижче! ')
         return super(Checkout, self).form_invalid(form)
 
     def get_success_url(self):
+        """Determine the success URL based on the selected payment method.
+        Returns the success URL based on the payment method chosen in the form.
+        """
         method = PaymentOptions.objects.get(pk=int(self.request.POST.get('payment_option'))).method
         if method == 'AFTER':
             return reverse_lazy('checkout_success')
@@ -72,6 +93,11 @@ class Checkout(LoginRequiredMixin, CreateView):
 
 @login_required
 def payment(request, pk):
+    """View for handling payment processing and redirection.
+
+    This view processes payments and redirects the user to
+    the payment gateway.
+    """
     order = Order.objects.get(pk=pk)
     api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
     checkout = cloudipsp.Checkout(api=api)
@@ -86,6 +112,11 @@ def payment(request, pk):
 
 
 def callback(request):
+    """Callback view for processing payment gateway responses.
+
+    This view handles the response from the payment gateway
+    and updates the order status accordingly.
+    """
     if request.method == 'POST':
         data = request.POST
         api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
@@ -102,6 +133,12 @@ def callback(request):
 
 
 class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+    """View to display a successful order checkout message.
+
+    This view displays a success message after a successful
+    order checkout.
+    """
+
     extra_context = {'title': 'Замовлення успішно оформлене'}
     template_name = 'checkout/checkout_success.html'
     allow_previous_url = reverse_lazy('checkout')
@@ -109,12 +146,24 @@ class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
 
 
 class PaymentSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+    """View to display a successful payment message.
+
+    This view displays a success message after a successful
+    payment.
+    """
+
     extra_context = {'title': 'Оплата успішна'}
     template_name = 'checkout/payment_success.html'
     redirect_url = reverse_lazy('order_list')
 
 
 class PaymentError(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+    """View to display an error message for payment.
+
+    This view displays an error message when there's
+    an issue with the payment.
+    """
+
     extra_context = {'title': 'Помилка оплати'}
     template_name = 'checkout/payment_error.html'
     redirect_url = reverse_lazy('order_list')

@@ -8,6 +8,8 @@ from .models import *
 
 
 class PostAdminForm(forms.ModelForm):
+    """Form for the PostAdmin to use CKEditor for the content field."""
+
     content = forms.CharField(label='Вміст', widget=CKEditorUploadingWidget())
 
     class Meta:
@@ -16,6 +18,8 @@ class PostAdminForm(forms.ModelForm):
 
 
 class PostAdmin(admin.ModelAdmin):
+    """Admin configuration for the Post model."""
+
     prepopulated_fields = {"slug": ("title",)}
     save_on_top = True
     list_display = ('id', 'title', 'category', 'created_at', 'views', 'get_photo',)
@@ -27,6 +31,7 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
     def get_photo(self, obj):
+        """Custom method to display the photo as a thumbnail in the admin list view."""
         if obj.photo:
             return mark_safe(f'<a href="{obj.photo.url}"><img src="{obj.photo.url}" width="80"></a>')
         return '-'
@@ -35,10 +40,14 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    """Admin configuration for the Category model."""
+
     prepopulated_fields = {"slug": ("title",)}
 
 
 class CommentAdmin(admin.ModelAdmin):
+    """Admin configuration for the Comment model."""
+
     list_display = ('id', 'body', 'parent', 'post', 'created_at', 'user',)
     list_display_links = ('id',)
     list_filter = ('user', 'post',)

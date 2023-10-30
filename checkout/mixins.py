@@ -2,6 +2,12 @@ from django.shortcuts import redirect
 
 
 class AllowOnlyRedirectMixin:
+    """Mixin to control access to a view based on the previous URL.
+
+    This mixin checks the previous URL and allows or disallows access to
+    a view based on specific conditions.
+    """
+
     def get(self, request, *args, **kwargs):
         previous_url = request.META.get('HTTP_REFERER')
         if previous_url:

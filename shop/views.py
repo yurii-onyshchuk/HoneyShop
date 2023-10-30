@@ -13,6 +13,8 @@ from .models import Product, Category, Review
 
 
 class ProductList(ListView):
+    """List view for shop products."""
+
     model = Product
     paginate_by = 12
 
@@ -22,12 +24,16 @@ class ProductList(ListView):
 
 
 class Shop(ProductList):
+    """View for main page of shop."""
+
     allow_empty = False
     extra_context = {'title': 'Магазин'}
     template_name = 'shop/index.html'
 
 
 class ProductsByCategory(ProductList):
+    """List view for shop products filtered by category."""
+
     allow_empty = False
 
     def get_queryset(self):
@@ -40,6 +46,8 @@ class ProductsByCategory(ProductList):
 
 
 class Search(ProductList):
+    """List view for shop products filtered by search query."""
+
     def get_queryset(self):
         return Product.objects.filter(title__icontains=self.request.GET.get('q'))
 
@@ -51,6 +59,8 @@ class Search(ProductList):
 
 
 class WishListView(LoginRequiredMixin, ProductList):
+    """View for shop products in the user's wishlist."""
+
     extra_context = {'title': 'Список вподобань'}
     template_name = 'shop/wishlist.html'
 
@@ -59,22 +69,35 @@ class WishListView(LoginRequiredMixin, ProductList):
 
 
 class DetailProduct(FormMixin, DetailView):
+    """Detail view for a single shop product."""
+
     model = Product
     form_class = ReviewForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """Get the context data for the single shop product.
+
+        This method is extended to update a product's view count and
+        pass product reviews to the context
+        """
         context = super().get_context_data(**kwargs)
+        context['title'] = self.object.title
+
         self.object.views = F('views') + 1
         self.object.save()
         self.object.refresh_from_db()
+
         _list = Review.objects.filter(product__slug=self.kwargs.get('slug'), parent__isnull=True)
         paginator = Paginator(_list, 10)
         page = self.request.GET.get('page')
         context['reviews'] = paginator.get_page(page)
-        context['title'] = self.object.title
+
         return context
 
     def post(self, request, *args, **kwargs):
+        """Handle the HTTP POST request to add a review to the shop product.
+        Redirect to the current shop product with the review anchor.
+        """
         form = self.get_form()
         product = self.get_object()
         if form.is_valid():
@@ -86,11 +109,13 @@ class DetailProduct(FormMixin, DetailView):
         return redirect(product.get_absolute_url())
 
     def get_success_url(self):
+        """Get the URL to redirect to after successfully submitting a review."""
         return reverse_lazy('shop:product', kwargs={'slug': self.kwargs['slug']})
 
 
 @login_required
 def wishlist_button_action(request):
+    """View for adding/removing a product from the user's wishlist."""
     product = get_object_or_404(Product, id=request.POST['product_id'])
     if product.users_wishlist.filter(pk=request.user.pk).exists():
         product.users_wishlist.remove(request.user)
@@ -104,6 +129,7 @@ def wishlist_button_action(request):
 
 @login_required
 def clear_wishlist(request):
+    """View for clearing all products from the user's wishlist."""
     products = Product.objects.filter(users_wishlist=request.user)
     for product in products:
         product.users_wishlist.remove(request.user)

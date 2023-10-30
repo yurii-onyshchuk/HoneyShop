@@ -4,6 +4,8 @@ from django.urls import reverse
 
 
 class Category(models.Model):
+    """Model to represent a product category."""
+
     title = models.CharField(max_length=100, verbose_name='Назва категорії товару')
     slug = models.SlugField(max_length=100, verbose_name='URL', unique=True)
     photo = models.ImageField(upload_to='photos/shop/%Y/%m', blank=True, verbose_name='Фото')
@@ -12,6 +14,7 @@ class Category(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        """Returns the absolute URL for the shop category."""
         return reverse('shop:category', kwargs={'slug': self.slug})
 
     class Meta:
@@ -21,6 +24,8 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """Model to represent a product."""
+
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name='Категорія')
     title = models.CharField(max_length=250, verbose_name='Назва')
     slug = models.SlugField(max_length=250, verbose_name='URL', unique=True)
@@ -39,9 +44,11 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        """Returns the absolute URL for the shop product."""
         return reverse('shop:product', kwargs={'slug': self.slug})
 
     def get_reviews_count(self):
+        """Returns the count of top-level reviews (comments) for the product."""
         return Review.objects.filter(product=self, parent__isnull=True).count()
 
     class Meta:
@@ -51,6 +58,8 @@ class Product(models.Model):
 
 
 class Review(models.Model):
+    """Model to represent a product review."""
+
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews', verbose_name='Товар')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                              related_name='reviews', verbose_name='Користувач')
@@ -68,6 +77,7 @@ class Review(models.Model):
         ordering = ['-created_at']
 
     def get_user(self):
+        """Returns the user who created the review"""
         if self.user:
             return self.user
         else:
@@ -75,10 +85,12 @@ class Review(models.Model):
 
     @property
     def children(self):
+        """Returns all child reviews (replies) associated with the current review in reverse order (latest first)."""
         return Review.objects.filter(parent=self).reverse()
 
     @property
     def is_parent(self):
+        """Checks if the current review is a top-level review or a reply to another comment."""
         if self.parent is None:
             return True
         return False

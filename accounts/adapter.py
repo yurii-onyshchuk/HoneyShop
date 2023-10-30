@@ -11,11 +11,19 @@ user_model = get_user_model()
 
 
 class MySocialAccountAdapter(DefaultSocialAccountAdapter):
+    """Custom Social Account Adapter for handling social logins and user registration."""
+
     def pre_social_login(self, request, sociallogin):
+        """Actions before social login.
+
+        Check if the user's social account is already connected
+        to the account based on their email.
+        If not, it connects the social account to the existing account and performs login.
+        """
         user = sociallogin.user
-        if user.id:  # Already linked
+        if user.id:
             return
-        try:  # if user exists, connect the account to the existing account and login
+        try:
             UserObj = user_model.objects.get(email=user.email)
             sociallogin.state['process'] = 'connect'
             perform_login(request, UserObj, 'none')
@@ -23,11 +31,13 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
             pass
 
     def save_user(self, request, sociallogin, form=None):
+        """Perform additional actions and save user."""
         self.populate_user_avatar(sociallogin)
         return super().save_user(request, sociallogin, form)
 
     @staticmethod
     def populate_user_avatar(sociallogin):
+        """Get and save the user's avatar from the social account."""
         picture_url = sociallogin.account.get_avatar_url()
         user = sociallogin.user
         picture = ContentFile(urlopen(picture_url).read())
@@ -35,4 +45,5 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         urlopen(picture_url).close()
 
     def get_connect_redirect_url(self, request, socialaccount):
+        """Get a redirect URL after connecting your account."""
         return reverse(settings.LOGIN_REDIRECT_URL)

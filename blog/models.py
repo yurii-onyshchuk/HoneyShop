@@ -4,6 +4,8 @@ from django.urls import reverse
 
 
 class Category(models.Model):
+    """Model to represent a category of post."""
+
     title = models.CharField(max_length=250, verbose_name='Назва категорії')
     slug = models.SlugField(max_length=100, verbose_name='URL', unique=True)
     photo = models.ImageField(upload_to='photos/blog/%Y/%m', blank=True, verbose_name='Фото')
@@ -12,6 +14,7 @@ class Category(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        """Return the absolute URL for the blog category."""
         return reverse('blog:category', kwargs={'slug': self.slug})
 
     class Meta:
@@ -21,6 +24,8 @@ class Category(models.Model):
 
 
 class Post(models.Model):
+    """Model to represent a post of blog."""
+
     title = models.CharField(max_length=250, verbose_name='Заголовок')
     slug = models.SlugField(max_length=100, verbose_name='URL', unique=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='posts', verbose_name='Категорія')
@@ -33,9 +38,11 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        """Return the absolute URL for the blog's post."""
         return reverse('blog:post', kwargs={'slug': self.slug})
 
     def get_comment_count(self):
+        """Return the count of top-level comments on the blog's post."""
         return Comment.objects.filter(post=self, parent__isnull=True).count()
 
     class Meta:
@@ -45,6 +52,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    """Model to represent a comment of post."""
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name='Пост')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                              related_name='user_comments', verbose_name='Користувач')
@@ -64,6 +73,7 @@ class Comment(models.Model):
         ordering = ['-created_at']
 
     def get_user(self):
+        """Return the user who posted the comment."""
         if self.user:
             return self.user
         else:
@@ -71,10 +81,12 @@ class Comment(models.Model):
 
     @property
     def children(self):
+        """Return the replies to the comment in reverse order."""
         return Comment.objects.filter(parent=self).reverse()
 
     @property
     def is_parent(self):
+        """Check if the comment is a top-level (parent) comment."""
         if self.parent is None:
             return True
         return False

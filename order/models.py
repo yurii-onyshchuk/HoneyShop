@@ -8,6 +8,8 @@ from shop.models import Product
 
 
 class Order(models.Model):
+    """Model to represent an order of user."""
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Користувач')
     recipient_first_name = models.CharField(verbose_name="Ім'я отримувача", max_length=100)
     recipient_last_name = models.CharField(verbose_name="Прізвище отримувача", max_length=100)
@@ -35,10 +37,13 @@ class Order(models.Model):
         return f'Замовлення №{str(self.pk)}'
 
     def get_recipient(self):
+        """Get the full name of the recipient."""
         return f'{self.recipient_last_name} {self.recipient_first_name} {self.recipient_patronymic}'
 
 
 class OrderItem(models.Model):
+    """Model to represent an item in an order."""
+
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Замовлення')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
     price = models.DecimalField(max_digits=7, decimal_places=0, verbose_name='Вартість')
@@ -52,4 +57,5 @@ class OrderItem(models.Model):
         return f'№{str(self.pk)} (замовлення №{str(self.order.pk)})'
 
     def total_price(self):
+        """Calculate the total price for the order item."""
         return self.quantity * self.price

@@ -7,12 +7,14 @@ from shop.models import Product
 
 
 def cart_detail(request):
+    """View for the cart detail page."""
     cart = Cart(request)
     return render(request, template_name='cart/cart_detail.html', context={'cart': cart, 'title': 'Корзина'})
 
 
 @require_POST
 def cart_add(request):
+    """Add a product to the cart via AJAX."""
     cart = Cart(request)
     product = get_object_or_404(Product, id=request.POST['product_id'])
     cart.add(product=product)
@@ -21,6 +23,7 @@ def cart_add(request):
 
 @require_POST
 def cart_update(request, product_id):
+    """Update the quantity of a product in the cart via AJAX."""
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     input_quantity = int(request.POST['input_quantity'])
@@ -40,6 +43,7 @@ def cart_update(request, product_id):
 
 
 def cart_delete(request, product_id):
+    """Remove a product from the cart."""
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.delete(product)
@@ -47,6 +51,7 @@ def cart_delete(request, product_id):
 
 
 def clear_cart(request):
+    """Clear all items from the cart."""
     cart = Cart(request)
     cart.clear()
     return redirect(request.META.get('HTTP_REFERER'))
