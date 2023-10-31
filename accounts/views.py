@@ -9,7 +9,7 @@ from django.views.generic import CreateView, UpdateView, TemplateView, ListView,
 
 from . import forms
 from .models import User, Address
-from .utils import RedirectAuthenticatedUserMixin
+from .mixins import RedirectAuthenticatedUserMixin
 
 
 class SignUpView(RedirectAuthenticatedUserMixin, CreateView):

@@ -11,7 +11,7 @@ import cloudipsp
 
 from cart.cart import Cart
 from checkout.forms import CheckoutForm
-from checkout.utils import AllowOnlyRedirectMixin
+from checkout.mixins import AllowOnlyRedirectMixin
 from accounts.models import Address
 from checkout.models import PaymentOptions
 from order.models import Order, OrderItem
