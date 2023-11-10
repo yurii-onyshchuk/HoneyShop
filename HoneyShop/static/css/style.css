@@ -480,6 +480,18 @@ button#to-wishlist:active {
 }
 
 /*--------------------------------------------------------------
+# Checkout
+--------------------------------------------------------------*/
+
+.checkout #div_id_city,
+.checkout #div_id_street,
+.checkout #div_id_house,
+.checkout #div_id_flat,
+.checkout #div_id_delivery_service_department {
+    display: none;
+}
+
+/*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/
 .sidebar .card,

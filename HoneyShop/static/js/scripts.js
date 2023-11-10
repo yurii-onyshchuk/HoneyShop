@@ -207,6 +207,26 @@ $(document).ready(function () {
             minus.removeClass('no-active')
         }
     }
+
+    // Change delivery options on the Checkout page
+    let deliveryOption = $('.checkout #id_delivery_option');
+    adjustFieldsVisibility();
+    deliveryOption.change(function () {
+        adjustFieldsVisibility();
+    });
+
+    function adjustFieldsVisibility() {
+        let selectedOption = deliveryOption.val();
+        $('.checkout #div_id_city, .checkout #div_id_street, .checkout #div_id_house, ' +
+            '.checkout #div_id_flat, .checkout #div_id_delivery_service_department').hide();
+        if (selectedOption === '1') {
+        } else if (selectedOption === '2' || selectedOption === '3') {
+            $('.checkout #div_id_city, .checkout #div_id_delivery_service_department').show();
+        } else if (selectedOption === '4') {
+            $('.checkout #div_id_city, .checkout #div_id_street, ' +
+                '.checkout #div_id_house, .checkout #div_id_flat').show();
+        }
+    }
 })
 
 // Add replay at comment
