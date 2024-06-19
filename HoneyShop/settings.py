@@ -265,3 +265,6 @@ CART_SESSION_ID = 'cart'
 
 FONDY_MERCHANT_ID = os.getenv('FONDY_MERCHANT_ID')
 FONDY_CREDIT_KEY = os.getenv('FONDY_CREDIT_KEY')
+
+NOVA_POSHTA_API_KEY = os.getenv('NOVA_POSHTA_API_KEY')
+NOVA_POSHTA_API_URL = 'https://api.novaposhta.ua/v2.0/json/'

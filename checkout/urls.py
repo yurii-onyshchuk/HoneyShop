@@ -9,4 +9,5 @@ urlpatterns = [
     path('checkout-success/', views.CheckoutSuccess.as_view(), name='checkout_success'),
     path('payment-success/', views.PaymentSuccess.as_view(), name='payment_success'),
     path('payment-error/', views.PaymentError.as_view(), name='payment_error'),
+    path('city_autocomplete/', views.city_autocomplete, name='city_autocomplete'),
 ]

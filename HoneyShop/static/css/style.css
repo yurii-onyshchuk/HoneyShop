@@ -491,6 +491,12 @@ button#to-wishlist:active {
     display: none;
 }
 
+.checkout #city-results .dropdown-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Забороняє перенесення тексту на новий рядок */
+}
+
 /*--------------------------------------------------------------
 # Blog
 --------------------------------------------------------------*/

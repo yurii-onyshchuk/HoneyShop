@@ -229,6 +229,64 @@ $(document).ready(function () {
     }
 })
 
+// City autocomplete from Weather API
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname === '/checkout/') {
+        const cityInput = document.querySelector('.checkout #id_city');
+        const cityResults = document.querySelector('.checkout #city-results');
+        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+        cityInput.addEventListener('input', function () {
+            const query = cityInput.value;
+            if (query.length >= 3) {
+                fetch('/checkout/city_autocomplete/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken, // Передача CSRF-токену
+                    },
+                    body: JSON.stringify({query: query}),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        cityResults.innerHTML = '';
+                        if (data.success && data.data.length > 0) {
+                            data.data[0].Addresses.forEach(item => {
+                                const resultItem = document.createElement('li');
+                                resultItem.textContent = item.Present;
+                                resultItem.classList.add('dropdown-item');
+                                cityResults.appendChild(resultItem);
+
+                                resultItem.addEventListener('click', function () {
+                                    cityInput.value = item.Present;
+                                    cityResults.classList.remove('show');
+                                    while (cityResults.firstChild) {
+                                        cityResults.removeChild(cityResults.firstChild);
+                                    }
+                                });
+                            });
+                            cityResults.classList.add('show');
+                        } else {
+                            cityResults.classList.remove('show');
+                        }
+                    })
+                    .catch(error => console.error(error));
+            } else {
+                cityResults.classList.remove('show');
+                cityResults.innerHTML = '';
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!cityResults.contains(event.target)) {
+                cityResults.classList.remove('show');
+                cityResults.innerHTML = '';
+            }
+        });
+    }
+});
+
 // Add replay at comment
 function addReply(user, comment_id) {
     document.getElementById("contactparent").value = comment_id;
