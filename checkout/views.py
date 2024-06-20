@@ -18,7 +18,7 @@ from accounts.models import Address
 from checkout.models import PaymentOptions
 from order.models import Order, OrderItem
 from shop.models import Product
-from checkout.services.nova_poshta_api_service import CitySearcher
+from checkout.services.nova_poshta_api_service import CitySearcher, DepartmentSearcher
 
 
 class Checkout(LoginRequiredMixin, CreateView):
@@ -118,6 +118,15 @@ def city_autocomplete(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         autocomplete_data = CitySearcher({'city': data.get('query')}).get_data_from_API()
+        return JsonResponse(autocomplete_data, safe=False)
+    else:
+        raise Http404()
+
+
+def department_autocomplete(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        autocomplete_data = DepartmentSearcher({'department': data.get('query')}).get_data_from_API()
         return JsonResponse(autocomplete_data, safe=False)
     else:
         raise Http404()

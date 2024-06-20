@@ -496,6 +496,12 @@ button#to-wishlist:active {
     text-overflow: ellipsis;
     white-space: nowrap; /* Забороняє перенесення тексту на новий рядок */
 }
+/*Style for the  autocomplete dropdown list*/
+.checkout #city-results .dropdown-item:hover,
+.checkout #city-results .dropdown-item:active{
+    cursor: pointer;
+    background-color: #e9ecef;
+}
 
 /*--------------------------------------------------------------
 # Blog

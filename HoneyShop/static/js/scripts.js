@@ -229,13 +229,47 @@ $(document).ready(function () {
     }
 })
 
-// City autocomplete from Weather API
-
 document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname === '/checkout/') {
         const cityInput = document.querySelector('.checkout #id_city');
         const cityResults = document.querySelector('.checkout #city-results');
         const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                // Функція для отримання номерів відділень
+        function fetchDepartments(cityId) {
+            fetch('/checkout/department_autocomplete/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({city_id: cityId}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                departmentResults.innerHTML = '';
+                if (data.success && data.departments.length > 0) {
+                    data.departments.forEach(department => {
+                        const resultItem = document.createElement('li');
+                        resultItem.textContent = department.number;
+                        resultItem.classList.add('dropdown-item');
+                        departmentResults.appendChild(resultItem);
+
+                        resultItem.addEventListener('click', function () {
+                            departmentInput.value = department.number;
+                            departmentResults.classList.remove('show');
+                            while (departmentResults.firstChild) {
+                                departmentResults.removeChild(departmentResults.firstChild);
+                            }
+                        });
+                    });
+                    departmentResults.classList.add('show');
+                } else {
+                    departmentResults.classList.remove('show');
+                }
+            })
+            .catch(error => console.error(error));
+        }
 
         cityInput.addEventListener('input', function () {
             const query = cityInput.value;
