@@ -1,4 +1,6 @@
 import json
+from abc import abstractmethod, ABC
+
 import requests
 
 from django.conf import settings
@@ -13,7 +15,7 @@ def post_request_to_api(url: str, request_data: dict):
         raise response.raise_for_status()
 
 
-class AbstractNovaPoshtaAPIRetriever:
+class AbstractNovaPoshtaAPIRetriever(ABC):
     """Abstract class for fetching data from an external API.
 
     Contains common methods and properties for all weather data retrieval classes.
@@ -25,30 +27,25 @@ class AbstractNovaPoshtaAPIRetriever:
     def __init__(self, data: dict):
         self.data = data
 
-    def get_request_data(self, **kwargs) -> dict:
+    @abstractmethod
+    def query_params(self, **kwargs) -> dict:
         """Define query parameters for the API request."""
-        request_data = {'apiKey': self.api_key}
-        return request_data
+        pass
 
-    def get_response(self, **kwargs) -> dict:
-        """Send a request to the external API and return the response."""
-        request_data = self.get_request_data()
-        response = post_request_to_api(self.api_url, request_data)
-        return response
-
-    def get_data_from_API(self, **kwargs) -> dict:
+    def get_response_from_API(self) -> dict:
         """Fetch city name suggestions based on user input.
 
         This method queries an external API to retrieve city name
         suggestions matching the user's input.
         """
-        return self.get_response()
+        response = post_request_to_api(self.api_url, self.query_params())
+        return response
 
 
 class CitySearcher(AbstractNovaPoshtaAPIRetriever):
     """Class to search for city names and retrieve city-related data from an external API."""
 
-    def get_request_data(self, **kwargs) -> dict:
+    def query_params(self) -> dict:
         request_data = {
             "apiKey": f"{self.api_key}",
             "modelName": "Address",
@@ -63,14 +60,17 @@ class CitySearcher(AbstractNovaPoshtaAPIRetriever):
 
 
 class DepartmentSearcher(AbstractNovaPoshtaAPIRetriever):
-    def get_request_data(self, **kwargs) -> dict:
+    def query_params(self) -> dict:
         request_data = {
             "apiKey": f"{self.api_key}",
             "modelName": "AddressGeneral",
             "calledMethod": "getWarehouses",
             "methodProperties": {
-                "CityRef": kwargs['CityRef'],
-                "Language": "UA"
+                "CityRef": self.data['city_id'],
+                "FindByString": self.data['query'],
+                "Language": "UA",
+                "Limit": "10",
+                "Page": "1"
             }
         }
         return request_data

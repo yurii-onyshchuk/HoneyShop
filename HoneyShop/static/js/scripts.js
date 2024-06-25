@@ -90,14 +90,11 @@ $(document).ready(function () {
         const product_id = $(this).parent().attr('data-index')
         e.preventDefault();
         $.ajax({
-            type: 'POST',
-            url: $(this).parent().attr('data-url'),
-            data: {
+            type: 'POST', url: $(this).parent().attr('data-url'), data: {
                 product_id: product_id,
                 csrfmiddlewaretoken: $('form.add-to-cart[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const add_to_cart_button = $('form.add-to-cart[data-index="' + product_id + '"] button')
                 const to_cart_link = $('form.add-to-cart[data-index="' + product_id + '"] a')
                 add_to_cart_button.addClass('d-none')
@@ -110,8 +107,7 @@ $(document).ready(function () {
                 } else {
                     cart_total_quantity.style.display = 'none'
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
     })
@@ -164,14 +160,11 @@ $(document).ready(function () {
     // AJAX handler for changing the quantity of product in the cart
     function ajax_handler(e, input, product_id, new_input_quantity) {
         $.ajax({
-            type: 'POST',
-            url: input.parent().parent().attr('data-url'),
-            data: {
+            type: 'POST', url: input.parent().parent().attr('data-url'), data: {
                 input_quantity: new_input_quantity,
                 csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const diff = json.available_product_quantity - json.product_quantity
                 if (diff >= 0) {
                     input.val(json.product_quantity);
@@ -183,8 +176,7 @@ $(document).ready(function () {
                     const cart_total_quantity = document.getElementById("cart-total")
                     cart_total_quantity.innerHTML = json.cart_total_quantity
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
         return false;
@@ -217,109 +209,16 @@ $(document).ready(function () {
 
     function adjustFieldsVisibility() {
         let selectedOption = deliveryOption.val();
-        $('.checkout #div_id_city, .checkout #div_id_street, .checkout #div_id_house, ' +
-            '.checkout #div_id_flat, .checkout #div_id_delivery_service_department').hide();
+        $('.checkout #div_id_city, .checkout #div_id_street, .checkout #div_id_house, ' + '.checkout #div_id_flat, .checkout #div_id_delivery_service_department').hide();
         if (selectedOption === '1') {
         } else if (selectedOption === '2' || selectedOption === '3') {
             $('.checkout #div_id_city, .checkout #div_id_delivery_service_department').show();
         } else if (selectedOption === '4') {
-            $('.checkout #div_id_city, .checkout #div_id_street, ' +
-                '.checkout #div_id_house, .checkout #div_id_flat').show();
+            $('.checkout #div_id_city, .checkout #div_id_street, ' + '.checkout #div_id_house, .checkout #div_id_flat').show();
         }
     }
 })
 
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.pathname === '/checkout/') {
-        const cityInput = document.querySelector('.checkout #id_city');
-        const cityResults = document.querySelector('.checkout #city-results');
-        const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-
-                // Функція для отримання номерів відділень
-        function fetchDepartments(cityId) {
-            fetch('/checkout/department_autocomplete/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,
-                },
-                body: JSON.stringify({city_id: cityId}),
-            })
-            .then(response => response.json())
-            .then(data => {
-                departmentResults.innerHTML = '';
-                if (data.success && data.departments.length > 0) {
-                    data.departments.forEach(department => {
-                        const resultItem = document.createElement('li');
-                        resultItem.textContent = department.number;
-                        resultItem.classList.add('dropdown-item');
-                        departmentResults.appendChild(resultItem);
-
-                        resultItem.addEventListener('click', function () {
-                            departmentInput.value = department.number;
-                            departmentResults.classList.remove('show');
-                            while (departmentResults.firstChild) {
-                                departmentResults.removeChild(departmentResults.firstChild);
-                            }
-                        });
-                    });
-                    departmentResults.classList.add('show');
-                } else {
-                    departmentResults.classList.remove('show');
-                }
-            })
-            .catch(error => console.error(error));
-        }
-
-        cityInput.addEventListener('input', function () {
-            const query = cityInput.value;
-            if (query.length >= 3) {
-                fetch('/checkout/city_autocomplete/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrfToken, // Передача CSRF-токену
-                    },
-                    body: JSON.stringify({query: query}),
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        cityResults.innerHTML = '';
-                        if (data.success && data.data.length > 0) {
-                            data.data[0].Addresses.forEach(item => {
-                                const resultItem = document.createElement('li');
-                                resultItem.textContent = item.Present;
-                                resultItem.classList.add('dropdown-item');
-                                cityResults.appendChild(resultItem);
-
-                                resultItem.addEventListener('click', function () {
-                                    cityInput.value = item.Present;
-                                    cityResults.classList.remove('show');
-                                    while (cityResults.firstChild) {
-                                        cityResults.removeChild(cityResults.firstChild);
-                                    }
-                                });
-                            });
-                            cityResults.classList.add('show');
-                        } else {
-                            cityResults.classList.remove('show');
-                        }
-                    })
-                    .catch(error => console.error(error));
-            } else {
-                cityResults.classList.remove('show');
-                cityResults.innerHTML = '';
-            }
-        });
-
-        document.addEventListener('click', function (event) {
-            if (!cityResults.contains(event.target)) {
-                cityResults.classList.remove('show');
-                cityResults.innerHTML = '';
-            }
-        });
-    }
-});
 
 // Add replay at comment
 function addReply(user, comment_id) {
@@ -330,3 +229,79 @@ function addReply(user, comment_id) {
     comment_form.setSelectionRange(end, end);
     comment_form.focus()
 }
+
+$(document).ready(function () {
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    // City choose
+    $('#id_city').on('input', function () {
+        let query = $(this).val();
+        if (query.length >= 2) {
+            $.ajax({
+                url: '/checkout/city_autocomplete/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: query}),
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('#city-results').empty().show();
+                    if (data.success) {
+                        $.each(data.data[0].Addresses, function (index, address) {
+                            $('#city-results').append(`<li class="dropdown-item" data-city-ref="${address.DeliveryCity}">${address.Present}</li>`);
+                        });
+                    }
+                }
+            });
+        }
+    });
+    $('#city-results').on('click', 'li', function () {
+        $('#id_city').val($(this).text())
+            .attr('value', $(this).text())
+            .attr('data-city-ref', $(this).attr('data-city-ref'));
+        $('#city-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_city, #city-results').length) {
+            $('#city-results').hide();
+        }
+    });
+
+
+    // Delivery service department choose
+    $('#id_delivery_service_department').on('input', function () {
+        let query = $(this).val();
+        let city_id = $('#id_city').attr('data-city-ref');
+        if (query.length >= 1) {
+            $.ajax({
+                url: '/checkout/department_autocomplete/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: query, city_id: city_id}),
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('#department-results').empty().show();
+                    if (data.success) {
+                        $.each(data.data, function (index, warehouse) {
+                            $('#department-results').append(`<li class="dropdown-item">${warehouse.Description}</li>`);
+                        });
+                    }
+                }
+            });
+        }
+    });
+    $('#department-results').on('click', 'li', function () {
+        $('#id_delivery_service_department').val($(this).text());
+        $('#department-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_delivery_service_department, #department-results').length) {
+            $('#department-results').hide();
+        }
+    });
+});

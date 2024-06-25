@@ -117,7 +117,8 @@ def payment(request, pk):
 def city_autocomplete(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        autocomplete_data = CitySearcher({'city': data.get('query')}).get_data_from_API()
+        searcher = CitySearcher({'city': data.get('query')})
+        autocomplete_data = searcher.get_response_from_API()
         return JsonResponse(autocomplete_data, safe=False)
     else:
         raise Http404()
@@ -126,7 +127,11 @@ def city_autocomplete(request):
 def department_autocomplete(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        autocomplete_data = DepartmentSearcher({'department': data.get('query')}).get_data_from_API()
+        searcher = DepartmentSearcher({'department': data.get('query')})
+        searcher.data['city_id'] = data.get('city_id')
+        searcher.data['query'] = data.get('query')
+        autocomplete_data = searcher.get_response_from_API()
+        print(autocomplete_data)
         return JsonResponse(autocomplete_data, safe=False)
     else:
         raise Http404()
