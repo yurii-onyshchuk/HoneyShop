@@ -69,10 +69,8 @@ $(document).ready(function () {
 
                 if (json.wishlist_total > '0') {
                     wishlist_total.style.display = 'block'
-                    console.log('block')
                 } else {
                     wishlist_total.style.display = 'none'
-                    console.log('none')
                 }
 
                 if (json.action_result === 'added') {
@@ -234,8 +232,27 @@ $(document).ready(function () {
     const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
     // City choose
-    $('#id_city').on('input', function () {
-        let query = $(this).val();
+    $('#id_city').on('click', function () {
+        cityAutocompleteFunction($(this).val());
+    })
+        .on('input', function () {
+            cityAutocompleteFunction($(this).val());
+        });
+
+    $('#city-results').on('click', 'li', function () {
+        $('#id_city').val($(this).text())
+            .attr('value', $(this).text())
+            .attr('data-city-ref', $(this).attr('data-city-ref'));
+        $('#city-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_city, #city-results').length) {
+            $('#city-results').hide();
+        }
+    });
+
+    function cityAutocompleteFunction(query) {
         if (query.length >= 2) {
             $.ajax({
                 url: '/checkout/city_autocomplete/',
@@ -255,26 +272,31 @@ $(document).ready(function () {
                 }
             });
         }
-    });
-    $('#city-results').on('click', 'li', function () {
-        $('#id_city').val($(this).text())
-            .attr('value', $(this).text())
-            .attr('data-city-ref', $(this).attr('data-city-ref'));
-        $('#city-results').hide();
-    });
-
-    $(document).click(function (event) {
-        if (!$(event.target).closest('#id_city, #city-results').length) {
-            $('#city-results').hide();
-        }
-    });
+    }
 
 
     // Delivery service department choose
-    $('#id_delivery_service_department').on('input', function () {
-        let query = $(this).val();
+    $('#id_delivery_service_department').on('click', function () {
+        departmentAutocompleteFunction($(this).val());
+    })
+        .on('input', function () {
+            departmentAutocompleteFunction($(this).val());
+        });
+
+    $('#department-results').on('click', 'li', function () {
+        $('#id_delivery_service_department').val($(this).text());
+        $('#department-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_delivery_service_department, #department-results').length) {
+            $('#department-results').hide();
+        }
+    });
+
+    function departmentAutocompleteFunction(query) {
         let city_id = $('#id_city').attr('data-city-ref');
-        if (query.length >= 1) {
+        if (city_id) {
             $.ajax({
                 url: '/checkout/department_autocomplete/',
                 type: 'POST',
@@ -293,15 +315,5 @@ $(document).ready(function () {
                 }
             });
         }
-    });
-    $('#department-results').on('click', 'li', function () {
-        $('#id_delivery_service_department').val($(this).text());
-        $('#department-results').hide();
-    });
-
-    $(document).click(function (event) {
-        if (!$(event.target).closest('#id_delivery_service_department, #department-results').length) {
-            $('#department-results').hide();
-        }
-    });
+    }
 });

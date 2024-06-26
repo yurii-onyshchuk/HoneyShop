@@ -131,7 +131,6 @@ def department_autocomplete(request):
         searcher.data['city_id'] = data.get('city_id')
         searcher.data['query'] = data.get('query')
         autocomplete_data = searcher.get_response_from_API()
-        print(autocomplete_data)
         return JsonResponse(autocomplete_data, safe=False)
     else:
         raise Http404()

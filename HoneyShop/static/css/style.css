@@ -492,16 +492,17 @@ button#to-wishlist:active {
 }
 
 .checkout #city-results .dropdown-item,
-.checkout #department-results .dropdown-item{
+.checkout #department-results .dropdown-item {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Забороняє перенесення тексту на новий рядок */
+    white-space: pre-line;
 }
+
 /*Style for the  autocomplete dropdown list*/
 .checkout #city-results .dropdown-item:hover,
 .checkout #city-results .dropdown-item:active,
 .checkout #department-results .dropdown-item:hover,
-.checkout #department-results .dropdown-item:active{
+.checkout #department-results .dropdown-item:active {
     cursor: pointer;
     background-color: #e9ecef;
 }
