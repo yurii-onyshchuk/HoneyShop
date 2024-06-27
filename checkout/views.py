@@ -1,9 +1,7 @@
-import json
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseNotAllowed, JsonResponse, Http404
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
@@ -18,7 +16,6 @@ from accounts.models import Address
 from checkout.models import PaymentOptions
 from order.models import Order, OrderItem
 from shop.models import Product
-from checkout.services.nova_poshta_api_service import CitySearcher, DepartmentSearcher
 
 
 class Checkout(LoginRequiredMixin, CreateView):
@@ -112,28 +109,6 @@ def payment(request, pk):
     }
     url = checkout.url(data).get('checkout_url')
     return redirect(url)
-
-
-def city_autocomplete(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        searcher = CitySearcher({'city': data.get('query')})
-        autocomplete_data = searcher.get_response_from_API()
-        return JsonResponse(autocomplete_data, safe=False)
-    else:
-        raise Http404()
-
-
-def department_autocomplete(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        searcher = DepartmentSearcher({'department': data.get('query')})
-        searcher.data['city_id'] = data.get('city_id')
-        searcher.data['query'] = data.get('query')
-        autocomplete_data = searcher.get_response_from_API()
-        return JsonResponse(autocomplete_data, safe=False)
-    else:
-        raise Http404()
 
 
 def callback(request):

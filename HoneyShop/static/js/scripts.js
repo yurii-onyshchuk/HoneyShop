@@ -255,7 +255,7 @@ $(document).ready(function () {
     function cityAutocompleteFunction(query) {
         if (query.length >= 1) {
             $.ajax({
-                url: '/checkout/city_autocomplete/',
+                url: '/external_api_services/city_autocomplete/',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({query: query}),
@@ -298,7 +298,7 @@ $(document).ready(function () {
         let city_id = $('#id_city').attr('data-city-ref');
         if (city_id) {
             $.ajax({
-                url: '/checkout/department_autocomplete/',
+                url: '/external_api_services/department_autocomplete/',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({query: query, city_id: city_id}),

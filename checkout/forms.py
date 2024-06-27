@@ -1,7 +1,7 @@
 from django import forms
 
 from checkout.models import PaymentOptions, DeliveryOptions
-from checkout.widgets import CityAutocompleteWidget, DepartmentAutocompleteWidget
+from external_api_services.widgets import CityAutocompleteWidget, DepartmentAutocompleteWidget
 from order.models import Order
 
 
