@@ -491,18 +491,18 @@ button#to-wishlist:active {
     display: none;
 }
 
-.checkout #city-results .dropdown-item,
-.checkout #department-results .dropdown-item {
+#city-results .dropdown-item,
+#department-results .dropdown-item {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre-line;
 }
 
 /*Style for the  autocomplete dropdown list*/
-.checkout #city-results .dropdown-item:hover,
-.checkout #city-results .dropdown-item:active,
-.checkout #department-results .dropdown-item:hover,
-.checkout #department-results .dropdown-item:active {
+#city-results .dropdown-item:hover,
+#city-results .dropdown-item:active,
+#department-results .dropdown-item:hover,
+#department-results .dropdown-item:active {
     cursor: pointer;
     background-color: #e9ecef;
 }
