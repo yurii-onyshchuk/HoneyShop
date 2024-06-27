@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'checkout.apps.CheckoutConfig',
     'order.apps.OrderConfig',
+    'external_api_services.apps.ExternalApiServicesConfig',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
