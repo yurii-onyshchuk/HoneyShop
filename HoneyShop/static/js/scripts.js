@@ -253,7 +253,7 @@ $(document).ready(function () {
     });
 
     function cityAutocompleteFunction(query) {
-        if (query.length >= 2) {
+        if (query.length >= 1) {
             $.ajax({
                 url: '/checkout/city_autocomplete/',
                 type: 'POST',
