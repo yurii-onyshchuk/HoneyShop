@@ -16,6 +16,7 @@ from accounts.models import Address
 from checkout.models import PaymentOptions
 from order.models import Order, OrderItem
 from shop.models import Product
+from external_api_services.services.nova_poshta_api_service import get_city_id
 
 
 class Checkout(LoginRequiredMixin, CreateView):
@@ -53,6 +54,20 @@ class Checkout(LoginRequiredMixin, CreateView):
             pass
         finally:
             return initial
+
+    def get_form(self, form_class=None):
+        """Get an instance of the form and add the 'city_id' as attribute to the city field."""
+        form = super(Checkout, self).get_form(form_class)
+        try:
+            city_id = get_city_id(form.initial['city'])
+            if city_id:
+                form.fields['city'].widget.attrs.update({'data-city-ref': city_id})
+            else:
+                form.initial['city'] = ''
+        except Address.DoesNotExist:
+            pass
+        finally:
+            return form
 
     def form_valid(self, form):
         """Handle a valid form submission.

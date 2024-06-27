@@ -74,3 +74,9 @@ class DepartmentSearcher(AbstractNovaPoshtaAPIRetriever):
             }
         }
         return request_data
+
+
+def get_city_id(city):
+    response = CitySearcher({'city': city}).get_response_from_API()
+    city_id = response['data'][0]['Addresses'][0]['DeliveryCity']
+    return city_id
