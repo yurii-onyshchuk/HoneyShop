@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, TemplateView
 from django.conf import settings
 
@@ -105,14 +106,15 @@ def payment(request, pk):
         'order_desc': f'Замовленння №{order.id}',
         'amount': int(order.total_price * 100),
         'currency': 'UAH',
-        'server_callback_url': request.build_absolute_uri(reverse_lazy('callback')),
+        'response_url': request.build_absolute_uri(reverse_lazy('payment_response')),
     }
     url = checkout.url(data).get('checkout_url')
     return redirect(url)
 
 
-def callback(request):
-    """Callback view for processing payment gateway responses.
+@csrf_exempt
+def payment_response(request):
+    """View for processing payment gateway responses.
 
     This view handles the response from the payment gateway
     and updates the order status accordingly.
@@ -122,12 +124,12 @@ def callback(request):
         api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
         status = cloudipsp.Order(api).status(data)
         if status == 'approved':
-            order = Order.objects.get(id=data['order_id'])
+            order = Order.objects.get(id=data['pk'])
             order.billing_status = True
             order.save()
-            return reverse_lazy('payment_success')
+            return redirect('payment_success')
         else:
-            return reverse_lazy('payment_error')
+            return redirect('payment_error')
     else:
         return HttpResponseNotAllowed(['POST'])
 
@@ -145,7 +147,7 @@ class CheckoutSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
     redirect_url = reverse_lazy('order_list')
 
 
-class PaymentSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+class PaymentSuccess(LoginRequiredMixin, TemplateView):
     """View to display a successful payment message.
 
     This view displays a success message after a successful
@@ -157,7 +159,7 @@ class PaymentSuccess(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
     redirect_url = reverse_lazy('order_list')
 
 
-class PaymentError(AllowOnlyRedirectMixin, LoginRequiredMixin, TemplateView):
+class PaymentError(LoginRequiredMixin, TemplateView):
     """View to display an error message for payment.
 
     This view displays an error message when there's
