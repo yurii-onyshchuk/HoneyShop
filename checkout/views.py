@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -92,6 +94,9 @@ class Checkout(LoginRequiredMixin, CreateView):
             return reverse_lazy('payment', kwargs={'pk': self.object.pk})
 
 
+order_pre = 'HONEY-SHOP-ORDER-ID-'
+
+
 @login_required
 def payment(request, pk):
     """View for handling payment processing and redirection.
@@ -100,9 +105,12 @@ def payment(request, pk):
     the payment gateway.
     """
     order = Order.objects.get(pk=pk)
+    if order.billing_status:
+        return redirect('payment_success')
     api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
     checkout = cloudipsp.Checkout(api=api)
     data = {
+        'order_id': f'{order_pre}{order.id}',
         'order_desc': f'Замовленння №{order.id}',
         'amount': int(order.total_price * 100),
         'currency': 'UAH',
@@ -121,10 +129,9 @@ def payment_response(request):
     """
     if request.method == 'POST':
         data = request.POST
-        api = cloudipsp.Api(merchant_id=settings.FONDY_MERCHANT_ID, secret_key=settings.FONDY_CREDIT_KEY)
-        status = cloudipsp.Order(api).status(data)
+        status = data.get('order_status')
         if status == 'approved':
-            order = Order.objects.get(id=data['pk'])
+            order = Order.objects.get(id=(data['order_id']).lstrip(order_pre))
             order.billing_status = True
             order.save()
             return redirect('payment_success')
