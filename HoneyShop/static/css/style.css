@@ -492,6 +492,7 @@ button#to-wishlist:active {
 }
 
 #city-results .dropdown-item,
+#street-results .dropdown-item,
 #department-results .dropdown-item {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -501,6 +502,8 @@ button#to-wishlist:active {
 /*Style for the  autocomplete dropdown list*/
 #city-results .dropdown-item:hover,
 #city-results .dropdown-item:active,
+#street-results .dropdown-item:hover,
+#street-results .dropdown-item:active,
 #department-results .dropdown-item:hover,
 #department-results .dropdown-item:active {
     cursor: pointer;

@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, TemplateView, ListView, DeleteView
 
+from external_api_services.mixins import CityChooseMixin
 from . import forms
 from .models import User, Address
 from .mixins import RedirectAuthenticatedUserMixin
@@ -121,7 +122,7 @@ class AddressesListView(LoginRequiredMixin, ListView):
         return Address.objects.filter(user=self.request.user)
 
 
-class AddAddressView(LoginRequiredMixin, CreateView):
+class AddAddressView(LoginRequiredMixin, CityChooseMixin, CreateView):
     """View for adding a new address for the user."""
 
     extra_context = {'title': 'Додавання адреси',
@@ -137,7 +138,7 @@ class AddAddressView(LoginRequiredMixin, CreateView):
         return super(AddAddressView, self).form_valid(form)
 
 
-class EditAddressView(LoginRequiredMixin, UpdateView):
+class EditAddressView(LoginRequiredMixin, CityChooseMixin, UpdateView):
     """View for editing an existing address for the user."""
 
     extra_context = {'title': 'Редагування адреси',

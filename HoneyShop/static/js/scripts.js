@@ -228,6 +228,7 @@ function addReply(user, comment_id) {
     comment_form.focus()
 }
 
+// Autocomplete
 $(document).ready(function () {
     const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
@@ -242,7 +243,11 @@ $(document).ready(function () {
     $('#city-results').on('click', 'li', function () {
         $('#id_city').val($(this).text())
             .attr('value', $(this).text())
-            .attr('data-city-ref', $(this).attr('data-city-ref'));
+            .attr('data-city-ref', $(this).attr('data-city-ref'))
+            .attr('data-delivery-city-ref', $(this).attr('data-delivery-city-ref'));
+        $('#id_street').val('').attr('value', '')
+        $('#id_house').val('').attr('value', '')
+        $('#id_flat').val('').attr('value', '')
         $('#city-results').hide();
     });
 
@@ -263,17 +268,71 @@ $(document).ready(function () {
                     'X-CSRFToken': csrfToken
                 },
                 success: function (data) {
-                    $('#city-results').empty().show();
-                    if (data.success) {
+                    $('#city-results').empty();
+                    if (data.success && data.data.length > 0 && data.data[0].Addresses.length > 0) {
+                        $('#city-results').show();
                         $.each(data.data[0].Addresses, function (index, address) {
-                            $('#city-results').append(`<li class="dropdown-item" data-city-ref="${address.DeliveryCity}">${address.Present}</li>`);
+                            $('#city-results').append(`<li class="dropdown-item" data-city-ref="${address.Ref}" data-delivery-city-ref="${address.DeliveryCity}">${address.Present}</li>`);
                         });
+                    } else {
+                        $('#city-results').hide();
                     }
                 }
             });
+        } else {
+            $('#city-results').hide();
         }
     }
 
+    // Street choose
+    $('#id_street').on('click', function () {
+        streetAutocompleteFunction($(this).val());
+    })
+        .on('input', function () {
+            streetAutocompleteFunction($(this).val());
+        });
+
+    $('#street-results').on('click', 'li', function () {
+        $('#id_street').val($(this).text());
+        $('#id_house').val('').attr('value', '')
+        $('#id_flat').val('').attr('value', '')
+        $('#street-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_street, #street-results').length) {
+            $('#street-results').hide();
+        }
+    });
+
+    function streetAutocompleteFunction(query) {
+        let city_id = $('#id_city').attr('data-city-ref');
+        if (city_id && query.length >= 2) {
+            $.ajax({
+                url: '/external_api_services/street_autocomplete/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: query, city_id: city_id}),
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('#street-results').empty();
+                    if (data.success && data.data[0].Addresses.length > 0) {
+                        $('#street-results').show();
+                        $.each(data.data[0].Addresses, function (index, street) {
+                            console.log(street.Present)
+                            $('#street-results').append(`<li class="dropdown-item">${street.Present}</li>`);
+                        });
+                    } else {
+                        $('#street-results').hide();
+                    }
+                }
+            });
+        } else {
+            $('#street-results').hide();
+        }
+    }
 
     // Delivery service department choose
     $('#id_delivery_service_department').on('click', function () {
@@ -295,7 +354,7 @@ $(document).ready(function () {
     });
 
     function departmentAutocompleteFunction(query) {
-        let city_id = $('#id_city').attr('data-city-ref');
+        let city_id = $('#id_city').attr('data-delivery-city-ref');
         if (city_id) {
             $.ajax({
                 url: '/external_api_services/department_autocomplete/',
@@ -306,14 +365,19 @@ $(document).ready(function () {
                     'X-CSRFToken': csrfToken
                 },
                 success: function (data) {
-                    $('#department-results').empty().show();
-                    if (data.success) {
+                    $('#department-results').empty();
+                    if (data.success && data.data.length > 0) {
+                        $('#department-results').show();
                         $.each(data.data, function (index, warehouse) {
                             $('#department-results').append(`<li class="dropdown-item">${warehouse.Description}</li>`);
                         });
+                    } else {
+                        $('#department-results').hide();
                     }
                 }
             });
+        } else {
+            $('#department-results').hide();
         }
     }
 });

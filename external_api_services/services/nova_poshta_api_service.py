@@ -51,7 +51,24 @@ class CitySearcher(AbstractNovaPoshtaAPIRetriever):
             "modelName": "Address",
             "calledMethod": "searchSettlements",
             "methodProperties": {
-                "CityName": f"{self.data['city']}",
+                "CityName": f"{self.data['query']}",
+                "Limit": "10",
+                "Page": "1"
+            }
+        }
+        return request_data
+
+
+class StreetSearcher(AbstractNovaPoshtaAPIRetriever):
+    def query_params(self) -> dict:
+        request_data = {
+            "apiKey": f"{self.api_key}",
+            "modelName": "AddressGeneral",
+            "calledMethod": "searchSettlementStreets",
+            "methodProperties": {
+                "SettlementRef": self.data['city_id'],
+                "StreetName": self.data['query'],
+                "Language": "UA",
                 "Limit": "10",
                 "Page": "1"
             }
@@ -76,7 +93,6 @@ class DepartmentSearcher(AbstractNovaPoshtaAPIRetriever):
         return request_data
 
 
-def get_city_id(city):
-    response = CitySearcher({'city': city}).get_response_from_API()
-    city_id = response['data'][0]['Addresses'][0]['DeliveryCity']
-    return city_id
+def get_city_info(city):
+    return CitySearcher({'query': city}).get_response_from_API()
+
