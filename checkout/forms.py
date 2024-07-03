@@ -30,9 +30,10 @@ class CheckoutForm(forms.ModelForm):
         chosen delivery option.
         """
         cleaned_data = super().clean()
-        if cleaned_data['delivery_option'].method == 'DELIVERY_SERVICE' or 'HOME_DELIVERY':
+        if cleaned_data['delivery_option'].method != 'IN_STORE':
             if not cleaned_data['city']:
                 raise forms.ValidationError('Вкажіть місто доставки')
+            return cleaned_data['city']
 
     def clean_street(self):
         """Validate the street field for home delivery.
@@ -44,6 +45,7 @@ class CheckoutForm(forms.ModelForm):
         if cleaned_data['delivery_option'].method == 'HOME_DELIVERY':
             if not cleaned_data['street']:
                 raise forms.ValidationError('Вкажіть вулицю доставки')
+            return cleaned_data['street']
 
     def clean_house(self):
         """Validate the house field for home delivery.
@@ -55,6 +57,14 @@ class CheckoutForm(forms.ModelForm):
         if cleaned_data['delivery_option'].method == 'HOME_DELIVERY':
             if not cleaned_data['house']:
                 raise forms.ValidationError('Вкажіть будинок доставки')
+            return cleaned_data['house']
+
+    def clean_flat(self):
+        """Validate the flat field for home delivery."""
+
+        cleaned_data = super().clean()
+        if cleaned_data['delivery_option'].method == 'HOME_DELIVERY':
+            return cleaned_data['flat']
 
     def clean_delivery_service_department(self):
         """Validate the delivery service department field for delivery service method.
@@ -66,6 +76,7 @@ class CheckoutForm(forms.ModelForm):
         if cleaned_data['delivery_option'].method == 'DELIVERY_SERVICE':
             if not cleaned_data['delivery_service_department']:
                 raise forms.ValidationError('Вкажіть відділення служби доставки')
+            return cleaned_data['delivery_service_department']
 
     class Meta:
         model = Order
