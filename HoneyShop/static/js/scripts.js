@@ -69,10 +69,8 @@ $(document).ready(function () {
 
                 if (json.wishlist_total > '0') {
                     wishlist_total.style.display = 'block'
-                    console.log('block')
                 } else {
                     wishlist_total.style.display = 'none'
-                    console.log('none')
                 }
 
                 if (json.action_result === 'added') {
@@ -90,14 +88,11 @@ $(document).ready(function () {
         const product_id = $(this).parent().attr('data-index')
         e.preventDefault();
         $.ajax({
-            type: 'POST',
-            url: $(this).parent().attr('data-url'),
-            data: {
+            type: 'POST', url: $(this).parent().attr('data-url'), data: {
                 product_id: product_id,
                 csrfmiddlewaretoken: $('form.add-to-cart[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const add_to_cart_button = $('form.add-to-cart[data-index="' + product_id + '"] button')
                 const to_cart_link = $('form.add-to-cart[data-index="' + product_id + '"] a')
                 add_to_cart_button.addClass('d-none')
@@ -110,8 +105,7 @@ $(document).ready(function () {
                 } else {
                     cart_total_quantity.style.display = 'none'
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
     })
@@ -164,14 +158,11 @@ $(document).ready(function () {
     // AJAX handler for changing the quantity of product in the cart
     function ajax_handler(e, input, product_id, new_input_quantity) {
         $.ajax({
-            type: 'POST',
-            url: input.parent().parent().attr('data-url'),
-            data: {
+            type: 'POST', url: input.parent().parent().attr('data-url'), data: {
                 input_quantity: new_input_quantity,
                 csrfmiddlewaretoken: $('form.update_quantity[data-index="' + product_id + '"] input[name="csrfmiddlewaretoken"]').val(),
                 action: 'post'
-            },
-            success: function (json) {
+            }, success: function (json) {
                 const diff = json.available_product_quantity - json.product_quantity
                 if (diff >= 0) {
                     input.val(json.product_quantity);
@@ -183,8 +174,7 @@ $(document).ready(function () {
                     const cart_total_quantity = document.getElementById("cart-total")
                     cart_total_quantity.innerHTML = json.cart_total_quantity
                 }
-            },
-            error: function (xhr, errmsg, err) {
+            }, error: function (xhr, errmsg, err) {
             }
         });
         return false;
@@ -217,17 +207,16 @@ $(document).ready(function () {
 
     function adjustFieldsVisibility() {
         let selectedOption = deliveryOption.val();
-        $('.checkout #div_id_city, .checkout #div_id_street, .checkout #div_id_house, ' +
-            '.checkout #div_id_flat, .checkout #div_id_delivery_service_department').hide();
+        $('.checkout #div_id_city, .checkout #div_id_street, .checkout #div_id_house, ' + '.checkout #div_id_flat, .checkout #div_id_delivery_service_department').hide();
         if (selectedOption === '1') {
         } else if (selectedOption === '2' || selectedOption === '3') {
             $('.checkout #div_id_city, .checkout #div_id_delivery_service_department').show();
         } else if (selectedOption === '4') {
-            $('.checkout #div_id_city, .checkout #div_id_street, ' +
-                '.checkout #div_id_house, .checkout #div_id_flat').show();
+            $('.checkout #div_id_city, .checkout #div_id_street, ' + '.checkout #div_id_house, .checkout #div_id_flat').show();
         }
     }
 })
+
 
 // Add replay at comment
 function addReply(user, comment_id) {
@@ -238,3 +227,93 @@ function addReply(user, comment_id) {
     comment_form.setSelectionRange(end, end);
     comment_form.focus()
 }
+
+$(document).ready(function () {
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    // City choose
+    $('#id_city').on('click', function () {
+        cityAutocompleteFunction($(this).val());
+    })
+        .on('input', function () {
+            cityAutocompleteFunction($(this).val());
+        });
+
+    $('#city-results').on('click', 'li', function () {
+        $('#id_city').val($(this).text())
+            .attr('value', $(this).text())
+            .attr('data-city-ref', $(this).attr('data-city-ref'));
+        $('#city-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_city, #city-results').length) {
+            $('#city-results').hide();
+        }
+    });
+
+    function cityAutocompleteFunction(query) {
+        if (query.length >= 1) {
+            $.ajax({
+                url: '/external_api_services/city_autocomplete/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: query}),
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('#city-results').empty().show();
+                    if (data.success) {
+                        $.each(data.data[0].Addresses, function (index, address) {
+                            $('#city-results').append(`<li class="dropdown-item" data-city-ref="${address.DeliveryCity}">${address.Present}</li>`);
+                        });
+                    }
+                }
+            });
+        }
+    }
+
+
+    // Delivery service department choose
+    $('#id_delivery_service_department').on('click', function () {
+        departmentAutocompleteFunction($(this).val());
+    })
+        .on('input', function () {
+            departmentAutocompleteFunction($(this).val());
+        });
+
+    $('#department-results').on('click', 'li', function () {
+        $('#id_delivery_service_department').val($(this).text());
+        $('#department-results').hide();
+    });
+
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#id_delivery_service_department, #department-results').length) {
+            $('#department-results').hide();
+        }
+    });
+
+    function departmentAutocompleteFunction(query) {
+        let city_id = $('#id_city').attr('data-city-ref');
+        if (city_id) {
+            $.ajax({
+                url: '/external_api_services/department_autocomplete/',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({query: query, city_id: city_id}),
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('#department-results').empty().show();
+                    if (data.success) {
+                        $.each(data.data, function (index, warehouse) {
+                            $('#department-results').append(`<li class="dropdown-item">${warehouse.Description}</li>`);
+                        });
+                    }
+                }
+            });
+        }
+    }
+});

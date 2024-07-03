@@ -1,6 +1,7 @@
 from django import forms
 
 from checkout.models import PaymentOptions, DeliveryOptions
+from external_api_services.widgets import CityAutocompleteWidget, DepartmentAutocompleteWidget
 from order.models import Order
 
 
@@ -69,3 +70,5 @@ class CheckoutForm(forms.ModelForm):
     class Meta:
         model = Order
         exclude = ['user', 'total_price', 'billing_status']
+        widgets = {'city': CityAutocompleteWidget(attrs={'autocomplete': 'off', }),
+                   'delivery_service_department': DepartmentAutocompleteWidget(attrs={'autocomplete': 'off', })}

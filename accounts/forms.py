@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 
 from phonenumber_field.formfields import PhoneNumberField
 
+from external_api_services.widgets import CityAutocompleteWidget
 from .models import User, Address
 
 
@@ -116,3 +117,4 @@ class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         exclude = ['user', 'default_address']
+        widgets = {'city': CityAutocompleteWidget(attrs={'autocomplete': 'off', })}
